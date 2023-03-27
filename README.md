@@ -6,7 +6,7 @@ Default installation
 Icons
 `npm install @mui/icons-material`
 
-# To INSTALL NIVO 
+# TO INSTALL NIVO 
 Install nivo bar chart library
 `npm i @nivo/bar`
 
