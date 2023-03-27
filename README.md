@@ -1,4 +1,7 @@
 # project-group-pink-pandas
+# view MUI demo 
+checkout to 'test' branch to view MUI demo 
+`git checkout test`
 
 # TO INSTSALL MUI 
 Default installation
@@ -14,3 +17,9 @@ Install nivo bar chart library
 Open terminal from frontend
 `npm install`
 `npm run dev`
+
+# START YOUR OWN COMPONENT
+remember to create a new branch before you start 
+PLZ don't edit on main branch
+
+enjoy coding :)
