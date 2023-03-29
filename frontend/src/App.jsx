@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import AddPatient from './AddPatient';
+import BasicTabs from './PatientInfoTab';
 
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
   return (
     <div className="App">
       {/* <p>testing</p> */}
-      <AddPatient />
+      <BasicTabs />
+      {/* <AddPatient /> */}
     </div>
   )
 }
