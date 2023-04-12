@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import MyProfile from './MyProfilePage/MyProfile';
-import MyTeam from './MyTeam/MyTeam';
+import MyTeam from './MyTeamPage/MyTeam';
 import './App.css';
 
 
