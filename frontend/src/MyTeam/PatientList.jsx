@@ -1,16 +1,11 @@
+
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-// import styles from './MyProfileMyDetails.module.css';
-import ImageAvatars from '../Avatar.jsx';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
+import ImageAvatars from '../Avatar.jsx';
 
 const style = {
     width: '100%',
@@ -19,35 +14,47 @@ const style = {
 };
 
 
-export default function MyProfileMyDetails() {
+export default function PatientList() {
     return (
         <div >
-            {/* <Card sx={{ maxWidth: 345 }}> */}
-            <Card sx={{ maxWidth: 345  }}>
+            <Card sx={{ maxWidth: 345 }}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        My Details
+                        Patients
                     </Typography>
                     <List sx={style} component="nav" aria-label="mailbox folders">
                         <ListItem button>
 
-                            <ImageAvatars id="DoctorAvartar" />
+                            <ImageAvatars id="PatientAvatar1" />
                             <Typography gutterBottom variant="h6" component="div">
-                                Dr. Dummy
+                                Patient 1
                             </Typography>
                         </ListItem>
                         <ListItem button>
-                            <ListItemText primary="Role: Surgeon" />
+                            <ImageAvatars id="PatientAvatar2" />
+                            <Typography gutterBottom variant="h6" component="div">
+                                Patient 2
+                            </Typography>
                         </ListItem>
                         <ListItem button>
-                            <ListItemText primary="Contact Number: 0201000000" />
+                            <ImageAvatars id="PatientAvatar3" />
+                            <Typography gutterBottom variant="h6" component="div">
+                                Patient 3
+                            </Typography>
                         </ListItem>
                         <ListItem button>
-                            <ListItemText primary="Email: dummyemail@gmail.com" />
+                            <ImageAvatars id="PatientAvatar4" />
+                            <Typography gutterBottom variant="h6" component="div">
+                                Patient 4
+                            </Typography>
                         </ListItem>
                         <ListItem button>
-                            <ListItemText primary="Team: XY" />
+                            <ImageAvatars id="PatientAvatar5" />
+                            <Typography gutterBottom variant="h6" component="div">
+                                Patient 5
+                            </Typography>
                         </ListItem>
+
                     </List>
                 </CardContent>
 

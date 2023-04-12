@@ -3,9 +3,8 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import styles from './MyProfileAnalitics.module.css'
-
-import MyProfileAnaliticsBarChart from './MyProfileAnaliticsBarChart';
+import styles from './TeamPerformance.module.css'
+import TeamPerformanceBarChart from './TeamPerformanceBarChart';
 const style = {
     width: '100%',
     maxWidth: 360,
@@ -13,17 +12,17 @@ const style = {
 };
 
 
-export default function MyProfileAnalitics() {
+export default function TeamPerformance() {
     return (
         <div >
             <Card >
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        My Analitics
+                        Team Performance
                     </Typography>
                     <div className={styles.bar_chart} >
 
-                        <MyProfileAnaliticsBarChart />
+                        <TeamPerformanceBarChart />
                     </div>
 
                 </CardContent>

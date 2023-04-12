@@ -1,4 +1,4 @@
-export const data = [
+export const BarChartData = [
     {
       "country": "Monday",
       "Bloods": 12,
@@ -64,4 +64,35 @@ export const data = [
     }
   ]
 
-  
+  export const PieChartData = [
+    {
+      "id": "lisp",
+      "label": "lisp",
+      "value": 547,
+      "color": "hsl(124, 70%, 50%)"
+    },
+    {
+      "id": "scala",
+      "label": "scala",
+      "value": 231,
+      "color": "hsl(180, 70%, 50%)"
+    },
+    {
+      "id": "php",
+      "label": "php",
+      "value": 325,
+      "color": "hsl(46, 70%, 50%)"
+    },
+    {
+      "id": "rust",
+      "label": "rust",
+      "value": 297,
+      "color": "hsl(92, 70%, 50%)"
+    },
+    {
+      "id": "haskell",
+      "label": "haskell",
+      "value": 426,
+      "color": "hsl(153, 70%, 50%)"
+    }
+  ]
