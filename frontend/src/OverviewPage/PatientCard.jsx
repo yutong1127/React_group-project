@@ -5,11 +5,11 @@ import PatientTasks from "./PatientTasks"
 import UploadArea from "./UploadArea"
 import styles from "./PatientCard.module.css"
 
-export default function PatientCard() {
+export default function PatientCard(props) {
 
     return (
         <div className={styles.patientCard}>
-            <PatientDetails />
+            <PatientDetails patient={props.patient}/>
             <PatientProgress />
             <PatientTasks/>
             <div>
