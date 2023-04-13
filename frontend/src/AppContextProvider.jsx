@@ -5,17 +5,30 @@ export const AppContext = React.createContext({});
 
 export function AppContextProvider ({children}){
     const [notifications, setNotifications] = useState(notificationList);
+    
     const handleClick = index =>{
 
         const newList = [...notifications];
         newList.splice(index,1);
         setNotifications(newList);
     }
+
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const handleDrawerOpen = () => {
+        setDrawerOpen(true);
+    }
+    const handleDrawerClose = () => {
+        setDrawerOpen(false);
+    }
     
     const context = {
         notificationList,
         notifications,
-        handleClick
+        handleClick,
+        drawerOpen,
+        handleDrawerOpen,
+        handleDrawerClose
         
     }
     return (
