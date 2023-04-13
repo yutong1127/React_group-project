@@ -9,7 +9,7 @@ function AppContextProvider({ children }) {
     const patients = [{
         name: "Kevin Zheng",
         location: "Ward 9",
-        identifier: "ABC123"
+        identifier: "ABC123",
     },
     {
         name: "Mickey Mouse",

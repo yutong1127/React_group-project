@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -19,6 +20,8 @@ import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import DoneIcon from '@mui/icons-material/Done';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 
@@ -35,19 +38,19 @@ function createData(id, name, type, patient, clinician, priority, time) {
 }
 
 const rows = [
-    createData(1,'FBC', 'Blood test', "Kevin Zheng", "KZ", 4.3, 1),
-    createData(2,'CRP', 'Blood test', "Kevin Zheng", "KZ", 4.9, 1),
-    createData(3,'Na', 'Blood test', "Donald Duck", "KZ", 6.0, 1),
-    createData(4,'K', 'Blood test', "Donald Duck", "KZ", 4.0, 2),
-    createData(5,'Ca', 'Blood test', "Mickey Mouse", "KZ", 3.9, 2),
-    createData(6,'CXR', 'Radiology', "Donald Duck", "TY", 6.5, 3),
-    createData(7,'AXR', 'Radiology', "Donald Duck", "TY", 4.3, 3),
-    createData(8,'CT', 'Radiology', "Mickey Mouse", "TY", 0.0, 4),
-    createData(9,'USS', 'Radiology', "Minnie Mouse", "TY", 7.0, 5),
-    createData(10,'Bx', 'Histology', "Minnie Mouse", "LOL", 0.0, 6),
-    createData(11,'FNA', 'Histology', "Minnie Mouse", "LOL", 2.0, 7),
-    createData(12,'Fever', 'Review', "Peter Rabbit", "LOL", 37.0, 8),
-    createData(13,'Discharge', 'Discharge', "Peter Rabbit", "LOL", 4.0, 9),
+    createData(1, 'FBC', 'Blood test', "Kevin Zheng", "KZ", 4.3, 1),
+    createData(2, 'CRP', 'Blood test', "Kevin Zheng", "KZ", 4.9, 1),
+    createData(3, 'Na', 'Blood test', "Donald Duck", "KZ", 6.0, 1),
+    createData(4, 'K', 'Blood test', "Donald Duck", "KZ", 4.0, 2),
+    createData(5, 'Ca', 'Blood test', "Mickey Mouse", "KZ", 3.9, 2),
+    createData(6, 'CXR', 'Radiology', "Donald Duck", "TY", 6.5, 3),
+    createData(7, 'AXR', 'Radiology', "Donald Duck", "TY", 4.3, 3),
+    createData(8, 'CT', 'Radiology', "Mickey Mouse", "TY", 0.0, 4),
+    createData(9, 'USS', 'Radiology', "Minnie Mouse", "TY", 7.0, 5),
+    createData(10, 'Bx', 'Histology', "Minnie Mouse", "LOL", 0.0, 6),
+    createData(11, 'FNA', 'Histology', "Minnie Mouse", "LOL", 2.0, 7),
+    createData(12, 'Fever', 'Review', "Peter Rabbit", "LOL", 37.0, 8),
+    createData(13, 'Discharge', 'Discharge', "Peter Rabbit", "LOL", 4.0, 9),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -216,11 +219,23 @@ function EnhancedTableToolbar(props) {
             )}
 
             {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton >
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
+                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                    <Tooltip title="Claim">
+                        <IconButton>
+                            <DoneOutlineIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Done">
+                        <IconButton>
+                            <DoneIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete">
+                        <IconButton>
+                            <DeleteIcon />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
             ) : (
                 <Tooltip title="Filter list">
                     <IconButton>
@@ -237,16 +252,16 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function Tasks() {
-    const [order, setOrder] = React.useState(DEFAULT_ORDER);
-    const [orderBy, setOrderBy] = React.useState(DEFAULT_ORDER_BY);
-    const [selected, setSelected] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
-    const [visibleRows, setVisibleRows] = React.useState(null);
-    const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
-    const [paddingHeight, setPaddingHeight] = React.useState(0);
+    const [order, setOrder] = useState(DEFAULT_ORDER);
+    const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
+    const [selected, setSelected] = useState([]);
+    const [page, setPage] = useState(0);
+    const [dense, setDense] = useState(false);
+    const [visibleRows, setVisibleRows] = useState(null);
+    const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
+    const [paddingHeight, setPaddingHeight] = useState(0);
 
-    React.useEffect(() => {
+    useEffect(() => {
         let rowsOnMount = stableSort(
             rows,
             getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
@@ -260,7 +275,7 @@ export default function Tasks() {
         setVisibleRows(rowsOnMount);
     }, []);
 
-    const handleRequestSort = React.useCallback(
+    const handleRequestSort = useCallback(
         (event, newOrderBy) => {
             const isAsc = orderBy === newOrderBy && order === 'asc';
             const toggledOrder = isAsc ? 'desc' : 'asc';
@@ -307,7 +322,7 @@ export default function Tasks() {
         setSelected(newSelected);
     };
 
-    const handleChangePage = React.useCallback(
+    const handleChangePage = useCallback(
         (event, newPage) => {
             setPage(newPage);
 
@@ -329,7 +344,7 @@ export default function Tasks() {
         [order, orderBy, dense, rowsPerPage],
     );
 
-    const handleChangeRowsPerPage = React.useCallback(
+    const handleChangeRowsPerPage = useCallback(
         (event) => {
             const updatedRowsPerPage = parseInt(event.target.value, 10);
             setRowsPerPage(updatedRowsPerPage);
