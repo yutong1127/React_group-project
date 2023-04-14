@@ -1,3 +1,7 @@
+import './App.css';
+import Overview from './OverviewPage/Overview';
+import Tasks from './TasksPage/Tasks';
+import { AppContext } from './AppContextProvider';
 import { useState } from "react";
 import "./App.css";
 import LoginPage from "./LoginPage/LoginPage";
@@ -16,7 +20,9 @@ import Notifications from './notifications/Notification'
 function App() {
   return (
     <div className="App">
-      <LoginPage />
+      <Overview />
+      {/*<Tasks />*/}
+      {/*<LoginPage />*/}
       {/* <Patient_detail /> */}
       {/* <BasicTabs /> */}
       {/* <AddPatient /> */}
