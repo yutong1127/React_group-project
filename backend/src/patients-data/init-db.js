@@ -37,6 +37,6 @@ async function addPatient() {
         const dbMon = new Patient(data);
 
         await dbMon.save();
-        console.log(`Patient saved! _id = ${dbMon._id}, name = ${dbMon.name}`);
+        console.log(`Patient saved! _id = ${dbMon._id}, name = ${dbMon.fname}`);
     }
 }

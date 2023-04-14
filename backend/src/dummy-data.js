@@ -1,6 +1,6 @@
 const patient = [
   {
-    name: "Mickey Mouse",
+    fname: "Mickey Mouse",
     description: "Where's Minnie",
     location: "Auckland",
     responsibleClinicians: {
