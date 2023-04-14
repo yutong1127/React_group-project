@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {
   Button,
   TextField,
@@ -16,11 +15,11 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 function LoginBox() {
   const theme = useTheme();
 
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate("/...");
-  };
+//   const handleClick = () => {
+//     navigate("/...");
+//   };
   return (
     <Box sx={{ height: "100vh", display: "flex", alignItems: "center" }}>
       <Box
@@ -112,7 +111,7 @@ function LoginBox() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={handleClick}
+                // onClick={handleClick}
               >
                 Login
               </Button>
