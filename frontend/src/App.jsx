@@ -2,13 +2,12 @@ import { useState } from "react";
 import "./App.css";
 import LoginPage from "./LoginPage/LoginPage";
 import React from "react";
-import Patient_detail from "./Patient_detail";
-import { Routes, Route, Navigate } from "react-router-dom";
+import Patient_detail from "./PatientDetails/Patient_detail";
+// import { Routes, Route, Navigate } from "react-router-dom";
 import MyProfile from './MyProfilePage/MyProfile';
 import MyTeam from './MyTeamPage/MyTeam';
 
-import AddPatient from './AddPatient';
-import BasicTabs from './PatientInfoTab';
+import BasicTabs from './AddModifyPatient/PatientInfoTab';
 import Notifications from './notifications/Notification'
 
 
@@ -16,10 +15,9 @@ import Notifications from './notifications/Notification'
 function App() {
   return (
     <div className="App">
-      <LoginPage />
+      {/* <LoginPage /> */}
       {/* <Patient_detail /> */}
       {/* <BasicTabs /> */}
-      {/* <AddPatient /> */}
       {/* <Notifications /> */}
       {/* <MyProfile/> */}
       {/* <MyTeam /> */}

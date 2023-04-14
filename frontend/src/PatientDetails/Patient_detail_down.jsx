@@ -1,11 +1,11 @@
 import { Divider, Box, List, ListItem, ListItemText } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
-const style = {
-  width: "100%",
-  maxWidth: 360,
-  bgcolor: "background.paper",
-};
+// const style = {
+//   width: "100%",
+//   maxWidth: 360,
+//   bgcolor: "background.paper",
+// };
 export default function Patient_detail_down() {
   return (
     <Box
