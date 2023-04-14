@@ -12,6 +12,7 @@
 # TO INSTALL NIVO 
 - Install nivo bar chart library
 `npm i @nivo/bar`
+`npm i @nivo/pie`
 
 # TO START FRONTEND RUNNING
 - Open terminal from frontend

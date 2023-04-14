@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import notificationList from "./notifications/DummyData";
 
-const AppContext = React.createContext({
+export const AppContext = React.createContext({
     patients: []
 });
 
-function AppContextProvider({ children }) {
+export function AppContextProvider ({children}){
+    const [notifications, setNotifications] = useState(notificationList);
+    
+    const handleClick = index =>{
+
+        const newList = [...notifications];
+        newList.splice(index,1);
+        setNotifications(newList);
+    }
+
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const handleDrawerOpen = () => {
+        setDrawerOpen(true);
+    }
+    const handleDrawerClose = () => {
+        setDrawerOpen(false);
+    }
 
     const patients = [{
         name: "Kevin Zheng",
@@ -28,18 +46,20 @@ function AppContextProvider({ children }) {
     },
     ];
 
+    
     const context = {
+        notificationList,
+        notifications,
+        handleClick,
+        drawerOpen,
+        handleDrawerOpen,
+        handleDrawerClose,
         patients
+        
     }
-
-
     return (
         <AppContext.Provider value={context}>
             {children}
         </AppContext.Provider>
-    );
+    )
 }
-export {
-    AppContext,
-    AppContextProvider
-};
