@@ -26,12 +26,14 @@
 - Don't write your code on main branch
 
 - enjoy coding :)
-
+git 
 # UPDATES (Apr. 14th, 2023)
 - Please install mui/material and emotion again
 `npm install @mui/material @emotion/react @emotion/styled`
 - Please install nivo/pie
 `npm i @nivo/pie`
+- Please install router
+`npm install react-router-dom`
 # TO START BACKEND RUNNING
 - Open terminal from backend
 `npm install mongoose dotenv`
