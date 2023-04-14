@@ -5,6 +5,8 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import AddPatient from './AddPatient';
+import Overview from '../OverviewPage/Overview';
+import Tasks from '../TasksPage/Tasks';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -56,10 +58,10 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-      Add Overview Component Here
+        <Overview />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Add Outstanding Tasks Component Here
+        <Tasks />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <AddPatient />

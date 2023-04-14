@@ -19,6 +19,12 @@
 `npm install`
 `npm run dev`
 
+# TO START BACKEND RUNNING
+- Open terminal from backend
+`npm install mongoose dotenv`
+`npm run init-db`
+- DB connection URL = mongodb://127.0.0.1:27017/project
+
 # START YOUR OWN COMPONENT
 - Remember to create a new branch before you start 
 - Don't write your code on main branch
