@@ -7,7 +7,7 @@ const patientSchema = new Schema({
     lname: {type: String},
     description: {type: String},
     location: {type: String},
-    // responsibleClinicians:{ type: Schema.Types.ObjectId, ref: 'User'},
+    responsibleClinicians:{ type: Schema.Types.ObjectId, ref: 'User'},
     quickAdd: { type: String },
     notification: { type: Boolean, default: false},
     created_at: { type: Date, default: Date.now},
