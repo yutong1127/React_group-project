@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormControl, FormGroup, FormLabel,FormControlLabel,Checkbox,Radio, RadioGroup, Switch, Button } from '@mui/material';
+import axios from 'axios';
 
 
 const locations = [
@@ -23,28 +24,37 @@ const locations = [
     },
   ];
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+
 export default function AddPatient(){
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = {
-      name: formData.get('name'),
+      fname: formData.get('fname'),
+      lname: formData.get('lname'),
       description: formData.get('description'),
       location: formData.get('location'),
-      responsibleClinicians: {
-        mrX: formData.get('mrX'),
-        mrY: formData.get('mrY'),
-      }, 
+      responsibleClinicians: formData.get('responsibleClinicians'), 
       quickAdd: formData.get('quickAdd'),
       notification: formData.get('notification'),
     };
+    axios.post(`${API_BASE_URL}/api/addPatient`, data)
+      .then(() => {
+        alert('Patient added!');
+      })
+      .catch()
     console.log(data);
   }
     return(
-        <Box sx={{'& .MuiTextField-root': { m: 1}}}>
+        <Box sx={{'& .MuiTextField-root': { my: 1}}}>
           <form onSubmit={handleSubmit}>
-          <TextField multiline fullWidth label="Name" name="name"/>
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <TextField multiline fullWidth sx={{mr:1}} label="First name" name="fname"/>
+            <TextField multiline fullWidth sx={{ml:1}} label="Last name" name="lname"/>
+            </Box>
+          
           <TextField multiline fullWidth label="Description" rows={4} name="description"/>
           <TextField select fullWidth  label="Location" defaultValue="Auckland"  name="location" SelectProps={{
             native: true,
@@ -57,10 +67,10 @@ export default function AddPatient(){
           </TextField>
           <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <FormLabel style={{textAlign: "left"}} component="label">Responsible Clinician</FormLabel>
-            <FormGroup >
-                <FormControlLabel control={<Checkbox/>} label="Mr X" name="mrX"/>
-                <FormControlLabel control={<Checkbox/>} label="Mr Y" name="mrY" />
-            </FormGroup>
+            <RadioGroup >
+                <FormControlLabel value="Mr X" control={<Radio />} label="Mr X" name="responsibleClinicians"/>
+                <FormControlLabel value="Mr Y"  control={<Radio />} label="Mr Y" name="responsibleClinicians" />
+            </RadioGroup>
           </FormControl>
           <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <FormLabel style={{textAlign: "left"}} component="label">Quick add</FormLabel>
