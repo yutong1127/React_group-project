@@ -3,7 +3,8 @@ dotenv.config();
 import mongoose from 'mongoose';
 
 import { patient, user, team } from '../dummy-data';
-import { Patient, User, Team } from './schema';
+import { Patient, User, Team, Notification } from './schema';
+import { notification } from '../notification-data/random-notification';
 
 mongoose.set('strictQuery', false);
 
@@ -21,6 +22,7 @@ async function run() {
     await addPatient();
     await addUser();
     await addTeam();
+    await addNotification();
 
     await mongoose.disconnect();
     console.log('Done!');
@@ -35,7 +37,8 @@ async function clearDatabase() {
     console.log(`Cleared database (removed ${usersDelete.deletedCount} users).`)
     const teamsDelete = await User.deleteMany({});
     console.log(`Cleared database (removed ${teamsDelete.deletedCount} teams).`)
-     
+    const notificationDelete = await Notification.deleteMany({});
+    console.log(`Cleared database (removed ${notificationDelete.deletedCount} notifications).`)
 }
 
 async function addPatient() {
@@ -60,5 +63,13 @@ async function addTeam() {
         const dbMon = new Team(data);
         await dbMon.save();
         console.log(`Team saved! _id = ${dbMon._id}`);
+    }
+}
+
+async function addNotification(){
+    for (const data of notification) {
+        const dbMon = new Notification(data);
+        await dbMon.save();
+        console.log(`Notification saved!_id=${dbMon._id}`);
     }
 }

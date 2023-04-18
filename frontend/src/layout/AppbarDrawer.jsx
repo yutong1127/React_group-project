@@ -11,6 +11,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { AppContext } from '../AppContextProvider';
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import styles from '.././layout/Appbar.module.css'
+
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -25,6 +28,29 @@ export default function DrawerMenu() {
 
     const { drawerOpen, handleDrawerClose } = useContext(AppContext);
 
+    const drawerData = [
+        {
+            link: 'patientinfo',
+            text: 'Patient List'
+        },
+        {
+            link: 'patientdetails',
+            text: 'Patient Details'
+        },
+        {
+            link: 'myteam',
+            text: 'My Team'
+        },
+        {
+            link: 'myprofile',
+            text: 'My Profile'
+        },
+        {
+            link: 'notification',
+            text: 'Notifications'
+        }
+        
+    ]
     return (
         <Drawer
             sx={{
@@ -44,10 +70,15 @@ export default function DrawerMenu() {
                 </IconButton>
             </DrawerHeader>
             <List >
-                {['Patient List', 'Patient Details', 'My Team', 'My Profile Page', 'Notifications'].map((text, index) => (
-                    <ListItem key={text} sx={{ mt: 2 }}>
+                {drawerData.map((data) => (
+                    <ListItem key={data.text} sx={{ mt: 2 }}>
                         <ListItemButton sx={{ borderColor: '#2196F3', borderWidth: '2px', borderStyle: 'solid', borderRadius: 5 }}>
-                            <ListItemText sx={{ color: '#2196F3', p: '10px' }}>{text}</ListItemText>
+                            
+                            <Link to={`${data.link}`} className={styles.link}>
+                            <ListItemText sx={{ color: '#2196F3', p: '10px' }}>
+                                {data.text}
+                            </ListItemText>
+                            </Link>
                         </ListItemButton>
                     </ListItem>
                 ))}

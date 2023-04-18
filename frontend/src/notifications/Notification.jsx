@@ -6,12 +6,13 @@ import {
     Typography,
     CardContent,
     CardActions,
-    Button
+    Button,
+
 } from '@mui/material';
 import { useContext } from 'react';
-import DocAppBar from '../layout/Appbar';
 import { AppContext } from '../AppContextProvider';
 import styles from '.././notifications/Notification.module.css';
+import {  Link } from 'react-router-dom'
 
 
 export default function Notifications() {
@@ -21,7 +22,6 @@ export default function Notifications() {
 
     return (
         <Container className={styles.container}>
-            <DocAppBar />
             <Box className={styles.cardContainer}>
                 {notifications.map((item, index) => (
                     <Card key={index}
@@ -34,7 +34,12 @@ export default function Notifications() {
 
                         </CardContent>
                         <CardActions>
-                            <Button size='small' variant='outlined'>View</Button>
+                            <Link to='/patientdetails' className={styles.link}>
+                                <Button size='small' variant='outlined'>
+                                    View
+                                </Button>
+                            </Link>
+
                             <Button size='small' variant='outlined' onClick={() => handleClick(index)}>Delete</Button>
                         </CardActions>
                     </Card>

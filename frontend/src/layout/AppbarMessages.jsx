@@ -1,7 +1,16 @@
-import { IconButton, Badge, Menu, MenuItem, Typography, Box, Button } from "@mui/material"
+import { 
+    IconButton, 
+    Badge, 
+    Menu, 
+    MenuItem, 
+    Typography, 
+    Box, 
+    Button } from "@mui/material"
 import MailIcon from '@mui/icons-material/Mail';
 import { useState, useContext } from 'react';
 import { AppContext } from '../AppContextProvider';
+import { NavLink } from 'react-router-dom';
+import styles from '.././layout/Appbar.module.css'
 
 export default function MessageMenu() {
 
@@ -68,7 +77,9 @@ export default function MessageMenu() {
                             >
                         <Typography >{notification.details}</Typography>
                         <Box>
+                            <NavLink to='/notification' className={styles.link}>
                             <Button size='medium'>CHECK IT OUT</Button>
+                            </NavLink>
                             <Button size='medium'>DISMISS</Button>
                         </Box>
                     </MenuItem>

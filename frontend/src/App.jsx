@@ -1,13 +1,7 @@
 import './App.css';
-import Overview from './OverviewPage/Overview';
-import Tasks from './TasksPage/Tasks';
-import { AppContext } from './AppContextProvider';
-import { useState } from "react";
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import "./App.css";
 import LoginPage from "./LoginPage/LoginPage";
-// import Patient_detail from "./PatientDetails/Patient_detail";
 import MyProfile from './MyProfilePage/MyProfile';
 import MyTeam from './MyTeamPage/MyTeam';
 import BasicTabs from './AddModifyPatient/PatientInfoTab';
