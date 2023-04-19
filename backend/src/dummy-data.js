@@ -141,3 +141,89 @@ const team = [
   }
 ]
 export { patient, user,team };
+const user = [
+  {
+    fname: "Jant",
+    lname: "Chan",
+    phone: "0225881753",
+    email: "jant.chan@aucklanduni.ac.nz",
+    password: "abc123",
+    isSupervisor: false,
+    isAdmin: false,
+    role: "",
+    avatar: "",
+  },
+  {
+    fname: "Zhiyan",
+    lname: "Hu",
+    phone: "0225478594",
+    email: "zhiyan.hu@aucklanduni.ac.nz",
+    password: "abc123",
+    isSupervisor: false,
+    isAdmin: false,
+    role: "",
+    avatar: "",
+  },
+  {
+    fname: "Jiewen",
+    lname: "Li",
+    phone: "0229584736",
+    email: "jiewen.li@aucklanduni.ac.nz",
+    password: "abc123",
+    isSupervisor: false,
+    isAdmin: true,
+    role: "",
+    avatar: "",
+  },
+  {
+    fname: "Olivia",
+    lname: "Li",
+    phone: "0228561923",
+    email: "olivia.li@aucklanduni.ac.nz",
+    password: "abc123",
+    isSupervisor: false,
+    isAdmin: false,
+    role: "",
+    avatar: "",
+  }, 
+  {
+    fname: "Jingyi",
+    lname: "You",
+    phone: "0229384712",
+    email: "jingyi.you@aucklanduni.ac.nz",
+    password: "abc123",
+    isSupervisor: false,
+    isAdmin: false,
+    role: "",
+    avatar: "",
+  }, 
+  {
+    fname: "Kevin",
+    lname: "Zheng",
+    phone: "0228471234",
+    email: "kevin.zheng@aucklanduni.ac.nz",
+    password: "abc123",
+    isSupervisor: true,
+    isAdmin: false,
+    role: "",
+    avatar: "",
+  }
+]
+
+const team = [
+  {
+    id: 1,
+    name: "Pink Panda",
+    patients: ["643ca27a0293d379cd4e4f03", "643ca27a0293d379cd4e4f05", "643ca46667ab9e4b039eb90f"],
+    clinicians: ["643ca1aef72f49a5254081c1", "643ca1aef72f49a5254081c3"],
+    supervisors: ["643ca27a0293d379cd4e4f19"]
+  }, 
+  {
+    id: 2,
+    name: "Red Panda",
+    patients: ["643ca46667ab9e4b039eb911", "643ca46667ab9e4b039eb913", "643ca46667ab9e4b039eb915"],
+    clinicians: ["643ca1aef72f49a5254081c5", "643ca1aef72f49a5254081c7"],
+    supervisors: ["643ca1aef72f49a5254081c9"]
+  }
+]
+export { patient, user,team };
