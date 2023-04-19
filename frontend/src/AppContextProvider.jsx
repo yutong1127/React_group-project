@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import notificationList from "./notifications/DummyData";
 import axios from 'axios';
 import useGet from "./hooks/useGet";
 
@@ -19,9 +18,9 @@ export function AppContextProvider ({ children }){
     } =useGet (`${API_BASE_URL}/api/notification`, []);
 
     // const [notifications, setNotifications] = useState(notificationList);
-    const [notifications, setNotifications] = useState(notification);
+    // const [notifications, setNotifications] = useState(notification);
 
-    console.log(notifications);
+    // console.log(notifications);
 
     async function deleteNotification(id){
         const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
@@ -32,12 +31,12 @@ export function AppContextProvider ({ children }){
 
     }
 
-    const handleClick = index =>{
+    // const handleClick = index =>{
 
-        const newList = [...notifications];
-        newList.splice(index,1);
-        setNotifications(newList);
-    }
+    //     const newList = [...notifications];
+    //     newList.splice(index,1);
+    //     setNotifications(newList);
+    // }
 
     const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -73,10 +72,8 @@ export function AppContextProvider ({ children }){
     
     const context = {
         notification,
-        notifications,
         notificationsLoading,
         deleteNotification,
-        handleClick,
         drawerOpen,
         handleDrawerOpen,
         handleDrawerClose,
