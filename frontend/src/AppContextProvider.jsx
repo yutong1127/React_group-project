@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import notificationList from "./notifications/DummyData";
+// import notificationList from "./notifications/DummyData";
 import axios from 'axios';
-import useGet from "./useGet";
+import useGet from "./hooks/useGet";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 

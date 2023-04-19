@@ -18,7 +18,7 @@ import {  Link } from 'react-router-dom'
 export default function Notifications() {
 
 
-    const { notification, handleClick, deleteNotification } = useContext(AppContext);
+    const { notification, deleteNotification } = useContext(AppContext);
 
     console.log(notification);
     return (
