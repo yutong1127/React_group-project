@@ -1,13 +1,37 @@
 import React, { useState } from "react";
 import notificationList from "./notifications/DummyData";
+import axios from 'axios';
+import useGet from "./useGet";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export const AppContext = React.createContext({
-    patients: []
+    patients: [],
+    notifications: []
 });
 
-export function AppContextProvider ({children}){
-    const [notifications, setNotifications] = useState(notificationList);
-    
+export function AppContextProvider ({ children }){
+
+    const {
+        data: notification,
+        isLoading: notificationsLoading,
+        refresh: refreshNotifications
+    } =useGet (`${API_BASE_URL}/api/notification`, []);
+
+    // const [notifications, setNotifications] = useState(notificationList);
+    const [notifications, setNotifications] = useState(notification);
+
+    console.log(notifications);
+
+    async function deleteNotification(id){
+        const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
+
+        console.log(deleteResponse);
+
+        refreshNotifications();
+
+    }
+
     const handleClick = index =>{
 
         const newList = [...notifications];
@@ -48,8 +72,10 @@ export function AppContextProvider ({children}){
 
     
     const context = {
-        notificationList,
+        notification,
         notifications,
+        notificationsLoading,
+        deleteNotification,
         handleClick,
         drawerOpen,
         handleDrawerOpen,

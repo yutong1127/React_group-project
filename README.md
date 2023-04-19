@@ -40,3 +40,7 @@ git
 `npm run init-db`
 - DB connection URL = mongodb://127.0.0.1:27017/project
 
+
+# UPDATES(AXIOS)
+- To install axios
+`npm install axios`

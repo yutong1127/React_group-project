@@ -9,7 +9,8 @@ const patientSchema = new Schema({
     location: {type: String},
     responsibleClinicians:{ type: Schema.Types.ObjectId, ref: 'User'},
     quickAdd: { type: String },
-    notification: { type: Boolean, default: false},
+    // notification: { type: Boolean, default: false},
+    notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
 })
 
@@ -23,6 +24,7 @@ const userSchema = new Schema({
     isAdmin: {type: Boolean, default: false},
     role: {type: String},
     avatar: {type: String},
+    notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
 })
 
@@ -34,7 +36,8 @@ const taskSchema = new Schema({
     clinician: { type: Schema.Types.ObjectId, ref: 'User'},
     priority: Number,
     status: String,
-    notification: { type: Boolean, default: false},
+    // notification: { type: Boolean, default: false},
+    notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
 })
 

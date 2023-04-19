@@ -14,7 +14,7 @@ import styles from '.././layout/Appbar.module.css'
 
 export default function MessageMenu() {
 
-    const { notifications } = useContext(AppContext);
+    const { notification } = useContext(AppContext);
 
     const [anchorElNotification, setAnchorElNotification] = useState(null);
     
@@ -28,21 +28,21 @@ export default function MessageMenu() {
 
     function notificationsLabel(count) {
         if (count === 0) {
-            return 'no notifications';
+            return 'no notification';
         }
         if (count > 99) {
-            return 'more than 99 notifications';
+            return 'more than 99 notification';
         }
-        return `${count} notifications`;
+        return `${count} notification`;
     }
     return (
         <>
             <IconButton
-                aria-label={notificationsLabel(notifications.length)}
+                aria-label={notificationsLabel(notification.length)}
                 size='large'
                 color='inherit'
                 onClick={handleNotificationsOpen}>
-                <Badge badgeContent={notifications.length} color="secondary">
+                <Badge badgeContent={notification.length} color="secondary">
                     <MailIcon />
                 </Badge>
             </IconButton>
@@ -61,7 +61,7 @@ export default function MessageMenu() {
                 open={Boolean(anchorElNotification)}
                 onClose={handleNotificationsClose}
             >
-                {notifications.map((notification, index) => (
+                {notification.map((notification, index) => (
                     <MenuItem
                         key={index}
                         onClick={handleNotificationsClose}
