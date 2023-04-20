@@ -1,32 +1,30 @@
 import TasksBlood from "./TasksBlood"
 import TasksHisto from "./TasksHisto"
 import TasksRad from "./TasksRad"
-import { Button } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import styles from './PatientTasks.module.css'
-import Grid2 from '@mui/material/Unstable_Grid2';
+// import Grid  from '@mui/material/Unstable_Grid item';
 
 export default function PatientTasks() {
 
     return (
-        <Grid2 container spacing={2} className={styles.patientTasks}>
-            <Grid2 xs={6}>
+        <Grid item container spacing={2} className={styles.patientTasks}>
+            <Grid item xs={6}>
                 <TasksBlood />
-            </Grid2>
-            <Grid2 xs={6}>
+            </Grid >
+            <Grid item xs={6}>
                 <TasksRad />
-            </Grid2>
-            <Grid2 xs={6}>
+            </Grid >
+            <Grid item xs={6}>
                 <TasksHisto />
-            </Grid2>
-              <Grid2 xs={6}>
+            </Grid >
+              <Grid item xs={6}>
                 <TasksHisto />
-            </Grid2>
-              <Grid2 xs={6}>
+            </Grid >
+              <Grid item xs={6}>
                 <TasksHisto />
-            </Grid2>
-            <Grid2 xs={12}>
-                <Button variant="contained">Edit</Button>
-            </Grid2>
-        </Grid2>
+            </Grid >
+
+        </Grid >
     )
 }
