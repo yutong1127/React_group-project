@@ -1,7 +1,6 @@
-import PatientCard from "./PatientCard"
-import { useState } from "react"
-import { AppContext } from "../AppContextProvider"
-import { useContext } from "react"
+import PatientCard from './PatientCard'
+import { AppContext } from '../../../AppContextProvider'
+import { useContext } from 'react'
 
 export default function Overview() {
 
