@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import PatientList from './PatientList';
-import TeamPerformance from './TeamPerformance';
-import Users from './Users';
+import { styled, Box, Paper, Grid } from '@mui/material';
+import MyProfileMyDetails from './MyProfileMyDetails';
+import MyProfileAnalitics from './MyProfileAnalitics';
+import LoginDetails from './LoginDetails';
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -15,24 +13,27 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export default function MyTeamGrid() {
+export default function MyPorfileGrid() {
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={8}>
-                <Grid container item xs={12} md={4} spacing={3}>
+            <Grid container spacing={8}  mt={10}>
+                <Grid container item spacing={3} xs={12} md={4}>
 
                     <Grid item xs={12} md={12}>
-                        <PatientList />
+                        <div><MyProfileMyDetails /></div>
                     </Grid>
 
                     <Grid item xs={12} md={12}>
-                        <Users />
+                        <LoginDetails />
                     </Grid>
                 </Grid>
 
                 <Grid item xs={12} md={8}>
-                    <TeamPerformance />
+
+                    <div ><MyProfileAnalitics /></div>
+
                 </Grid>
+
             </Grid>
         </Box>
     );

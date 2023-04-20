@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Table, TableBody, TableCell, TableContainer,TableHead,TableRow,Paper,Box} from '@mui/material';
-import ImageAvatars from '../Avatar.jsx';
+import ImageAvatars from '../../utils/Avatar.jsx';
 import { users } from "./DummyData.js"
 
 function createData(profilePhoto, name, role, isSuperVisor  ) {

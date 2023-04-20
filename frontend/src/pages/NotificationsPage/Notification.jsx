@@ -9,7 +9,7 @@ import {
 
 } from '@mui/material';
 import { useContext } from 'react';
-import { AppContext } from '../../AppContextProvider';
+import { AppContext } from '../../utils/AppContextProvider';
 import styles from './Notification.module.css';
 import {  Link } from 'react-router-dom'
 

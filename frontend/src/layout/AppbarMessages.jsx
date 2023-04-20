@@ -8,7 +8,7 @@ import {
     Button } from "@mui/material"
 import MailIcon from '@mui/icons-material/Mail';
 import { useState, useContext } from 'react';
-import { AppContext } from '../AppContextProvider';
+import { AppContext } from '../utils/AppContextProvider';
 import { NavLink } from 'react-router-dom';
 import styles from '.././layout/Appbar.module.css'
 

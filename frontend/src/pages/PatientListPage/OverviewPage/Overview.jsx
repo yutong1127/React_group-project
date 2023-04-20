@@ -1,5 +1,5 @@
 import PatientCard from './PatientCard'
-import { AppContext } from '../../../AppContextProvider'
+import { AppContext } from '../../../utils/AppContextProvider'
 import { useContext } from 'react'
 
 export default function Overview() {

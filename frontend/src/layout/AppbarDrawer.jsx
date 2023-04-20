@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { AppContext } from '../AppContextProvider';
+import { AppContext } from '../utils/AppContextProvider';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '.././layout/Appbar.module.css'
@@ -30,7 +30,7 @@ export default function DrawerMenu() {
 
     const drawerData = [
         {
-            link: 'patientinfo',
+            link: 'patientlist',
             text: 'Patient List'
         },
         {

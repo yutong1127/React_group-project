@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import useGet from "./hooks/useGet";
+import useGet from "../hooks/useGet";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 

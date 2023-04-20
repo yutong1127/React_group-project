@@ -1,5 +1,4 @@
-import { BarChart } from "@mui/icons-material";
-import { useTheme } from "@mui/material";
+
 import {ResponsiveBar} from '@nivo/bar';
 import{data} from "./DummyData";
 import styles from "./MyProfileAnalitics.module.css";

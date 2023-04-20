@@ -1,8 +1,6 @@
 
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
+import {Card,CardContent , Typography} from '@mui/material';
 import PieChart from './PieChart';
 import styles from './Users.module.css'
 
@@ -11,7 +9,7 @@ export default function Users() {
     return (
         <div >
 
-            <Card sx={{ maxWidth: 345 }}>
+            <Card >
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                         Users

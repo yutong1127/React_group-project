@@ -1,19 +1,10 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-// import styles from './MyProfileEdit.module.css';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
+import { Card,CardActions,CardContent,Button, Typography,Box, List,ListItem,ListItemText,Divider } from '@mui/material/styles';
 
 const style = {
     width: '100%',
     maxWidth: 360,
+    
     bgcolor: 'background.paper',
 };
 

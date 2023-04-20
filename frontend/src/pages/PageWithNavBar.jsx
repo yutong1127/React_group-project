@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import DocAppBar from "./layout/Appbar";
+import DocAppBar from "../layout/Appbar";
 
 export default function PageWithNavbar() {
     return (
