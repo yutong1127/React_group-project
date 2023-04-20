@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useContext } from 'react';
 import { AppContext } from '../AppContextProvider';
-import styles from '.././notifications/Notification.module.css';
+import styles from './Notification.module.css';
 import {  Link } from 'react-router-dom'
 
 
