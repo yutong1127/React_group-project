@@ -9,9 +9,15 @@ const patientSchema = new Schema({
     location: {type: String},
     responsibleClinicians:{ type: Schema.Types.ObjectId, ref: 'User'},
     quickAdd: { type: String },
-    // notification: { type: Boolean, default: false},
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
+    progress: {
+        problems: {type: String},
+        history:{type: String},
+        plan:{type: String},
+    },
+    birth_date: {type: Date},
+    gender: {type: String},
 })
 
 const userSchema = new Schema({
@@ -28,17 +34,19 @@ const userSchema = new Schema({
     created_at: { type: Date, default: Date.now},
 })
 
+
 const taskSchema = new Schema({
     id: Number,
     name: String,
     type: String,
-    patient: { type: Schema.Types.ObjectId, ref: 'Patient'},
-    clinician: { type: Schema.Types.ObjectId, ref: 'User'},
+    patient: { type: Schema.Types.ObjectId, ref: 'Patient' },
+    clinician: { type: Schema.Types.ObjectId, ref: 'User' },
     priority: Number,
-    status: String,
-    // notification: { type: Boolean, default: false},
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
-    created_at: { type: Date, default: Date.now},
+    created_at: { type: Date, default: Date.now },
+    finished_at: { type: Date },
+    status: { type: Number },
+    result:{ type: String },
 })
 
 const teamSchema = new Schema({

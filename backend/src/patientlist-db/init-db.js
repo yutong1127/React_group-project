@@ -2,9 +2,10 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import mongoose from 'mongoose';
 
-import { patient, user, team } from '../dummy-data';
+
 import { Patient, User, Team, Notification } from './schema';
-import { notification } from '../notification-data/random-notification';
+import { patient, user, team } from '../data/dummy-data';
+import { notification } from '../data/notification-data';
 
 mongoose.set('strictQuery', false);
 

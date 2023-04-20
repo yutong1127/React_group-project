@@ -24,234 +24,15 @@ import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import DoneIcon from '@mui/icons-material/Done';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-
-function createData(id, name, type, patient, clinician, priority, time) {
-    return {
-        id,
-        name,
-        type,
-        patient,
-        clinician,
-        priority,
-        time
-    };
-}
-
-const rows = [
-    createData(1, 'FBC', 'Blood test', "Kevin Zheng", "KZ", 4.3, 1),
-    createData(2, 'CRP', 'Blood test', "Kevin Zheng", "KZ", 4.9, 1),
-    createData(3, 'Na', 'Blood test', "Donald Duck", "KZ", 6.0, 1),
-    createData(4, 'K', 'Blood test', "Donald Duck", "KZ", 4.0, 2),
-    createData(5, 'Ca', 'Blood test', "Mickey Mouse", "KZ", 3.9, 2),
-    createData(6, 'CXR', 'Radiology', "Donald Duck", "TY", 6.5, 3),
-    createData(7, 'AXR', 'Radiology', "Donald Duck", "TY", 4.3, 3),
-    createData(8, 'CT', 'Radiology', "Mickey Mouse", "TY", 0.0, 4),
-    createData(9, 'USS', 'Radiology', "Minnie Mouse", "TY", 7.0, 5),
-    createData(10, 'Bx', 'Histology', "Minnie Mouse", "LOL", 0.0, 6),
-    createData(11, 'FNA', 'Histology', "Minnie Mouse", "LOL", 2.0, 7),
-    createData(12, 'Fever', 'Review', "Peter Rabbit", "LOL", 37.0, 8),
-    createData(13, 'Discharge', 'Discharge', "Peter Rabbit", "LOL", 4.0, 9),
-];
-
-function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-}
-
-function getComparator(order, orderBy) {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
-function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) {
-            return order;
-        }
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-}
-
-const headCells = [
-    {
-        id: 'name',
-        numeric: false,
-        disablePadding: true,
-        label: 'Select All',
-    },
-    {
-        id: 'type',
-        numeric: false,
-        disablePadding: false,
-        label: 'Type',
-    },
-    {
-        id: 'patient',
-        numeric: false,
-        disablePadding: false,
-        label: 'Patient',
-    },
-    {
-        id: 'clinician',
-        numeric: false,
-        disablePadding: false,
-        label: 'Clinician',
-    },
-    {
-        id: 'priority',
-        numeric: true,
-        disablePadding: false,
-        label: 'Priority',
-    },
-    {
-        id: 'time',
-        numeric: true,
-        disablePadding: false,
-        label: 'Time',
-    },
-];
-
-const DEFAULT_ORDER = 'asc';
-const DEFAULT_ORDER_BY = 'type';
-const DEFAULT_ROWS_PER_PAGE = 5;
-
-function EnhancedTableHead(props) {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-        props;
-    const createSortHandler = (newOrderBy) => (event) => {
-        onRequestSort(event, newOrderBy);
-    };
-
-    return (
-        <TableHead>
-            <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        color="primary"
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{
-                            'aria-label': 'select all desserts',
-                        }}
-                    />
-                </TableCell>
-                {headCells.map((headCell) => (
-                    <TableCell
-                        key={headCell.id}
-                        align={headCell.id == 'name' ? 'left' : 'right'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <Box component="span" sx={visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </Box>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
-            </TableRow>
-        </TableHead>
-    );
-}
-
-EnhancedTableHead.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-    orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
-};
-
-function EnhancedTableToolbar(props) {
-    const { numSelected } = props;
-
-    return (
-        <Toolbar
-            sx={{
-                pl: { sm: 2 },
-                pr: { xs: 1, sm: 1 },
-                ...(numSelected > 0 && {
-                    bgcolor: (theme) =>
-                        alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-                }),
-            }}
-        >
-            {numSelected > 0 ? (
-                <Typography
-                    sx={{ flex: '1 1 100%' }}
-                    color="inherit"
-                    variant="subtitle1"
-                    component="div"
-                >
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                <Typography
-                    sx={{ flex: '1 1 100%' }}
-                    variant="h6"
-                    id="tableTitle"
-                    component="div"
-                >
-                    Patient Tasks
-                </Typography>
-            )}
-
-            {numSelected > 0 ? (
-                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <Tooltip title="Claim">
-                        <IconButton>
-                            <DoneOutlineIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Done">
-                        <IconButton>
-                            <DoneIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete">
-                        <IconButton>
-                            <DeleteIcon />
-                        </IconButton>
-                    </Tooltip>
-                </Box>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton>
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
-        </Toolbar>
-    );
-}
-
-EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-};
+import { useContext } from 'react';
+import { AppContext } from '../../../utils/AppContextProvider';
+import axios from 'axios';
 
 export default function Tasks() {
+    const DEFAULT_ORDER = 'asc';
+    const DEFAULT_ORDER_BY = 'type';
+    const DEFAULT_ROWS_PER_PAGE = 5;
+
     const [order, setOrder] = useState(DEFAULT_ORDER);
     const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
     const [selected, setSelected] = useState([]);
@@ -260,10 +41,234 @@ export default function Tasks() {
     const [visibleRows, setVisibleRows] = useState(null);
     const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
     const [paddingHeight, setPaddingHeight] = useState(0);
+    const { tasks } = useContext(AppContext)
+    const [displayedTasks, setdisplayedTasks] = useState(tasks)
 
+    //Table headers,toolbars etc.
+    function descendingComparator(a, b, orderBy) {
+        if (b[orderBy] < a[orderBy]) {
+            return -1;
+        }
+        if (b[orderBy] > a[orderBy]) {
+            return 1;
+        }
+        return 0;
+    }
+
+    function getComparator(order, orderBy) {
+        return order === 'desc'
+            ? (a, b) => descendingComparator(a, b, orderBy)
+            : (a, b) => -descendingComparator(a, b, orderBy);
+    }
+    // Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
+    // stableSort() brings sort stability to non-modern browsers (notably IE11). If you
+    // only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
+    // with exampleArray.slice().sort(exampleComparator)
+    function stableSort(array, comparator) {
+        const stabilizedThis = array.map((el, index) => [el, index]);
+        stabilizedThis.sort((a, b) => {
+            const order = comparator(a[0], b[0]);
+            if (order !== 0) {
+                return order;
+            }
+            return a[1] - b[1];
+        });
+        return stabilizedThis.map((el) => el[0]);
+    }
+
+    const headCells = [
+        {
+            id: 'name',
+            numeric: false,
+            disablePadding: true,
+            label: 'Select All',
+        },
+        {
+            id: 'type',
+            numeric: false,
+            disablePadding: false,
+            label: 'Type',
+        },
+        {
+            id: 'patient',
+            numeric: false,
+            disablePadding: false,
+            label: 'Patient',
+        },
+        {
+            id: 'clinician',
+            numeric: false,
+            disablePadding: false,
+            label: 'Clinician',
+        },
+        {
+            id: 'priority',
+            numeric: true,
+            disablePadding: false,
+            label: 'Priority',
+        },
+        {
+            id: 'time',
+            numeric: true,
+            disablePadding: false,
+            label: 'Time',
+        },
+    ];
+
+    function EnhancedTableHead(props) {
+        const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+            props;
+        const createSortHandler = (newOrderBy) => (event) => {
+            onRequestSort(event, newOrderBy);
+        };
+
+        return (
+            <TableHead>
+                <TableRow>
+                    <TableCell padding="checkbox">
+                        <Checkbox
+                            color="primary"
+                            indeterminate={numSelected > 0 && numSelected < rowCount}
+                            checked={rowCount > 0 && numSelected === rowCount}
+                            onChange={onSelectAllClick}
+                            inputProps={{
+                                'aria-label': 'select all desserts',
+                            }}
+                        />
+                    </TableCell>
+                    {headCells.map((headCell) => (
+                        <TableCell
+                            key={headCell.id}
+                            align={headCell.id == 'name' ? 'left' : 'right'}
+                            padding={headCell.disablePadding ? 'none' : 'normal'}
+                            sortDirection={orderBy === headCell.id ? order : false}
+                        >
+                            <TableSortLabel
+                                active={orderBy === headCell.id}
+                                direction={orderBy === headCell.id ? order : 'asc'}
+                                onClick={createSortHandler(headCell.id)}
+                            >
+                                {headCell.label}
+                                {orderBy === headCell.id ? (
+                                    <Box component="span" sx={visuallyHidden}>
+                                        {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                    </Box>
+                                ) : null}
+                            </TableSortLabel>
+                        </TableCell>
+                    ))}
+                </TableRow>
+            </TableHead>
+        );
+    }
+
+    EnhancedTableHead.propTypes = {
+        numSelected: PropTypes.number.isRequired,
+        onRequestSort: PropTypes.func.isRequired,
+        onSelectAllClick: PropTypes.func.isRequired,
+        order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+        orderBy: PropTypes.string.isRequired,
+        rowCount: PropTypes.number.isRequired,
+    };
+
+    function EnhancedTableToolbar(props) {
+        const { numSelected, tasksSelected } = props;
+
+        // console.log(tasksSelected[0])
+
+        const deleteTask = async () => {
+            await fetch(`http://localhost:3000/api/tasks/${tasksSelected[0]}`, { method: 'DELETE' });
+            const taskToBeRemoved = tasksSelected[0]
+            const findIndex = displayedTasks.findIndex(task => task._id === taskToBeRemoved)
+            // console.log(findIndex)
+            setdisplayedTasks(displayedTasks.splice(findIndex, 1))
+            // console.log(displayedTasks)
+        }
+
+        const claimTask = async () => {
+            const taskToBeUpdated = tasksSelected[0]
+            const requestOptions = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(taskToBeUpdated)
+            };
+
+            //Need user dao to retrieve the user object ID to updated the displayedtask object to send to server
+            await fetch(`http://localhost:3000/api/tasks/assignclinician/${taskToBeUpdated}`, requestOptions);
+
+            const findIndex = displayedTasks.findIndex(task => task._id === taskToBeUpdated)
+            // console.log(findIndex)
+            setdisplayedTasks(displayedTasks.splice(findIndex, 1))
+            // console.log(displayedTasks)
+        }
+
+        return (
+            <Toolbar
+                sx={{
+                    pl: { sm: 2 },
+                    pr: { xs: 1, sm: 1 },
+                    ...(numSelected > 0 && {
+                        bgcolor: (theme) =>
+                            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+                    }),
+                }}
+            >
+                {numSelected > 0 ? (
+                    <Typography
+                        sx={{ flex: '1 1 100%' }}
+                        color="inherit"
+                        variant="subtitle1"
+                        component="div"
+                    >
+                        {numSelected} selected
+                    </Typography>
+                ) : (
+                    <Typography
+                        sx={{ flex: '1 1 100%' }}
+                        variant="h6"
+                        id="tableTitle"
+                        component="div"
+                    >
+                        Patient Tasks
+                    </Typography>
+                )}
+
+                {numSelected > 0 ? (
+                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                        <Tooltip title="Claim">
+                            <IconButton onClick={claimTask}>
+                                <DoneOutlineIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Done">
+                            <IconButton>
+                                <DoneIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete">
+                            <IconButton onClick={deleteTask}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </Box>
+                ) : (
+                    <Tooltip title="Filter list">
+                        <IconButton>
+                            <FilterListIcon />
+                        </IconButton>
+                    </Tooltip>
+                )}
+            </Toolbar>
+        );
+    }
+
+    EnhancedTableToolbar.propTypes = {
+        numSelected: PropTypes.number.isRequired,
+    };
+    //Table cells.
     useEffect(() => {
         let rowsOnMount = stableSort(
-            rows,
+            displayedTasks,
             getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
         );
 
@@ -282,7 +287,7 @@ export default function Tasks() {
             setOrder(toggledOrder);
             setOrderBy(newOrderBy);
 
-            const sortedRows = stableSort(rows, getComparator(toggledOrder, newOrderBy));
+            const sortedRows = stableSort(displayedTasks, getComparator(toggledOrder, newOrderBy));
             const updatedRows = sortedRows.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
@@ -295,7 +300,7 @@ export default function Tasks() {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelected = rows.map((n) => n.name);
+            const newSelected = displayedTasks.map((n) => n.name);
             setSelected(newSelected);
             return;
         }
@@ -326,7 +331,7 @@ export default function Tasks() {
         (event, newPage) => {
             setPage(newPage);
 
-            const sortedRows = stableSort(rows, getComparator(order, orderBy));
+            const sortedRows = stableSort(displayedTasks, getComparator(order, orderBy));
             const updatedRows = sortedRows.slice(
                 newPage * rowsPerPage,
                 newPage * rowsPerPage + rowsPerPage,
@@ -336,7 +341,7 @@ export default function Tasks() {
 
             // Avoid a layout jump when reaching the last page with empty rows.
             const numEmptyRows =
-                newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - rows.length) : 0;
+                newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - displayedTasks.length) : 0;
 
             const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
             setPaddingHeight(newPaddingHeight);
@@ -351,7 +356,7 @@ export default function Tasks() {
 
             setPage(0);
 
-            const sortedRows = stableSort(rows, getComparator(order, orderBy));
+            const sortedRows = stableSort(displayedTasks, getComparator(order, orderBy));
             const updatedRows = sortedRows.slice(
                 0 * updatedRowsPerPage,
                 0 * updatedRowsPerPage + updatedRowsPerPage,
@@ -368,13 +373,12 @@ export default function Tasks() {
     const handleChangeDense = (event) => {
         setDense(event.target.checked);
     };
-
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar numSelected={selected.length} tasksSelected={selected} />
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
@@ -387,22 +391,23 @@ export default function Tasks() {
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
+                            rowCount={displayedTasks.length}
                         />
                         <TableBody>
                             {visibleRows
                                 ? visibleRows.map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
+                                    const isItemSelected = isSelected(row._id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
+
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
+                                            onClick={(event) => handleClick(event, row._id)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
-                                            key={row.id}
+                                            key={row._id}
                                             selected={isItemSelected}
                                             sx={{ cursor: 'pointer' }}
                                         >
@@ -424,10 +429,10 @@ export default function Tasks() {
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="right">{row.type}</TableCell>
-                                            <TableCell align="right">{row.patient}</TableCell>
-                                            <TableCell align="right">{row.clinician}</TableCell>
+                                            <TableCell align="right">{row.patient.fname}</TableCell>
+                                            <TableCell align="right">{row.clinician.lname}</TableCell>
                                             <TableCell align="right">{row.priority}</TableCell>
-                                            <TableCell align="right">{row.time}</TableCell>
+                                            <TableCell align="right">{row.created_at}</TableCell>
                                         </TableRow>
                                     );
                                 })
@@ -447,7 +452,7 @@ export default function Tasks() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
+                    count={displayedTasks.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
