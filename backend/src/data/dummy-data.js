@@ -1,57 +1,51 @@
 const patient = [
   {
     fname: "Laureen",
-    lanem: "Lance",
+    lname: "Lance",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id ipsum lectus. Donec commodo mollis suscipit. Donec ut purus nec nibh pharetra finibus. Nunc vitae suscipit urna. Vivamus efficitur turpis nibh, nec tristique purus tempus eu. Sed finibus sagittis tortor hendrerit suscipit. Vestibulum porta ex quis dui volutpat, ac mollis arcu ornare. Fusce sit amet efficitur odio, eu pharetra augue. Suspendisse ut ullamcorper lorem. Aenean at odio in dui tempor eleifend. Nullam a viverra enim. Aenean nec felis mattis, pharetra magna in, molestie lacus.",
     location: "Auckland",
     responsibleClinicians: '643ca1aef72f49a5254081c1',
     quickAdd: 'blood-test',
-    // notification: true,
   },
   {
     fname: "Bram",
-    lanem: "Gene",
+    lname: "Gene",
     description:"Aenean ac lorem facilisis, dignissim urna nec, malesuada erat. In consectetur libero at mauris vehicula venenatis. Nam pulvinar mattis posuere. Aenean ligula magna, ultrices nec vestibulum ut, rutrum vehicula nisl. Phasellus egestas placerat sapien eget malesuada. Proin nibh nisi, fermentum id tincidunt eu, iaculis eget erat. Ut sit amet odio sit amet felis tincidunt placerat. Vestibulum ac aliquet mauris. Pellentesque tincidunt vulputate magna et tristique.",
     location: "Wellington",
     responsibleClinicians: '643ca1aef72f49a5254081c3',
     quickAdd: 'radiology',
-    // notification: true,
   },
   {
     fname: "Cearra",
-    lanem: "Buffy",
+    lname: "Buffy",
     description:"Vestibulum commodo interdum molestie. Quisque aliquet, tellus ac iaculis dictum, lectus ante euismod velit, volutpat luctus augue magna sit amet purus. Donec euismod aliquam nisi sit amet volutpat. Sed ut ullamcorper augue, sed interdum lacus. Cras sodales tincidunt lectus, ut suscipit metus cursus non. Etiam ipsum nibh, porta blandit vestibulum sit amet, suscipit ut lorem. Suspendisse potenti. Vestibulum fringilla lorem libero, sed ultricies elit porttitor eu. Quisque non nulla sagittis, varius ex sed, ullamcorper eros. Aliquam dictum iaculis dolor. Proin semper vehicula turpis, id hendrerit ante fermentum id. Donec euismod efficitur ligula, vitae tristique velit egestas sed. Etiam eleifend mauris sed eros fringilla suscipit. Aliquam nunc tellus, efficitur mollis magna sed, tincidunt volutpat odio. Phasellus blandit, nisi in varius tempor, dolor ipsum pharetra est, in volutpat massa felis nec mauris.",
     location: "Queenstown",
     responsibleClinicians: '643ca1aef72f49a5254081c1',
     quickAdd: null,
-    // notification: true,
   },
   {
     fname: "Laureen",
-    lanem: "Lance",
+    lname: "Lance",
     description:"Quisque eros leo, venenatis eu interdum a, mattis quis turpis. Suspendisse potenti. Nulla ut consectetur urna. In lobortis finibus orci ac condimentum. Aenean ut sem et ex vestibulum scelerisque id eget augue. Cras vulputate feugiat magna quis tincidunt. Curabitur in ante semper, consequat nisl a, imperdiet velit. Etiam feugiat in sapien ut eleifend. Pellentesque dolor lectus, dictum ut pellentesque at, varius interdum mi. Nulla non nisi eget nunc rhoncus fringilla et sit amet dui. Nam lobortis dui eu rutrum aliquam.",
     location: "Christchurch",
     responsibleClinicians: '643ca1aef72f49a5254081c7',
     quickAdd: 'radiology',
-    // notification: true,
   },
   {
     fname: "Ross",
-    lanem: "Carlisle",
+    lname: "Carlisle",
     description:"Integer in viverra eros. Integer imperdiet placerat ligula quis aliquam. Sed non accumsan libero. Curabitur ac quam nulla. Vivamus et est nec leo semper ornare in et purus. Phasellus arcu tortor, ullamcorper quis ultrices quis, gravida sit amet magna. Curabitur enim turpis, tincidunt vel tortor tincidunt, bibendum venenatis elit. Nulla et nibh urna.",
     location: "Wellington",
     responsibleClinicians: '643ca1aef72f49a5254081c5',
     quickAdd: 'radiology',
-    // notification: true,
   },
   {
     fname: "Ferdie",
-    lanem: "Kurt",
+    lname: "Kurt",
     description:"Pellentesque vel aliquet mi, vel gravida tortor. Aenean sit amet velit lacinia, convallis erat vestibulum, ullamcorper elit. Fusce ullamcorper porta blandit. Nulla facilisi. Etiam porttitor justo vitae eros pretium aliquam. Donec sed libero vestibulum, laoreet ligula ac, consectetur felis. Vivamus et facilisis odio, quis faucibus purus. Nam eget neque vel massa pulvinar scelerisque ut id urna. In hac habitasse platea dictumst. Donec vitae turpis et risus condimentum luctus eu a arcu. Duis dignissim mattis ultrices.",
     location: "Auckland",
     responsibleClinicians: '643ca1aef72f49a5254081c5',
     quickAdd: 'blood-test',
-    // notification: true,
   }
 ];
 
@@ -64,7 +58,7 @@ const user = [
     password: "abc123",
     isSupervisor: false,
     isAdmin: false,
-    role: "",
+    role: "HS",
     avatar: "",
   },
   {
@@ -75,7 +69,7 @@ const user = [
     password: "abc123",
     isSupervisor: false,
     isAdmin: false,
-    role: "",
+    role: "REG",
     avatar: "",
   },
   {
@@ -86,7 +80,7 @@ const user = [
     password: "abc123",
     isSupervisor: false,
     isAdmin: true,
-    role: "",
+    role: "SMO",
     avatar: "",
   },
   {
@@ -97,7 +91,7 @@ const user = [
     password: "abc123",
     isSupervisor: false,
     isAdmin: false,
-    role: "",
+    role: "HS",
     avatar: "",
   }, 
   {
@@ -108,7 +102,7 @@ const user = [
     password: "abc123",
     isSupervisor: false,
     isAdmin: false,
-    role: "",
+    role: "HS",
     avatar: "",
   }, 
   {
@@ -119,7 +113,7 @@ const user = [
     password: "abc123",
     isSupervisor: true,
     isAdmin: false,
-    role: "",
+    role: "HS",
     avatar: "",
   }
 ]

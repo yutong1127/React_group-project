@@ -41,6 +41,12 @@ git
 - DB connection URL = mongodb://127.0.0.1:27017/project
 
 
-# UPDATES(AXIOS)
+# UPDATES(AXIOS, backend)
 - To install axios
 `npm install axios`
+# UPDATES (PASSPORT, backend)
+- To install passport
+`npm install passport passport-local express-session bcrypt`
+# UPDATES (Frontend)
+`npm install react-hook-form`
+`npm i @material/textfield`
