@@ -10,13 +10,13 @@ export const AppContext = React.createContext({
     tasks: []
 });
 
-export function AppContextProvider ({ children }){
+export function AppContextProvider({ children }) {
 
     const {
         data: notification,
         isLoading: notificationsLoading,
         refresh: refreshNotifications
-    } =useGet (`${API_BASE_URL}/api/notification`, []);
+    } = useGet(`${API_BASE_URL}/api/notification`, []);
 
 
     const {
@@ -25,16 +25,30 @@ export function AppContextProvider ({ children }){
         refresh: refreshTasks
     } = useGet(`${API_BASE_URL}/api/task`, []);
 
-    async function deleteNotification(id){
-        const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
 
-        console.log(deleteResponse);
-
-        refreshNotifications();
-
+    async function createTask(task) {
+       await axios.post(`${API_BASE_URL}/api/task/createtask`, {
+            name: task.name,
+            type: task.type,
+            patient: task.patient,
+            clinician: task.clinician,
+            priority: task.priority,
+            status: task.status
+        })
+        .then(function (response) {
+            console.log(response);
+          })
+        refreshTasks()
     }
 
-   
+
+    async function deleteNotification(id) {
+        const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
+        console.log(deleteResponse);
+        refreshNotifications();
+    }
+
+
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const handleDrawerOpen = () => {
@@ -66,7 +80,7 @@ export function AppContextProvider ({ children }){
     },
     ];
 
-   
+
     const context = {
         notification,
         notificationsLoading,
@@ -76,8 +90,8 @@ export function AppContextProvider ({ children }){
         handleDrawerClose,
         patients,
         tasks,
-        tasksLoading
-        
+        tasksLoading,
+        createTask
     }
 
     return (

@@ -1,4 +1,4 @@
-import { retrieveTask, retrieveTasks, updateTask, deleteTask } from "../../dao/task-dao"
+import { retrieveTask, retrieveTasks, updateTask, deleteTask, createTask } from "../../dao/task-dao"
 import express from 'express';
 
 const HTTP_CREATED = 201;
@@ -37,6 +37,12 @@ router.delete('/:id', async (req, res) => {
    const { id } = req.params;
    await deleteTask(id);
    res.sendStatus(HTTP_NO_CONTENT);
+});
+
+router.post('/createtask', async (req, res) => {
+   const task = req.body;
+   const success = await createTask(task)
+   res.sendStatus(success ? HTTP_CREATED : HTTP_NOT_FOUND);
 });
 
 

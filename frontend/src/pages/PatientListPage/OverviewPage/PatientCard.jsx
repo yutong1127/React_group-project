@@ -1,4 +1,4 @@
-import { useState, React } from "react"
+import { useState, React, useContext } from "react"
 import FreetextArea from "./FreetextArea"
 import PatientDetails from "./PatientDetails"
 import PatientProgress from "./PatientProgress"
@@ -11,6 +11,7 @@ import {
     Button,
     Modal
 } from '@mui/material/';
+import { AppContext } from "../../../utils/AppContextProvider"
 
 const style = {
     position: 'absolute',
@@ -87,6 +88,7 @@ function BloodTestModal() {
 }
 
 function ReviewModal() {
+    const { createTask } = useContext(AppContext)
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -94,6 +96,18 @@ function ReviewModal() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleCreateTask = async () => {
+        const task = {
+            name: 'Review',
+            type: 'Review',
+            patient: '6441045775c54d273abff3f9',
+            clinician: '6441045875c54d273abff405',
+            priority: 0,
+            status: 0
+        }
+        await createTask(task)
+    }
 
     return (
         < >
@@ -109,6 +123,7 @@ function ReviewModal() {
                     <p id="child-modal-description">
                         Review patient
                     </p>
+                    <Button onClick={handleCreateTask}>Create</Button>
                     <Button onClick={handleClose}>Close</Button>
                 </Box>
             </Modal>

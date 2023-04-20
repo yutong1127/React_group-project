@@ -32,9 +32,17 @@ async function deleteTask(id) {
     await Task.deleteOne({ _id: id });
 }
 
+async function createTask(task) {
+
+    const dbTask = new Task(task);
+    
+    await dbTask.save()
+}
+
 export {
     retrieveTasks,
     retrieveTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    createTask
 }

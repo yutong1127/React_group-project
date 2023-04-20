@@ -177,29 +177,42 @@ export default function Tasks() {
         // console.log(tasksSelected[0])
 
         const deleteTask = async () => {
-            await fetch(`http://localhost:3000/api/tasks/${tasksSelected[0]}`, { method: 'DELETE' });
-            const taskToBeRemoved = tasksSelected[0]
-            const findIndex = displayedTasks.findIndex(task => task._id === taskToBeRemoved)
-            // console.log(findIndex)
-            setdisplayedTasks(displayedTasks.splice(findIndex, 1))
-            // console.log(displayedTasks)
+            for (let i = 0; i < tasksSelected.length; i++) {
+                await fetch(`http://localhost:3000/api/task/${tasksSelected[i]}`, { method: 'DELETE' });
+                const taskToBeRemoved = tasksSelected[i]
+                const findIndex = displayedTasks.findIndex(task => task._id === taskToBeRemoved)
+                // console.log(findIndex)
+                setdisplayedTasks(displayedTasks.splice(findIndex, 1))
+                // console.log(displayedTasks)
+            }
         }
 
         const claimTask = async () => {
-            const taskToBeUpdated = tasksSelected[0]
-            const requestOptions = {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(taskToBeUpdated)
-            };
+            for (let i = 0; i < tasksSelected.length; i++) {
+                const response = await fetch(`http://localhost:3000/api/task/${tasksSelected[i]}`)
+                let  taskToBeUpdated = await response.json()
+                console.log(taskToBeUpdated)
 
-            //Need user dao to retrieve the user object ID to updated the displayedtask object to send to server
-            await fetch(`http://localhost:3000/api/tasks/assignclinician/${taskToBeUpdated}`, requestOptions);
+                taskToBeUpdated = {
+                    ...taskToBeUpdated,
+                    clinician: '6441045875c54d273abff40f'
+                }
 
-            const findIndex = displayedTasks.findIndex(task => task._id === taskToBeUpdated)
-            // console.log(findIndex)
-            setdisplayedTasks(displayedTasks.splice(findIndex, 1))
-            // console.log(displayedTasks)
+                console.log(taskToBeUpdated)
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(taskToBeUpdated)
+                };
+
+                //Need user dao to retrieve the user object ID to updated the displayedtask object to send to server
+                await fetch(`http://localhost:3000/api/task/assignclinician/${taskToBeUpdated._id}`, requestOptions);
+
+                const findIndex = displayedTasks.findIndex(task => task._id === taskToBeUpdated._id)
+                // console.log(findIndex)
+                setdisplayedTasks(displayedTasks.splice(findIndex, 1))
+                // console.log(displayedTasks)
+            }
         }
 
         return (
@@ -429,8 +442,8 @@ export default function Tasks() {
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="right">{row.type}</TableCell>
-                                            <TableCell align="right">{row.patient.fname}</TableCell>
-                                            <TableCell align="right">{row.clinician.lname}</TableCell>
+                                            <TableCell align="right">{row.patient.fname} {row.patient.lname}</TableCell>
+                                            <TableCell align="right">{row.clinician.fname} {row.clinician.lname}</TableCell>
                                             <TableCell align="right">{row.priority}</TableCell>
                                             <TableCell align="right">{row.created_at}</TableCell>
                                         </TableRow>
