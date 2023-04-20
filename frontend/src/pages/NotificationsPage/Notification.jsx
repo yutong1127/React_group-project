@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
     Card,
     Box,
@@ -10,7 +9,7 @@ import {
 
 } from '@mui/material';
 import { useContext } from 'react';
-import { AppContext } from '../AppContextProvider';
+import { AppContext } from '../../AppContextProvider';
 import styles from './Notification.module.css';
 import {  Link } from 'react-router-dom'
 
@@ -29,13 +28,10 @@ export default function Notifications() {
                         variant='outlined'
                         sx={{ margin: '20px' }}>
                         <CardContent className={styles.cardContent}>
-                            {/* <Typography sx={{ textAlign: 'left', fontSize: 20 }} >{item.title}</Typography> */}
                             <Typography sx={{ textAlign: 'left', fontSize: 20 }} >{item.type}</Typography>
 
-                            {/* <Typography sx={{ textAlign: 'left', variant: 'body2', paddingBottom: '30px' }}>{item.time}</Typography> */}
                             <Typography sx={{ textAlign: 'left', variant: 'body2', paddingBottom: '30px' }}>{item.created_at}</Typography>
 
-                            {/* <Typography sx={{ textAlign: 'left', bgcolor: '#9ED0F9', padding: '30px' }}>{item.details}</Typography> */}
                             <Typography sx={{ textAlign: 'left', bgcolor: '#9ED0F9', padding: '30px' }}>{item.entity}</Typography>
 
 
@@ -47,7 +43,6 @@ export default function Notifications() {
                                 </Button>
                             </Link>
 
-                            {/* <Button size='small' variant='outlined' onClick={() => handleClick(index)}>Delete</Button> */}
                             <Button size='small' variant='outlined' onClick={() => deleteNotification(item._id)}>Delete</Button>
 
                         </CardActions>

@@ -1,6 +1,5 @@
-import { Box, useTheme } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import LeftImg from "../assets/10132.jpeg";
+import { Box, useTheme, Typography } from '@mui/material';
+import LeftImg from '../../assets/10132.jpeg'
 
 function LeftBox() {
   const theme = useTheme();

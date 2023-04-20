@@ -1,11 +1,12 @@
 import './App.css';
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import LoginPage from "./LoginPage/LoginPage";
+// import LoginPage from "./LoginPage/LoginPage";
+import LoginPage from './pages/LoginPage/LoginPage'
 import MyProfile from './MyProfilePage/MyProfile';
 import MyTeam from './MyTeamPage/MyTeam';
 import BasicTabs from './AddModifyPatient/PatientInfoTab';
-import Notifications from './notifications/Notification';
+import Notifications from './pages/NotificationsPage/Notification';
 import PageWithNavbar from "./PageWithNavBar";
 import PatientListGrid from "./PatientDetails/PatientListGrid";
 
