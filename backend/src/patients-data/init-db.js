@@ -3,7 +3,8 @@ dotenv.config();
 import mongoose from 'mongoose';
 
 import { patient, user, team } from '../dummy-data';
-import { Patient, User, Team } from './schema';
+import { Patient, User, Team, Notification } from './schema';
+import { notification } from '../notification-data/random-notification';
 
 mongoose.set('strictQuery', false);
 
@@ -21,6 +22,7 @@ async function run() {
     await addPatient();
     await addUser();
     await addTeam();
+    await addNotification();
 
     await mongoose.disconnect();
     console.log('Done!');
@@ -33,9 +35,10 @@ async function clearDatabase() {
     console.log(`Cleared database (removed ${patientsDeleted.deletedCount} patients).`)
     const usersDelete = await User.deleteMany({});
     console.log(`Cleared database (removed ${usersDelete.deletedCount} users).`)
-    const teamsDelete = await User.deleteMany({});
+    const teamsDelete = await Team.deleteMany({});
     console.log(`Cleared database (removed ${teamsDelete.deletedCount} teams).`)
-     
+    const notificationDelete = await Notification.deleteMany({});
+    console.log(`Cleared database (removed ${notificationDelete.deletedCount} notifications).`)
 }
 
 async function addPatient() {
@@ -60,5 +63,51 @@ async function addTeam() {
         const dbMon = new Team(data);
         await dbMon.save();
         console.log(`Team saved! _id = ${dbMon._id}`);
+    }
+}
+
+async function addNotification(){
+    const userJant = await User.findOne( {fname:'Jant'} );
+    const userJiewen = await User.findOne( {fname:'Jiewen'} );
+    const userKevin = await User.findOne( {fname:'Kevin'} );
+
+
+    const allPatients = await Patient.find();
+
+    for (const data of notification) {
+        if (data.type=='Admin'){
+            const patientIndex = Math.floor(Math.random() * allPatients.length)
+            const patient = allPatients[patientIndex];
+
+            const dbNotification = new Notification(data);
+
+
+            dbNotification.recipient = userJant._id;
+            dbNotification.sender = userJiewen._id;
+            dbNotification.patient = patient._id;
+
+            await dbNotification.save();
+            console.log(`Notification for ${userJant.fname} saved! _id=${dbNotification._id}, recipient=${dbNotification.recipient.fname}`);
+
+            userJant.notification.push(dbNotification._id);
+            await userJant.save();
+        } else if (data.type=='Task'){
+
+            const patientIndex = Math.floor(Math.random() * allPatients.length)
+
+            const patient = allPatients[patientIndex];
+            const dbNotification = new Notification(data);
+
+            dbNotification.recipient = userJant._id;
+            dbNotification.sender = userKevin._id;
+            dbNotification.patient = patient._id;
+
+            await dbNotification.save();
+            console.log(`Notification for ${userJant.fname} saved! _id=${dbNotification._id}, recipient=${dbNotification.recipient.fname}`);
+
+            userJant.notification.push(dbNotification._id);
+            await userJant.save();
+
+        }
     }
 }

@@ -1,11 +1,20 @@
-import { IconButton, Badge, Menu, MenuItem, Typography, Box, Button } from "@mui/material"
+import { 
+    IconButton, 
+    Badge, 
+    Menu, 
+    MenuItem, 
+    Typography, 
+    Box, 
+    Button } from "@mui/material"
 import MailIcon from '@mui/icons-material/Mail';
 import { useState, useContext } from 'react';
-import { AppContext } from '../AppContextProvider';
+import { AppContext } from '../utils/AppContextProvider';
+import { NavLink } from 'react-router-dom';
+import styles from '.././layout/Appbar.module.css'
 
 export default function MessageMenu() {
 
-    const { notifications } = useContext(AppContext);
+    const { notification } = useContext(AppContext);
 
     const [anchorElNotification, setAnchorElNotification] = useState(null);
     
@@ -19,21 +28,21 @@ export default function MessageMenu() {
 
     function notificationsLabel(count) {
         if (count === 0) {
-            return 'no notifications';
+            return 'no notification';
         }
         if (count > 99) {
-            return 'more than 99 notifications';
+            return 'more than 99 notification';
         }
-        return `${count} notifications`;
+        return `${count} notification`;
     }
     return (
         <>
             <IconButton
-                aria-label={notificationsLabel(notifications.length)}
+                aria-label={notificationsLabel(notification.length)}
                 size='large'
                 color='inherit'
                 onClick={handleNotificationsOpen}>
-                <Badge badgeContent={notifications.length} color="secondary">
+                <Badge badgeContent={notification.length} color="secondary">
                     <MailIcon />
                 </Badge>
             </IconButton>
@@ -52,7 +61,7 @@ export default function MessageMenu() {
                 open={Boolean(anchorElNotification)}
                 onClose={handleNotificationsClose}
             >
-                {notifications.map((notification, index) => (
+                {notification.map((notification, index) => (
                     <MenuItem
                         key={index}
                         onClick={handleNotificationsClose}
@@ -68,7 +77,9 @@ export default function MessageMenu() {
                             >
                         <Typography >{notification.details}</Typography>
                         <Box>
+                            <NavLink to='/notification' className={styles.link}>
                             <Button size='medium'>CHECK IT OUT</Button>
+                            </NavLink>
                             <Button size='medium'>DISMISS</Button>
                         </Box>
                     </MenuItem>

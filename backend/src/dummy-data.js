@@ -6,7 +6,7 @@ const patient = [
     location: "Auckland",
     responsibleClinicians: '643ca1aef72f49a5254081c1',
     quickAdd: 'blood-test',
-    notification: true,
+    // notification: true,
   },
   {
     fname: "Bram",
@@ -15,7 +15,7 @@ const patient = [
     location: "Wellington",
     responsibleClinicians: '643ca1aef72f49a5254081c3',
     quickAdd: 'radiology',
-    notification: true,
+    // notification: true,
   },
   {
     fname: "Cearra",
@@ -24,7 +24,7 @@ const patient = [
     location: "Queenstown",
     responsibleClinicians: '643ca1aef72f49a5254081c1',
     quickAdd: null,
-    notification: true,
+    // notification: true,
   },
   {
     fname: "Laureen",
@@ -33,7 +33,7 @@ const patient = [
     location: "Christchurch",
     responsibleClinicians: '643ca1aef72f49a5254081c7',
     quickAdd: 'radiology',
-    notification: true,
+    // notification: true,
   },
   {
     fname: "Ross",
@@ -42,7 +42,7 @@ const patient = [
     location: "Wellington",
     responsibleClinicians: '643ca1aef72f49a5254081c5',
     quickAdd: 'radiology',
-    notification: true,
+    // notification: true,
   },
   {
     fname: "Ferdie",
@@ -51,7 +51,7 @@ const patient = [
     location: "Auckland",
     responsibleClinicians: '643ca1aef72f49a5254081c5',
     quickAdd: 'blood-test',
-    notification: true,
+    // notification: true,
   }
 ];
 

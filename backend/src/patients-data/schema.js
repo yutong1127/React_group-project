@@ -9,7 +9,8 @@ const patientSchema = new Schema({
     location: {type: String},
     responsibleClinicians:{ type: Schema.Types.ObjectId, ref: 'User'},
     quickAdd: { type: String },
-    notification: { type: Boolean, default: false},
+    // notification: { type: Boolean, default: false},
+    notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
 })
 
@@ -23,6 +24,7 @@ const userSchema = new Schema({
     isAdmin: {type: Boolean, default: false},
     role: {type: String},
     avatar: {type: String},
+    notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
 })
 
@@ -33,7 +35,9 @@ const taskSchema = new Schema({
     patient: { type: Schema.Types.ObjectId, ref: 'Patient'},
     clinician: { type: Schema.Types.ObjectId, ref: 'User'},
     priority: Number,
-    notification: { type: Boolean, default: false},
+    status: String,
+    // notification: { type: Boolean, default: false},
+    notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
 })
 
@@ -43,9 +47,20 @@ const teamSchema = new Schema({
     patients: [{ type: Schema.Types.ObjectId, ref: 'Patient'}],
     clinicians: [{ type: Schema.Types.ObjectId, ref: 'User'}],
     supervisors: [{ type: Schema.Types.ObjectId, ref: 'User'}]
-    })
+})
+
+const notificationSchema = new Schema({
+    id: Number,
+    type: String,
+    recipient: [{type: Schema.Types.ObjectId, ref:'User'}],
+    sender: [{type: Schema.Types.ObjectId, ref:'User'}],
+    patient:[{ type: Schema.Types.ObjectId, ref: 'Patient'}],
+    entity: String,
+    created_at:{ type: Date, default: Date.now},
+})
 
 export const Patient = mongoose.model('Patient', patientSchema);
 export const User = mongoose.model('User', userSchema);
 export const Task = mongoose.model('Task', taskSchema);
 export const Team = mongoose.model('Team', teamSchema);
+export const Notification = mongoose.model('Notification', notificationSchema);
