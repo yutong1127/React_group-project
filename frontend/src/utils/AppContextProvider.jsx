@@ -7,7 +7,12 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 export const AppContext = React.createContext({
     patients: [],
     notifications: [],
-    tasks: []
+    tasks: [],
+    patientList: [],
+    clinicianList: [],
+    team: {},
+    userProfile: {},
+
 });
 
 export function AppContextProvider ({ children }){
@@ -24,6 +29,32 @@ export function AppContextProvider ({ children }){
         isLoading: tasksLoading,
         refresh: refreshTasks
     } = useGet(`${API_BASE_URL}/api/task`, []);
+
+
+    const {
+        data: patientList,
+        isLoading: patientListLoading,
+        refresh: refreshPatientList
+    } = useGet(`${API_BASE_URL}/api/team/1/patient_list`, []);
+
+    const {
+        data: clinicianList,
+        isLoading: clinicianListLoading,
+        refresh: refreshClinicianList
+    } = useGet(`${API_BASE_URL}/api/team/1/clinician_list`, []);
+
+    const {
+        data: team,
+        isLoading: teamLoading,
+        refresh: refreshTeam
+    } = useGet(`${API_BASE_URL}/api/team/1`, []);
+
+    const {
+        data: userProfile,
+        isLoading: userProfileLoading,
+        refresh: refreshUserProfile
+    } = useGet(`${API_BASE_URL}/api/user_profile/6444a8e997f09205c414eb6b`, []);
+
 
     async function deleteNotification(id){
         const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
@@ -76,7 +107,15 @@ export function AppContextProvider ({ children }){
         handleDrawerClose,
         patients,
         tasks,
-        tasksLoading
+        tasksLoading,
+        patientList,
+        patientListLoading,
+        clinicianList,
+        clinicianListLoading,
+        team,
+        teamLoading,
+        userProfile,
+        userProfileLoading,
         
     }
 

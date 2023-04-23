@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Button, Typography, List,ListItem,ListItemText,Divider,TextField,Container, Box } from '@mui/material';
 import ImageAvatars from '../../utils/Avatar.jsx';
 import { useForm } from "react-hook-form";
+import { useContext } from 'react';
+import { AppContext } from '../../utils/AppContextProvider';
 
 const style = {
     width: '100%',
@@ -14,6 +16,8 @@ const style = {
 export default function MyProfileMyDetails() {
 
     const [isEditing, setIsEditing] = useState(false);
+    const { userProfile } = useContext(AppContext);
+    // console.log(userProfile);
 
     return (
         isEditing ?
