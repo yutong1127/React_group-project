@@ -82,7 +82,7 @@ function MyDetails({ setEditOn }) {
 
 function MyDetailsForm({ setEditOff }) {
     const { userProfile, updateUserProfile} = useContext(AppContext);
-    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     function onSubmit(data) {
 
@@ -110,6 +110,8 @@ function MyDetailsForm({ setEditOff }) {
                         {...register("fname", {
                             required: "Required field"
                         })}
+                        error={!!errors?.fname}
+                        helperText={errors.fname?.message}
 
                     />
                     <TextField
@@ -121,6 +123,8 @@ function MyDetailsForm({ setEditOff }) {
                         {...register("lname", {
                             required: "Required field"
                         })}
+                        error={!!errors?.lname}
+                        helperText={errors.lname?.message}
                     />
 
                     <TextField
@@ -132,6 +136,8 @@ function MyDetailsForm({ setEditOff }) {
                         {...register("phone", {
                             required: "Required field"
                         })}
+                        error={!!errors?.phone}
+                        helperText={errors.phone?.message}
                     />
                     <TextField
                         margin='dense'
@@ -148,6 +154,7 @@ function MyDetailsForm({ setEditOff }) {
                         })}
                         error={!!errors?.email}
                         helperText={errors?.email ? errors.email.message : null}
+                        
                     />
                     <TextField
                         margin='dense'
