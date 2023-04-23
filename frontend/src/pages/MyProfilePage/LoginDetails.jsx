@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import {Container,Typography,TextField,List,ListItem, ListItemText,Button,styled, Box, Paper, Grid } from '@mui/material';
+import { Container, Typography, TextField, List, ListItem, ListItemText, Button, styled, Box, Paper, Grid } from '@mui/material';
 import { useForm } from "react-hook-form";
+import { useContext } from 'react';
+import { AppContext } from '../../utils/AppContextProvider';
 
 
 const style = {
@@ -25,6 +27,9 @@ export default function LoginDetails() {
 
 
 function LoginDetailsList({ setEditOn }) {
+
+    const { userProfile } = useContext(AppContext);
+
     function hancleEditClick() {
         setEditOn();
 
@@ -45,11 +50,11 @@ function LoginDetailsList({ setEditOn }) {
                     <ListItem button>
                         <ListItemText
                             primary="Username"
-                            secondary={DoctorDummyData.username} />
+                            secondary={userProfile.fname} />
                     </ListItem>
                     <ListItem button>
                         <ListItemText primary="Password"
-                            secondary={DoctorDummyData.password} />
+                            secondary={userProfile.password} />
                     </ListItem>
                 </List>
                 <Button
@@ -65,17 +70,18 @@ function LoginDetailsList({ setEditOn }) {
 
 function LoginDetailsForm({ setEditOff }) {
 
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const { register,
+        handleSubmit,
+        formState: { errors },
+        watch } = useForm();
     const [showPassword, setShowPassword] = useState(false);
+    const { userProfile, updateUserProfile } = useContext(AppContext);
+
 
     function onSubmit(data) {
 
 
-        for (let key in data) {
-            DoctorDummyData[key] = data[key];
-
-        }
-
+        updateUserProfile(userProfile._id, data);
 
 
         setEditOff();
@@ -90,15 +96,7 @@ function LoginDetailsForm({ setEditOff }) {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box>
 
-                    <TextField
-                        margin='dense'
-                        varient="outlined"
-                        label="Username"
-                        fullWidth
-                        defaultValue={DoctorDummyData.username}
-                        disabled
 
-                    />
                     <TextField
                         margin='dense'
                         varient="outlined"
@@ -106,17 +104,40 @@ function LoginDetailsForm({ setEditOff }) {
                         fullWidth
                         type={showPassword ? "text" : "password"}
                         {...register("password", {
-                            required: "Required field"
+                            required: "password is required",
+                            minLength: {
+                                value: 8,
+                                message: "password must be at least 8 characters"
+                            },
+                            maxLength: {
+                                value: 30,
+                                message: "Username must be atmost 30 characters long",
+                            }
+
                         })}
+                        helperText={errors.password?.message}
                     />
+
                     <TextField
                         margin='dense'
                         varient="outlined"
                         label="Confirm Password"
                         fullWidth
                         type={showPassword ? "text" : "password"}
-                 
+                        {
+                        ...register("confirm_password", {
+                            required: "comfirm password is required",
+                            validate: (value) => {
+                                if (value !== watch("password")) {
+                                    return "your password does not match";
+                                }
+                            }
+                        })
+                        }
+
+                        helperText={errors.confirm_password?.message}
                     />
+
 
                 </Box>
                 <Button type="submit" variant="contained" color="primary" fullWidth>
@@ -127,16 +148,3 @@ function LoginDetailsForm({ setEditOff }) {
     );
 };
 
-let DoctorDummyData = {
-
-    firstName: "Donald",
-    lastName: "Duck",
-    phone: "0101011010",
-    email: "donaldduck@gmail.com",
-    role: "Surgeon",
-    team: "XY",
-    avatar: "DoctorAvartar",
-    username: "donalquackquack",
-    password: "123456789"
-
-}

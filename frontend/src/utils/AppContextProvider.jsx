@@ -65,6 +65,14 @@ export function AppContextProvider ({ children }){
 
     }
 
+    async function updateUserProfile(id, data){
+        const updateResponse = await axios.put(`${API_BASE_URL}/api/user_profile/${id}`, data);
+
+        console.log(updateResponse && "you have updated profile for" + data.fname);
+
+        refreshUserProfile();
+    }
+
    
     const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -116,6 +124,7 @@ export function AppContextProvider ({ children }){
         teamLoading,
         userProfile,
         userProfileLoading,
+        updateUserProfile
         
     }
 

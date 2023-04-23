@@ -16,9 +16,7 @@ const style = {
 export default function MyProfileMyDetails() {
 
     const [isEditing, setIsEditing] = useState(false);
-    const { userProfile } = useContext(AppContext);
-    // console.log(userProfile);
-
+ 
     return (
         isEditing ?
             <MyDetailsForm setEditOff={() => setIsEditing(false)} />
@@ -30,6 +28,8 @@ export default function MyProfileMyDetails() {
 
 
 function MyDetails({ setEditOn }) {
+    const { userProfile } = useContext(AppContext);
+
     function hancleEditClick() {
         setEditOn();
 
@@ -45,28 +45,28 @@ function MyDetails({ setEditOn }) {
                 <List sx={style} component="nav" aria-label="mailbox folders">
 
                     <Typography gutterBottom variant="h5" component="div" textAlign="center">
-                        Dr. {DoctorDummyData.firstName} {DoctorDummyData.lastName}
+                        Dr. {userProfile.fname} {userProfile.lname}
                     </Typography>
                     <Divider />
 
                     <ListItem button>
                         <ListItemText
                             primary="Role"
-                            secondary={DoctorDummyData.role} />
+                            secondary={userProfile.role} />
                     </ListItem>
                     <ListItem button>
                         <ListItemText
                             primary="Contact Number"
-                            secondary={DoctorDummyData.phone} />
+                            secondary={userProfile.phone} />
                     </ListItem>
                     <ListItem button>
                         <ListItemText
                             primary="Email"
-                            secondary={DoctorDummyData.email} />
+                            secondary={userProfile.email} />
                     </ListItem>
                     <ListItem button>
                         <ListItemText primary="Team"
-                            secondary={DoctorDummyData.team} />
+                            secondary="Pink Panda" />
                     </ListItem>
                 </List>
                 <Button
@@ -81,19 +81,14 @@ function MyDetails({ setEditOn }) {
 }
 
 function MyDetailsForm({ setEditOff }) {
-
+    const { userProfile, updateUserProfile} = useContext(AppContext);
     const { register, handleSubmit, formState: { errors }, } = useForm();
 
     function onSubmit(data) {
 
 
-        for (let key in data) {
-            
-            DoctorDummyData[key] = data[key];
-
-        }
-
-
+        updateUserProfile(userProfile._id,data);
+        
 
         setEditOff();
     }
@@ -111,8 +106,8 @@ function MyDetailsForm({ setEditOff }) {
                         varient="outlined"
                         label="First Name"
                         fullWidth
-                        defaultValue={DoctorDummyData.firstName}
-                        {...register("firstName", {
+                        defaultValue={userProfile.fname}
+                        {...register("fname", {
                             required: "Required field"
                         })}
 
@@ -122,8 +117,8 @@ function MyDetailsForm({ setEditOff }) {
                         varient="outlined"
                         label="Last Name"
                         fullWidth
-                        defaultValue={DoctorDummyData.lastName}
-                        {...register("lastName", {
+                        defaultValue={userProfile.lname}
+                        {...register("lname", {
                             required: "Required field"
                         })}
                     />
@@ -133,7 +128,7 @@ function MyDetailsForm({ setEditOff }) {
                         varient="outlined"
                         label="Phone Number"
                         fullWidth
-                        defaultValue={DoctorDummyData.phone}
+                        defaultValue={userProfile.phone}
                         {...register("phone", {
                             required: "Required field"
                         })}
@@ -141,9 +136,9 @@ function MyDetailsForm({ setEditOff }) {
                     <TextField
                         margin='dense'
                         varient="outlined"
-                        label="Email"
+                        label="email"
                         fullWidth
-                        defaultValue={DoctorDummyData.email}
+                        defaultValue={userProfile.email}
                         {...register("email", {
                             required: "Required field",
                             pattern: {
@@ -159,7 +154,7 @@ function MyDetailsForm({ setEditOff }) {
                         varient="outlined"
                         label="Role"
                         fullWidth
-                        defaultValue={DoctorDummyData.role}
+                        defaultValue={userProfile.role}
                         disabled
 
                     />
@@ -168,7 +163,7 @@ function MyDetailsForm({ setEditOff }) {
                         varient="outlined"
                         label="Team"
                         fullWidth
-                        defaultValue={DoctorDummyData.team}
+                        defaultValue={userProfile.team}
                         disabled
 
                     />
@@ -181,14 +176,3 @@ function MyDetailsForm({ setEditOff }) {
     );
 };
 
-let DoctorDummyData = {
-
-    firstName: "Donald",
-    lastName: "Duck",
-    phone: "0101011010",
-    email: "donaldduck@gmail.com",
-    role: "Surgeon",
-    team: "XY",
-    avatar: "DoctorAvartar"
-
-}
