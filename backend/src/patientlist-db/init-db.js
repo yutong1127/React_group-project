@@ -3,16 +3,17 @@ dotenv.config();
 import mongoose from 'mongoose';
 
 
-import { Patient, User, Team, Notification } from './schema';
+import { Patient, User, Team, Notification, Task } from './schema';
 import { patient, user, team } from '../data/dummy-data';
 import { notification } from '../data/notification-data';
+import { task } from '../data/task-data';
 
 mongoose.set('strictQuery', false);
 
 async function run() {
     console.log('Connecting to database...');
-    await mongoose.connect(process.env.DB_URL, { useNewUrlParser: true }); 
-    
+    await mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
+
     console.log('Clearing db...');
     // Clear the database by deleting all Pokedex entries
     await clearDatabase();
@@ -23,6 +24,7 @@ async function run() {
     await addPatient();
     await addUser();
     await addTeam();
+    await addTasks();
     await addNotification();
 
     await mongoose.disconnect();
@@ -43,7 +45,7 @@ async function clearDatabase() {
 }
 
 async function addPatient() {
-    for(const data of patient) {
+    for (const data of patient) {
         const dbMon = new Patient(data);
 
         await dbMon.save();
@@ -52,7 +54,7 @@ async function addPatient() {
 }
 
 async function addUser() {
-    for(const data of user) {
+    for (const data of user) {
         const dbMon = new User(data);
         await dbMon.save();
         console.log(`User saved! _id = ${dbMon._id}`);
@@ -60,30 +62,87 @@ async function addUser() {
 }
 
 async function addTeam() {
-    for(const data of team) {
-        const dbMon = new Team(data);
-        await dbMon.save();
-        console.log(`Team saved! _id = ${dbMon._id}`);
+    const clinicians = await User.find();
+    let index = 0;
+    let teamSize = clinicians.length / team.length;
+    console.log(`team size: ${teamSize}`);
+    let initialValue = 0;
+
+    for (const data of team) {
+        const supervisor = await User.find({ 'isSupervisor.supervisor': true });
+        const dbSupervisor = await User.findOne(supervisor[index]._id);
+        index++;
+
+        console.log(`supervisor is ${dbSupervisor}`);
+
+        const dbTeam = new Team(data);
+
+        dbTeam.supervisors = dbSupervisor._id;
+
+        const dbClinicians = clinicians.slice(initialValue, initialValue + teamSize);
+        initialValue+=teamSize;
+        console.log(`initial value: ${initialValue}`);
+        console.log(`dbClinicians: ${dbClinicians}`)
+        for (const user of dbClinicians) {
+            dbTeam.clinicians.push(user._id);
+
+            user.team=dbTeam._id;
+            await user.save();
+        }
+        console.log(`Team saved! _id = ${dbTeam._id}`);
+        await dbTeam.save();
+
+        
+    }
+
+}
+
+// function splitArray(array, groups) {
+//     if (groups == 1) return array;
+//     var size = Math.ceil(array.length / groups);
+//     return array.slice(0, size).concat([null]).concat(splitArray(array.slice(size), groups - 1));
+// }
+
+async function addTasks() {
+    for (const data of task) {
+        const userJantandJingyi = await User.find({ fname: { $in: ['Jant', 'Jingyi'] } });
+        const userIndex = Math.floor(Math.random() * userJantandJingyi.length)
+        const user = userJantandJingyi[userIndex];
+        const dbUser = await User.findOne({ _id: user._id });
+
+        const allPatients = await Patient.find();
+        const patientIndex = Math.floor(Math.random() * allPatients.length)
+        const patient = allPatients[patientIndex];
+        const dbPatient = await Patient.findOne({ _id: patient._id });
+
+        const dbTask = new Task(data);
+
+        dbTask.clinician = dbUser._id;
+        dbTask.patient = dbPatient._id;
+
+        await dbTask.save();
+        console.log(`Taks for ${dbUser.fname} saved! _id=${dbTask._id}`);
+
     }
 }
 
-async function addNotification(){
+async function addNotification() {
     // This should be modified later
-    const userJant = await User.findOne( {fname:'Jant'} );
-    const userJiewen = await User.findOne( {fname:'Jiewen'} );
-    const userKevin = await User.findOne( {fname:'Kevin'} );
+    const userJant = await User.findOne({ fname: 'Jant' });
+    const userJiewen = await User.findOne({ fname: 'Jiewen' });
+    const userKevin = await User.findOne({ fname: 'Kevin' });
 
 
     const allPatients = await Patient.find();
 
     for (const data of notification) {
         // Notification related to transfer/add/remove patients
-        if (data.type=='Admin'){
+        if (data.type == 'Admin') {
             const patientIndex = Math.floor(Math.random() * allPatients.length)
             const patient = allPatients[patientIndex];
-            const dbPatient = await Patient.findOne({_id:patient._id})
+            const dbPatient = await Patient.findOne({ _id: patient._id })
 
-            console.log(`DB patient: ${dbPatient}`);
+            // console.log(`DB patient: ${dbPatient}`);
 
             const dbNotification = new Notification(data);
 
@@ -100,13 +159,13 @@ async function addNotification(){
             await userJant.save();
             await dbPatient.save();
 
-        } else if (data.type=='Task'){
+        } else if (data.type == 'Task') {
 
             // Notification related to tasks
             const patientIndex = Math.floor(Math.random() * allPatients.length)
 
             const patient = allPatients[patientIndex];
-            const dbPatient = await Patient.findOne({_id:patient._id})
+            const dbPatient = await Patient.findOne({ _id: patient._id })
 
             const dbNotification = new Notification(data);
 

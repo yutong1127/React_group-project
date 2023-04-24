@@ -28,6 +28,10 @@ async function deleteNotification(id){
         {},
         { $pull:{notification:id}}
     )
+    await Patient.updateOne(
+        {},
+        { $pull:{notification:id}}
+    )
 }
 
 async function findPatientOfNotification(id){
