@@ -1,10 +1,18 @@
 
 import { useState } from 'react';
-import { Button, Typography, List,ListItem,ListItemText,Divider,TextField,Container, Box } from '@mui/material';
+import { Button, Typography, List, ListItem, ListItemText, Divider, TextField, Container, Box } from '@mui/material';
 import ImageAvatars from '../../utils/Avatar.jsx';
 import { useForm } from "react-hook-form";
 import { useContext } from 'react';
 import { AppContext } from '../../utils/AppContextProvider';
+
+
+//hide or reveal the password.
+// import OutlinedInput from '@mui/material/OutlinedInput';
+// import InputLabel from '@mui/material/InputLabel';
+// import InputAdornment from '@mui/material/InputAdornment';
+// import Visibility from '@mui/icons-material/Visibility';
+// import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const style = {
     width: '100%',
@@ -16,7 +24,7 @@ const style = {
 export default function MyProfileMyDetails() {
 
     const [isEditing, setIsEditing] = useState(false);
- 
+
     return (
         isEditing ?
             <MyDetailsForm setEditOff={() => setIsEditing(false)} />
@@ -55,6 +63,10 @@ function MyDetails({ setEditOn }) {
                             secondary={userProfile.role} />
                     </ListItem>
                     <ListItem button>
+                        <ListItemText primary="Team"
+                            secondary="Pink Panda" />
+                    </ListItem>
+                    <ListItem button>
                         <ListItemText
                             primary="Contact Number"
                             secondary={userProfile.phone} />
@@ -64,10 +76,8 @@ function MyDetails({ setEditOn }) {
                             primary="Email"
                             secondary={userProfile.email} />
                     </ListItem>
-                    <ListItem button>
-                        <ListItemText primary="Team"
-                            secondary="Pink Panda" />
-                    </ListItem>
+
+
                 </List>
                 <Button
                     variant="contained"
@@ -81,14 +91,16 @@ function MyDetails({ setEditOn }) {
 }
 
 function MyDetailsForm({ setEditOff }) {
-    const { userProfile, updateUserProfile} = useContext(AppContext);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { userProfile, updateUserProfile } = useContext(AppContext);
+    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+
+    const [showPassword, setShowPassword] = useState(false);
 
     function onSubmit(data) {
 
 
-        updateUserProfile(userProfile._id,data);
-        
+        updateUserProfile(userProfile._id, data);
+
 
         setEditOff();
     }
@@ -154,7 +166,7 @@ function MyDetailsForm({ setEditOff }) {
                         })}
                         error={!!errors?.email}
                         helperText={errors?.email ? errors.email.message : null}
-                        
+
                     />
                     <TextField
                         margin='dense'
@@ -174,6 +186,7 @@ function MyDetailsForm({ setEditOff }) {
                         disabled
 
                     />
+
                 </Box>
                 <Button type="submit" variant="contained" color="primary" fullWidth>
                     Save

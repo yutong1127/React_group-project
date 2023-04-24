@@ -64,7 +64,7 @@ function LoginDetailsList({ setEditOn }) {
                     variant="contained"
                     onClick={hancleEditClick}
                     fullWidth
-                >Edit Login Details</Button>
+                > Change Password</Button>
             </Box>
         </div>
     )
@@ -99,7 +99,7 @@ function LoginDetailsForm({ setEditOff }) {
     return (
         <Container>
             <Typography gutterBottom variant="h5" component="div" textAlign="center">
-                Edit Login Details
+                Change Password
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box>
