@@ -68,6 +68,7 @@ async function addTeam() {
 }
 
 async function addNotification(){
+    // This should be modified later
     const userJant = await User.findOne( {fname:'Jant'} );
     const userJiewen = await User.findOne( {fname:'Jiewen'} );
     const userKevin = await User.findOne( {fname:'Kevin'} );
@@ -76,12 +77,15 @@ async function addNotification(){
     const allPatients = await Patient.find();
 
     for (const data of notification) {
+        // Notification related to transfer/add/remove patients
         if (data.type=='Admin'){
             const patientIndex = Math.floor(Math.random() * allPatients.length)
             const patient = allPatients[patientIndex];
+            const dbPatient = await Patient.findOne({_id:patient._id})
+
+            console.log(`DB patient: ${dbPatient}`);
 
             const dbNotification = new Notification(data);
-
 
             dbNotification.recipient = userJant._id;
             dbNotification.sender = userJiewen._id;
@@ -90,13 +94,20 @@ async function addNotification(){
             await dbNotification.save();
             console.log(`Notification for ${userJant.fname} saved! _id=${dbNotification._id}, recipient=${dbNotification.recipient.fname}`);
 
+            // Notification push
             userJant.notification.push(dbNotification._id);
+            dbPatient.notification.push(dbNotification._id)
             await userJant.save();
+            await dbPatient.save();
+
         } else if (data.type=='Task'){
 
+            // Notification related to tasks
             const patientIndex = Math.floor(Math.random() * allPatients.length)
 
             const patient = allPatients[patientIndex];
+            const dbPatient = await Patient.findOne({_id:patient._id})
+
             const dbNotification = new Notification(data);
 
             dbNotification.recipient = userJant._id;
@@ -106,8 +117,12 @@ async function addNotification(){
             await dbNotification.save();
             console.log(`Notification for ${userJant.fname} saved! _id=${dbNotification._id}, recipient=${dbNotification.recipient.fname}`);
 
+            // Notification push
             userJant.notification.push(dbNotification._id);
+            dbPatient.notification.push(dbNotification._id)
             await userJant.save();
+            await dbPatient.save();
+
 
         }
     }
