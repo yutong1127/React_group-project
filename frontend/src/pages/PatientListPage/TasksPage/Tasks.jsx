@@ -44,6 +44,8 @@ export default function Tasks() {
     const { tasks } = useContext(AppContext)
     const [displayedTasks, setdisplayedTasks] = useState(tasks)
 
+    console.log(tasks);
+
     //Table headers,toolbars etc.
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {

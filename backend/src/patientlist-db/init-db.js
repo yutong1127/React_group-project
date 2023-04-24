@@ -40,6 +40,8 @@ async function clearDatabase() {
     console.log(`Cleared database (removed ${usersDelete.deletedCount} users).`)
     const teamsDelete = await Team.deleteMany({});
     console.log(`Cleared database (removed ${teamsDelete.deletedCount} teams).`)
+    const taskDelete = await Task.deleteMany({});
+    console.log(`Cleared database (removed ${taskDelete.deletedCount} tasks).`)
     const notificationDelete = await Notification.deleteMany({});
     console.log(`Cleared database (removed ${notificationDelete.deletedCount} notifications).`)
 }
@@ -96,12 +98,6 @@ async function addTeam() {
     }
 
 }
-
-// function splitArray(array, groups) {
-//     if (groups == 1) return array;
-//     var size = Math.ceil(array.length / groups);
-//     return array.slice(0, size).concat([null]).concat(splitArray(array.slice(size), groups - 1));
-// }
 
 async function addTasks() {
     for (const data of task) {
