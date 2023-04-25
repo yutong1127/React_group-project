@@ -27,12 +27,14 @@ export default function Notifications() {
                     <Card key={index}
                         variant='outlined'
                         sx={{ margin: '20px' }}>
-                        <CardContent className={styles.cardContent}>
-                            <Typography sx={{ textAlign: 'left', fontSize: 20 }} >{item.type}</Typography>
+                        <CardContent className={styles.cardContent} id={`${item.id}`}>
+                            <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color:'white', fontWeight:'bold' }} >New {item.type} Message</Typography>
+                           
+                            <Typography sx={{ textAlign: 'left', fontSize:18, paddingBottom: '10px', color:'white'}}>Send from: {item.sender.fname}</Typography>
 
-                            <Typography sx={{ textAlign: 'left', variant: 'body2', paddingBottom: '30px' }}>{item.created_at}</Typography>
+                            <Typography sx={{ textAlign: 'left', fontSize:18, paddingBottom: '10px', color:'white'}}>Time: {item.created_at}</Typography>
 
-                            <Typography sx={{ textAlign: 'left', bgcolor: '#9ED0F9', padding: '30px' }}>{item.entity}</Typography>
+                            <Typography sx={{ textAlign: 'left', bgcolor: '#9ED0F9', padding: '30px' }}>{item.entity} {item.patient.fname} {item.patient.lname}</Typography>
 
 
                         </CardContent>

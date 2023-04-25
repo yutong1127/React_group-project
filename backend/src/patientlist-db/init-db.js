@@ -4,8 +4,10 @@ import mongoose from 'mongoose';
 
 
 import { Patient, User, Team, Notification, Task } from './schema';
+import { Patient, User, Team, Notification, Task } from './schema';
 import { patient, user, team } from '../data/dummy-data';
 import { notification } from '../data/notification-data';
+import { task } from '../data/task-data';
 import { task } from '../data/task-data';
 
 mongoose.set('strictQuery', false);
@@ -25,6 +27,7 @@ async function run() {
     await addUser();
     await addTeam();
     await addTasks();
+    await addTasks();
     await addNotification();
 
     await mongoose.disconnect();
@@ -42,11 +45,14 @@ async function clearDatabase() {
     console.log(`Cleared database (removed ${teamsDelete.deletedCount} teams).`)
     const taskDelete = await Task.deleteMany({});
     console.log(`Cleared database (removed ${taskDelete.deletedCount} tasks).`)
+    const taskDelete = await Task.deleteMany({});
+    console.log(`Cleared database (removed ${taskDelete.deletedCount} tasks).`)
     const notificationDelete = await Notification.deleteMany({});
     console.log(`Cleared database (removed ${notificationDelete.deletedCount} notifications).`)
 }
 
 async function addPatient() {
+    for (const data of patient) {
     for (const data of patient) {
         const dbMon = new Patient(data);
 
@@ -56,6 +62,7 @@ async function addPatient() {
 }
 
 async function addUser() {
+    for (const data of user) {
     for (const data of user) {
         const dbMon = new User(data);
         await dbMon.save();
@@ -71,9 +78,7 @@ async function addTeam() {
     let initialValue = 0;
 
     for (const data of team) {
-        
         const supervisor = await User.find({ 'isSupervisor.supervisor': true });
-        
         const dbSupervisor = await User.findOne(supervisor[index]._id);
         index++;
 

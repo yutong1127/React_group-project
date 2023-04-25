@@ -75,7 +75,7 @@ export default function MessageMenu() {
                             borderStyle: 'solid', 
                             borderRadius: '5px' }}
                             >
-                        <Typography >{notification.details}</Typography>
+                        <Typography >{notification.entity} {notification.patient.fname}</Typography>
                         <Box>
                             <NavLink to='/notification' className={styles.link}>
                             <Button size='medium'>CHECK IT OUT</Button>
