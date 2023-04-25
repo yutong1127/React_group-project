@@ -53,7 +53,7 @@ export function AppContextProvider ({ children }){
         data: userProfile,
         isLoading: userProfileLoading,
         refresh: refreshUserProfile
-    } = useGet(`${API_BASE_URL}/api/user_profile/644735f4b749dfcf6024e4e8`, []);
+    } = useGet(`${API_BASE_URL}/api/user_profile/64473cc7f3d635bb9defdef8`, []);
 
 
     async function deleteNotification(id){
