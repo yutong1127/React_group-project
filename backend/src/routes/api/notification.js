@@ -13,7 +13,7 @@ const router = express.Router();
 
 
 router.get('/', async(req,res)=>{
-    
+
     res.json(await retrieveUserOfNotification('Jant'));
 
 });
