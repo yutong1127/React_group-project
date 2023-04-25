@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
 import ImageAvatars from '../../utils/Avatar.jsx';
-import { users } from "./DummyData.js"
+
 import { useContext } from 'react';
 import { AppContext } from '../../utils/AppContextProvider';
 
