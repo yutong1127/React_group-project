@@ -26,12 +26,17 @@ const userSchema = new Schema({
     phone: {type: Number},
     email: {type: String},
     password: {type: String}, //??
-    isSupervisor: {type: Boolean, default: false},
+    // isSupervisor: {type: Boolean, default: false},
+    isSupervisor:{
+        supervisor: {type:Boolean, default:false},
+        team:[{ type: Schema.Types.ObjectId, ref: 'Team'}],
+    },
     isAdmin: {type: Boolean, default: false},
     role: {type: String},
     avatar: {type: String},
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
+    team:{type: Schema.Types.ObjectId, ref:'Team'},
 })
 
 
@@ -61,9 +66,10 @@ const notificationSchema = new Schema({
     id: Number,
     type: String,
     recipient: [{type: Schema.Types.ObjectId, ref:'User'}],
-    sender: [{type: Schema.Types.ObjectId, ref:'User'}],
-    patient:[{ type: Schema.Types.ObjectId, ref: 'Patient'}],
+    sender: {type: Schema.Types.ObjectId, ref:'User'},
+    patient:{ type: Schema.Types.ObjectId, ref: 'Patient'},
     entity: String,
+    status: Number,
     created_at:{ type: Date, default: Date.now},
 })
 

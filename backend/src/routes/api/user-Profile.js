@@ -13,9 +13,9 @@ const router = express.Router();
 router.get('/:userId', async(req,res)=>{
     const { userId } = req.params;
 
-
+console.log(`userId: ${userId}`);
     const user =await getUserById(userId);
-
+    console.log(`user: ${user}`);
     if(user) {
         return res.json(user);
     }
