@@ -5,8 +5,8 @@ import { users } from "./DummyData.js"
 import { useContext } from 'react';
 import { AppContext } from '../../utils/AppContextProvider';
 
-function createData(profilePhoto, name, role, isSuperVisor) {
-  return { profilePhoto, name, role, isSuperVisor };
+function createData(avatar, name, role, isSuperVisor) {
+  return { avatar, name, role, isSuperVisor };
 }
 
 
@@ -19,7 +19,7 @@ export default function BasicTable() {
   // map users to rows
   let rows = [];
   clinicianList.map((user) => {
-    rows.push(createData(user.avatar, "Dr. " + user.fname + " " + user.lname, user.role, user.isSupervisor ? "Yes" : "No"));
+    rows.push(createData(user.avatar, "Dr. " + user.fname + " " + user.lname, user.role, user.isSupervisor.supervisor ? "Yes" : "No"));
   });
 
 
@@ -42,11 +42,11 @@ export default function BasicTable() {
           <TableBody>
             {rows.map((row) => (
               <TableRow
-                key={row.profilePhoto}
+                key={row.avatar}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  <ImageAvatars id={row.profilePhoto} />
+                  <ImageAvatars id={row.avatar} />
                 </TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.role}</TableCell>

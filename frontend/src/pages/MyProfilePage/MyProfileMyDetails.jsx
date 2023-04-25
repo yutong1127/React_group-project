@@ -7,13 +7,6 @@ import { useContext } from 'react';
 import { AppContext } from '../../utils/AppContextProvider';
 
 
-//hide or reveal the password.
-// import OutlinedInput from '@mui/material/OutlinedInput';
-// import InputLabel from '@mui/material/InputLabel';
-// import InputAdornment from '@mui/material/InputAdornment';
-// import Visibility from '@mui/icons-material/Visibility';
-// import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
 const style = {
     width: '100%',
     maxWidth: 360,
