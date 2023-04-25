@@ -4,10 +4,8 @@ import mongoose from 'mongoose';
 
 
 import { Patient, User, Team, Notification, Task } from './schema';
-import { Patient, User, Team, Notification, Task } from './schema';
 import { patient, user, team } from '../data/dummy-data';
 import { notification } from '../data/notification-data';
-import { task } from '../data/task-data';
 import { task } from '../data/task-data';
 
 mongoose.set('strictQuery', false);
