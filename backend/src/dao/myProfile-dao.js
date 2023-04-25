@@ -36,7 +36,6 @@ async function findSevenDayDoneTasksByUser(userId) {
 
 }
 
-
 export {
     findUserById
 }

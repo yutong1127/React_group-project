@@ -59,16 +59,20 @@ const teamSchema = new Schema({
     name: {type: String},
     patients: [{ type: Schema.Types.ObjectId, ref: 'Patient'}],
     clinicians: [{type: Number}],
+    id: Number,
+    name: String,
+    patients: [{ type: Schema.Types.ObjectId, ref: 'Patient'}],
+    clinicians: [{ type: Schema.Types.ObjectId, ref: 'User'}],
     supervisors: [{ type: Schema.Types.ObjectId, ref: 'User'}]
 })
 
 const notificationSchema = new Schema({
-    id: {type: Number},
-    type: {type: String},
+    id: Number,
+    type: String,
     recipient: [{type: Schema.Types.ObjectId, ref:'User'}],
     sender: [{type: Schema.Types.ObjectId, ref:'User'}],
     patient:[{ type: Schema.Types.ObjectId, ref: 'Patient'}],
-    entity: {type: String},
+    entity: String,
     created_at:{ type: Date, default: Date.now},
 })
 

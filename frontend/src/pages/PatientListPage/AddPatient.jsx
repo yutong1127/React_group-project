@@ -95,13 +95,3 @@ export default function AddPatient(){
           <FormLabel style={{textAlign: "left"}} component="label">Quick add</FormLabel>
             <FormControlLabel value="blood test" control={<Checkbox />} label="Blood Test" name="blood-test"/>
             <FormControlLabel value="radiology" control={<Checkbox />} label="Radiology" name="radiology"/>
-          </FormControl>
-          <FormGroup>
-            <FormControlLabel control={<Switch defaultChecked />} label="Notification" name="notification" />
-         </FormGroup>
-         <Button style={{display: 'flex'}} variant="contained" type="submit">Add</Button>
-         </form>
-      </Box>
-    )
-    
-}
