@@ -7,7 +7,12 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 export const AppContext = React.createContext({
     patients: [],
     notifications: [],
-    tasks: []
+    tasks: [],
+    patientList: [],
+    clinicianList: [],
+    team: {},
+    userProfile: {},
+
 });
 
 export function AppContextProvider ({ children }){
@@ -25,6 +30,32 @@ export function AppContextProvider ({ children }){
         refresh: refreshTasks
     } = useGet(`${API_BASE_URL}/api/task`, []);
 
+
+    const {
+        data: patientList,
+        isLoading: patientListLoading,
+        refresh: refreshPatientList
+    } = useGet(`${API_BASE_URL}/api/team/1/patient_list`, []);
+
+    const {
+        data: clinicianList,
+        isLoading: clinicianListLoading,
+        refresh: refreshClinicianList
+    } = useGet(`${API_BASE_URL}/api/team/1/clinician_list`, []);
+
+    const {
+        data: team,
+        isLoading: teamLoading,
+        refresh: refreshTeam
+    } = useGet(`${API_BASE_URL}/api/team/1`, []);
+
+    const {
+        data: userProfile,
+        isLoading: userProfileLoading,
+        refresh: refreshUserProfile
+    } = useGet(`${API_BASE_URL}/api/user_profile/64473cc7f3d635bb9defdef8`, []);
+
+
     async function deleteNotification(id){
         const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
 
@@ -32,6 +63,14 @@ export function AppContextProvider ({ children }){
 
         refreshNotifications();
 
+    }
+
+    async function updateUserProfile(id, data){
+        const updateResponse = await axios.put(`${API_BASE_URL}/api/user_profile/${id}`, data);
+
+        console.log(updateResponse && "you have updated profile for" + data.fname);
+
+        refreshUserProfile();
     }
 
    
@@ -76,7 +115,16 @@ export function AppContextProvider ({ children }){
         handleDrawerClose,
         patients,
         tasks,
-        tasksLoading
+        tasksLoading,
+        patientList,
+        patientListLoading,
+        clinicianList,
+        clinicianListLoading,
+        team,
+        teamLoading,
+        userProfile,
+        userProfileLoading,
+        updateUserProfile
         
     }
 
