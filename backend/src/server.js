@@ -7,6 +7,9 @@ import mongoose from 'mongoose';
 import * as url from 'url';
 import cors from 'cors';
 
+import passport from './middleware/passport';
+import session from 'express-session';
+
 // Setup Express
 const app = express();
 const port = process.env.PORT ?? 3000;
@@ -15,6 +18,22 @@ app.use(cors());
 
 // Setup body-parser
 app.use(express.json());
+
+// Setup express-session
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true
+}));
+
+// Setup passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.url}`);
+    next();
+  });
 
 // Setup our routes.
 import routes from './routes';

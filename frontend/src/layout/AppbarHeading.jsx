@@ -8,7 +8,7 @@ export default function NoticiationHeading() {
                 flexGrow: 1,
                 textAlign: 'left'
             }}>
-            Notification
+            Pink Pandas
         </Typography>
     )
 }
