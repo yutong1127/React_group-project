@@ -1,4 +1,4 @@
-import { addPatient,getTeamByUserId, getCliniciansByTeam  } from "../../dao/patient-dao";
+import { addPatient, getCliniciansByUserId  } from "../../dao/patient-dao";
 import express from 'express';
 
 const router = express.Router();
@@ -9,15 +9,13 @@ const HTTP_NO_CONTENT = 204;
 
 router.post('/add', async (req, res)=> {
     const success = await addPatient(req.body);
-    const testing = await getCliniciansByTeam(1);
     res.sendStatus(success? HTTP_CREATED: HTTP_NOT_FOUND);
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       const { id } = req.params;
-      const team = await getTeamByUserId(id);
-      const clinicians = await getCliniciansByTeam(team);
+      const clinicians = await getCliniciansByUserId(id);
       res.json(clinicians);
     } catch (error) {
       console.error(error);
