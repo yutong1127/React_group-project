@@ -1,5 +1,5 @@
 import { Patient, User, Team } from "../patientlist-db/schema";
-import { findUserById } from "./myProfile-dao";
+import { getUserById } from "./user-dao";
 
 async function addPatient(data) {
     const patient = new Patient({
@@ -9,29 +9,24 @@ async function addPatient(data) {
         description: data.description,
         responsibleClinicians: data.responsibleClinicians, 
         quickAdd: data.quickAdd,
-         birth_date: data.birth_date,
+        birth_date: data.birth_date,
         gender: data.gender,
     })
     return await patient.save();
 }
 
-// Jant: temporary hardcode for testing
-async function getUserById(userId) {
-    const user = await User.findOne({id: userId}).exec();
-    return user;
+async function getRandomUser() {
+    const user = await User.find();
+    const randomNum = Math.floor(Math.random() * user.length);
+    return user[randomNum];
 }
 
-async function getTeamByUserId(userId) {
-    // Jant: temporary hardcode for testing
-    const user = await getUserById(userId);
-    const team = user.team;
-    return team;
-}
-
-async function getCliniciansByTeam(teamId) {
+async function getCliniciansByUserId(user) {
+    //temporary
+    const random = await getRandomUser();
     let data = [];
-    const team = await Team.findOne({id: teamId}).exec();
-    const clinicians = team.clinicians;
+    const team = await Team.findOne({ clinicians: random._id });
+    const clinicians = team.supervisors;
     await Promise.all(clinicians.map(async (c) => {
         const user = await getUserById(c);
         data.push({
@@ -44,5 +39,5 @@ async function getCliniciansByTeam(teamId) {
 }
 
 export {
-    addPatient,getTeamByUserId, getCliniciansByTeam 
+    addPatient, getCliniciansByUserId, updatePatient
 }

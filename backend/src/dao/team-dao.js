@@ -35,4 +35,3 @@ export {
     retrievePatientList,
     retrieveClinicianList
 };
-

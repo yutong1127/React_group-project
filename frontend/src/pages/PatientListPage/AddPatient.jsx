@@ -16,10 +16,10 @@ export default function AddPatient(){
   const [dob, setDob] = React.useState('');
   const [clinicians, setClinicians] = React.useState([]);
 
-  const id = 1;
   React.useEffect(() => {
     async function getClinicians() {
-      const { data } = await axios.get(`${API_BASE_URL}/api/patient/${id}`);
+      // should pass in userID instead
+      const { data } = await axios.get(`${API_BASE_URL}/api/patient`);
       let renderClinicians = [];
       for(const c of data) {
         const name = `${c.fname} ${c.lname}`
@@ -95,3 +95,13 @@ export default function AddPatient(){
           <FormLabel style={{textAlign: "left"}} component="label">Quick add</FormLabel>
             <FormControlLabel value="blood test" control={<Checkbox />} label="Blood Test" name="blood-test"/>
             <FormControlLabel value="radiology" control={<Checkbox />} label="Radiology" name="radiology"/>
+          </FormControl>
+          <FormGroup>
+            <FormControlLabel control={<Switch defaultChecked />} label="Notification" name="notification" />
+         </FormGroup>
+         <Button style={{display: 'flex'}} variant="contained" type="submit">Add</Button>
+         </form>
+      </Box>
+    )
+    
+}
