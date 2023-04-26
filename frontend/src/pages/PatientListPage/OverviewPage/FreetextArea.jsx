@@ -36,14 +36,16 @@ function useSharedString(container_id, patient_id) {
     let container;
     
     let containerId = container_id;
+    console.log(containerId)
 
-    if (container_id === null) {
+    if (container_id === "") {
       ({ container } = await client.createContainer(containerSchema));
       const id = await container.attach();
       //need to save id to db and set the containerId to the new id
       
       // window.location.href = id;
       // Return the Fluid SharedString object.
+      console.log(id)
       return container.initialObjects.sharedString;
     }
     
