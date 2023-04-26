@@ -7,7 +7,8 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 export const AppContext = React.createContext({
     patients: [],
     notifications: [],
-    tasks: []
+    unreadNotification:[],
+    tasks: [],
 });
 
 export function AppContextProvider ({ children }){
@@ -17,6 +18,12 @@ export function AppContextProvider ({ children }){
         isLoading: notificationsLoading,
         refresh: refreshNotifications
     } =useGet (`${API_BASE_URL}/api/notification`, []);
+
+    const {
+        data: unreadNotification,
+        isLoading: unreadNotificationLoading,
+        refresh: refreshUnreadNotifications
+    } =useGet (`${API_BASE_URL}/api/notification/unread`, []);
 
 
     const {
@@ -70,6 +77,8 @@ export function AppContextProvider ({ children }){
     const context = {
         notification,
         notificationsLoading,
+        unreadNotification,
+        unreadNotificationLoading,
         deleteNotification,
         drawerOpen,
         handleDrawerOpen,

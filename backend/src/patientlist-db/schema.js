@@ -65,11 +65,11 @@ const teamSchema = new Schema({
 const notificationSchema = new Schema({
     id: Number,
     type: String,
-    recipient: [{type: Schema.Types.ObjectId, ref:'User'}],
+    recipient: {type: Schema.Types.ObjectId, ref:'User'},
     sender: {type: Schema.Types.ObjectId, ref:'User'},
     patient:{ type: Schema.Types.ObjectId, ref: 'Patient'},
     entity: String,
-    status: Number,
+    isRead: Number,
     created_at:{ type: Date, default: Date.now},
 })
 

@@ -11,15 +11,27 @@ async function retrieveUserOfNotification(name){
     // console.log(`The user with fname  '${name}' is ${user.fname} ${user.lname} ${user._id}`);
 
     const notificationsOfUser = await User.populate(user, 'notification');
-    console.log(`The notification of this user patients: ${notificationsOfUser}`);
+    // console.log(`The notification of this user patients: ${notificationsOfUser}`);
 
     const notifications = notificationsOfUser.notification;
     
     await Notification.populate(notifications,'patient');
     await Notification.populate(notifications,'sender');
 
-
     return notificationsOfUser.notification;  
+}
+
+async function retrieveUnreadNotification(name){
+    const user = await User.findOne({ fname:name });
+    // console.log(`The user with fname  '${name}' is ${user.fname} ${user.lname} ${user._id}`);
+
+    const unReadNotification = await Notification.find( {isRead:0, recipient:user._id} ).populate('patient').populate('entity');
+    // await unReadNotification.populate()
+
+    console.log(`The unread notifications of this user patients: ${unReadNotification}`);
+
+    return unReadNotification;
+
 }
 
 async function deleteNotification(id){
@@ -41,5 +53,6 @@ async function findPatientOfNotification(id){
 export {
     retrieveNotificationList,
     retrieveUserOfNotification,
+    retrieveUnreadNotification,
     deleteNotification
 };

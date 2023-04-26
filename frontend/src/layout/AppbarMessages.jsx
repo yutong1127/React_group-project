@@ -14,7 +14,8 @@ import styles from '.././layout/Appbar.module.css'
 
 export default function MessageMenu() {
 
-    const { notification } = useContext(AppContext);
+    const { notification, unreadNotification } = useContext(AppContext);
+    console.log(unreadNotification);
 
     const [anchorElNotification, setAnchorElNotification] = useState(null);
     
@@ -38,11 +39,11 @@ export default function MessageMenu() {
     return (
         <>
             <IconButton
-                aria-label={notificationsLabel(notification.length)}
+                aria-label={notificationsLabel(unreadNotification.length)}
                 size='large'
                 color='inherit'
                 onClick={handleNotificationsOpen}>
-                <Badge badgeContent={notification.length} color="secondary">
+                <Badge badgeContent={unreadNotification.length} color="secondary">
                     <MailIcon />
                 </Badge>
             </IconButton>
@@ -61,7 +62,7 @@ export default function MessageMenu() {
                 open={Boolean(anchorElNotification)}
                 onClose={handleNotificationsClose}
             >
-                {notification.map((notification, index) => (
+                {unreadNotification.map((unreadNotification, index) => (
                     <MenuItem
                         key={index}
                         onClick={handleNotificationsClose}
@@ -75,7 +76,7 @@ export default function MessageMenu() {
                             borderStyle: 'solid', 
                             borderRadius: '5px' }}
                             >
-                        <Typography >{notification.entity} {notification.patient.fname}</Typography>
+                        <Typography >{unreadNotification.entity} {unreadNotification.patient.fname}</Typography>
                         <Box>
                             <NavLink to='/notification' className={styles.link}>
                             <Button size='medium'>CHECK IT OUT</Button>

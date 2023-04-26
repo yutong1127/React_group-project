@@ -2,7 +2,8 @@ import express from 'express';
 import {
     retrieveNotificationList,
     retrieveUserOfNotification,
-    deleteNotification
+    deleteNotification,
+    retrieveUnreadNotification
 } from '../../dao/notification-dao';
 
 const HTTP_CREATED = 201;
@@ -15,6 +16,12 @@ const router = express.Router();
 router.get('/', async(req,res)=>{
 
     res.json(await retrieveUserOfNotification('Jant'));
+
+});
+
+router.get('/unread', async(req,res)=>{
+
+    res.json(await retrieveUnreadNotification('Jant'));
 
 });
 
