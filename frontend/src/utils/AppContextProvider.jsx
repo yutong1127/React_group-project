@@ -18,16 +18,20 @@ export function AppContextProvider({ children }) {
         refresh: refreshNotifications
     } = useGet(`${API_BASE_URL}/api/notification`, []);
 
-
     const {
         data: tasks,
         isLoading: tasksLoading,
         refresh: refreshTasks
     } = useGet(`${API_BASE_URL}/api/task`, []);
 
+    const {
+        data: teamPatients,
+        isLoading: teamPatientsLoading,
+        refresh: refreshTeamPatients
+    } = useGet(`${API_BASE_URL}/api/patients`, []);
 
     async function createTask(task) {
-       await axios.post(`${API_BASE_URL}/api/task/createtask`, {
+        await axios.post(`${API_BASE_URL}/api/task/createtask`, {
             name: task.name,
             type: task.type,
             patient: task.patient,
@@ -35,9 +39,40 @@ export function AppContextProvider({ children }) {
             priority: task.priority,
             status: task.status
         })
-        .then(function (response) {
-            console.log(response);
-          })
+            .then(function (response) {
+                console.log(response);
+            })
+        refreshTasks()
+    }
+
+    async function deleteTask(tasksSelected) {
+        for (let i = 0; i < tasksSelected.length; i++) {
+            const taskDeleteResponse = await axios.delete(`http://localhost:3000/api/task/${tasksSelected[i]}`);
+            console.log(taskDeleteResponse)
+
+        }
+        refreshTasks()
+    }
+
+    async function claimTask(tasksSelected) {
+        for (let i = 0; i < tasksSelected.length; i++) {
+            const response = await fetch(`http://localhost:3000/api/task/${tasksSelected[i]}`)
+            let taskToBeUpdated = await response.json()
+
+            taskToBeUpdated = {
+                ...taskToBeUpdated,
+                clinician: '6441045875c54d273abff40f'
+            }
+
+            const requestOptions = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(taskToBeUpdated)
+            };
+
+            //Need user dao to retrieve the user object ID to updated the displayedtask object to send to server
+            await fetch(`http://localhost:3000/api/task/assignclinician/${taskToBeUpdated._id}`, requestOptions);
+        }
         refreshTasks()
     }
 
@@ -58,29 +93,6 @@ export function AppContextProvider({ children }) {
         setDrawerOpen(false);
     }
 
-    const patients = [{
-        name: "Kevin Zheng",
-        location: "Ward 9",
-        identifier: "ABC123",
-    },
-    {
-        name: "Mickey Mouse",
-        location: "Ward 1",
-        identifier: "XYZ123"
-    },
-    {
-        name: "Minnie Mouse",
-        location: "Ward 3",
-        identifier: "DEF456"
-    },
-    {
-        name: "Donald Duck",
-        location: "Ward 21",
-        identifier: "ZZZ888"
-    },
-    ];
-
-
     const context = {
         notification,
         notificationsLoading,
@@ -88,10 +100,12 @@ export function AppContextProvider({ children }) {
         drawerOpen,
         handleDrawerOpen,
         handleDrawerClose,
-        patients,
+        teamPatients,
         tasks,
         tasksLoading,
-        createTask
+        createTask,
+        deleteTask,
+        claimTask
     }
 
     return (

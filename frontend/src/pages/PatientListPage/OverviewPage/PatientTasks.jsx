@@ -3,7 +3,6 @@ import TasksHisto from "./TasksHisto"
 import TasksRad from "./TasksRad"
 import { Button, Grid } from '@mui/material'
 import styles from './PatientTasks.module.css'
-// import Grid  from '@mui/material/Unstable_Grid item';
 
 export default function PatientTasks() {
 

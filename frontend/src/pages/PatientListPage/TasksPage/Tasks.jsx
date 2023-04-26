@@ -26,7 +26,6 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useContext } from 'react';
 import { AppContext } from '../../../utils/AppContextProvider';
-import axios from 'axios';
 
 export default function Tasks() {
     const DEFAULT_ORDER = 'asc';
@@ -41,9 +40,8 @@ export default function Tasks() {
     const [visibleRows, setVisibleRows] = useState(null);
     const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
     const [paddingHeight, setPaddingHeight] = useState(0);
-    const { tasks } = useContext(AppContext)
-    const [displayedTasks, setdisplayedTasks] = useState(tasks)
-
+    const { tasks, deleteTask, claimTask } = useContext(AppContext)
+    
     //Table headers,toolbars etc.
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
@@ -60,10 +58,7 @@ export default function Tasks() {
             ? (a, b) => descendingComparator(a, b, orderBy)
             : (a, b) => -descendingComparator(a, b, orderBy);
     }
-    // Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-    // stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-    // only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-    // with exampleArray.slice().sort(exampleComparator)
+
     function stableSort(array, comparator) {
         const stabilizedThis = array.map((el, index) => [el, index]);
         stabilizedThis.sort((a, b) => {
@@ -81,7 +76,7 @@ export default function Tasks() {
             id: 'name',
             numeric: false,
             disablePadding: true,
-            label: 'Select All',
+            label: 'Tasks',
         },
         {
             id: 'type',
@@ -116,7 +111,7 @@ export default function Tasks() {
     ];
 
     function EnhancedTableHead(props) {
-        const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+        const { order, orderBy, numSelected, rowCount, onRequestSort } =
             props;
         const createSortHandler = (newOrderBy) => (event) => {
             onRequestSort(event, newOrderBy);
@@ -125,17 +120,7 @@ export default function Tasks() {
         return (
             <TableHead>
                 <TableRow>
-                    <TableCell padding="checkbox">
-                        <Checkbox
-                            color="primary"
-                            indeterminate={numSelected > 0 && numSelected < rowCount}
-                            checked={rowCount > 0 && numSelected === rowCount}
-                            onChange={onSelectAllClick}
-                            inputProps={{
-                                'aria-label': 'select all desserts',
-                            }}
-                        />
-                    </TableCell>
+                    <TableCell padding="checkbox" />
                     {headCells.map((headCell) => (
                         <TableCell
                             key={headCell.id}
@@ -165,7 +150,6 @@ export default function Tasks() {
     EnhancedTableHead.propTypes = {
         numSelected: PropTypes.number.isRequired,
         onRequestSort: PropTypes.func.isRequired,
-        onSelectAllClick: PropTypes.func.isRequired,
         order: PropTypes.oneOf(['asc', 'desc']).isRequired,
         orderBy: PropTypes.string.isRequired,
         rowCount: PropTypes.number.isRequired,
@@ -173,47 +157,6 @@ export default function Tasks() {
 
     function EnhancedTableToolbar(props) {
         const { numSelected, tasksSelected } = props;
-
-        // console.log(tasksSelected[0])
-
-        const deleteTask = async () => {
-            for (let i = 0; i < tasksSelected.length; i++) {
-                await fetch(`http://localhost:3000/api/task/${tasksSelected[i]}`, { method: 'DELETE' });
-                const taskToBeRemoved = tasksSelected[i]
-                const findIndex = displayedTasks.findIndex(task => task._id === taskToBeRemoved)
-                // console.log(findIndex)
-                setdisplayedTasks(displayedTasks.splice(findIndex, 1))
-                // console.log(displayedTasks)
-            }
-        }
-
-        const claimTask = async () => {
-            for (let i = 0; i < tasksSelected.length; i++) {
-                const response = await fetch(`http://localhost:3000/api/task/${tasksSelected[i]}`)
-                let  taskToBeUpdated = await response.json()
-                console.log(taskToBeUpdated)
-
-                taskToBeUpdated = {
-                    ...taskToBeUpdated,
-                    clinician: '6441045875c54d273abff40f'
-                }
-
-                console.log(taskToBeUpdated)
-                const requestOptions = {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(taskToBeUpdated)
-                };
-
-                //Need user dao to retrieve the user object ID to updated the displayedtask object to send to server
-                await fetch(`http://localhost:3000/api/task/assignclinician/${taskToBeUpdated._id}`, requestOptions);
-
-                const findIndex = displayedTasks.findIndex(task => task._id === taskToBeUpdated._id)
-                // console.log(findIndex)
-                setdisplayedTasks(displayedTasks.splice(findIndex, 1))
-                // console.log(displayedTasks)
-            }
-        }
 
         return (
             <Toolbar
@@ -249,7 +192,10 @@ export default function Tasks() {
                 {numSelected > 0 ? (
                     <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                         <Tooltip title="Claim">
-                            <IconButton onClick={claimTask}>
+                            <IconButton onClick={() => {
+                                claimTask(tasksSelected)
+                                setSelected([])
+                            }}>
                                 <DoneOutlineIcon />
                             </IconButton>
                         </Tooltip>
@@ -259,7 +205,10 @@ export default function Tasks() {
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Delete">
-                            <IconButton onClick={deleteTask}>
+                            <IconButton onClick={() => {
+                                deleteTask(tasksSelected)
+                                setSelected([])
+                            }}>
                                 <DeleteIcon />
                             </IconButton>
                         </Tooltip>
@@ -270,8 +219,9 @@ export default function Tasks() {
                             <FilterListIcon />
                         </IconButton>
                     </Tooltip>
-                )}
-            </Toolbar>
+                )
+                }
+            </Toolbar >
         );
     }
 
@@ -281,7 +231,7 @@ export default function Tasks() {
     //Table cells.
     useEffect(() => {
         let rowsOnMount = stableSort(
-            displayedTasks,
+            tasks,
             getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
         );
 
@@ -291,7 +241,7 @@ export default function Tasks() {
         );
 
         setVisibleRows(rowsOnMount);
-    }, []);
+    }, [tasks]);
 
     const handleRequestSort = useCallback(
         (event, newOrderBy) => {
@@ -300,7 +250,7 @@ export default function Tasks() {
             setOrder(toggledOrder);
             setOrderBy(newOrderBy);
 
-            const sortedRows = stableSort(displayedTasks, getComparator(toggledOrder, newOrderBy));
+            const sortedRows = stableSort(tasks, getComparator(toggledOrder, newOrderBy));
             const updatedRows = sortedRows.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
@@ -308,17 +258,8 @@ export default function Tasks() {
 
             setVisibleRows(updatedRows);
         },
-        [order, orderBy, page, rowsPerPage],
+        [order, orderBy, page, rowsPerPage, tasks],
     );
-
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelected = displayedTasks.map((n) => n.name);
-            setSelected(newSelected);
-            return;
-        }
-        setSelected([]);
-    };
 
     const handleClick = (event, name) => {
         const selectedIndex = selected.indexOf(name);
@@ -344,7 +285,7 @@ export default function Tasks() {
         (event, newPage) => {
             setPage(newPage);
 
-            const sortedRows = stableSort(displayedTasks, getComparator(order, orderBy));
+            const sortedRows = stableSort(tasks, getComparator(order, orderBy));
             const updatedRows = sortedRows.slice(
                 newPage * rowsPerPage,
                 newPage * rowsPerPage + rowsPerPage,
@@ -354,12 +295,12 @@ export default function Tasks() {
 
             // Avoid a layout jump when reaching the last page with empty rows.
             const numEmptyRows =
-                newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - displayedTasks.length) : 0;
+                newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - tasks.length) : 0;
 
             const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
             setPaddingHeight(newPaddingHeight);
         },
-        [order, orderBy, dense, rowsPerPage],
+        [order, orderBy, dense, rowsPerPage, tasks],
     );
 
     const handleChangeRowsPerPage = useCallback(
@@ -369,7 +310,7 @@ export default function Tasks() {
 
             setPage(0);
 
-            const sortedRows = stableSort(displayedTasks, getComparator(order, orderBy));
+            const sortedRows = stableSort(tasks, getComparator(order, orderBy));
             const updatedRows = sortedRows.slice(
                 0 * updatedRowsPerPage,
                 0 * updatedRowsPerPage + updatedRowsPerPage,
@@ -402,9 +343,8 @@ export default function Tasks() {
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={displayedTasks.length}
+                            rowCount={tasks.length}
                         />
                         <TableBody>
                             {visibleRows
@@ -442,8 +382,8 @@ export default function Tasks() {
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="right">{row.type}</TableCell>
-                                            <TableCell align="right">{row.patient.fname} {row.patient.lname}</TableCell>
-                                            <TableCell align="right">{row.clinician.fname} {row.clinician.lname}</TableCell>
+                                            <TableCell align="right">{row.patient.fname + row.patient.lname}</TableCell>
+                                            <TableCell align="right">{row.clinician.fname + row.clinician.lname}</TableCell>
                                             <TableCell align="right">{row.priority}</TableCell>
                                             <TableCell align="right">{row.created_at}</TableCell>
                                         </TableRow>
@@ -465,7 +405,7 @@ export default function Tasks() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={displayedTasks.length}
+                    count={tasks.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

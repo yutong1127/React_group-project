@@ -4,11 +4,11 @@ import { useContext } from 'react'
 
 export default function Overview() {
 
-    const { patients } = useContext(AppContext)
+    const { teamPatients } = useContext(AppContext)
 
     return (
         <div>
-            {patients.map(patient => <PatientCard key={patient.identifier} patient={patient}/>)}
+            {teamPatients.map(patient => <PatientCard key={patient._id} patient={patient} />)}
         </div>
     )
 };

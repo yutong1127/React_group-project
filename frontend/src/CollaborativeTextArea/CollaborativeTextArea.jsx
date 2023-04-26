@@ -1,5 +1,5 @@
 import React from "react";
-import { ISharedStringHelperTextChangedEventArgs, SharedStringHelper } from "@fluid-experimental/react-inputs";
+import { SharedStringHelper } from "@fluid-experimental/react-inputs";
 
 
 export const CollaborativeTextArea = (props) => {
@@ -90,8 +90,8 @@ export const CollaborativeTextArea = (props) => {
   // TODO 6: Create and configure a textarea element that will be used in App.tsx.
   return (
     <textarea
-      rows={20}
-      cols={50}
+      rows={10}
+      cols={30}
       ref={textareaRef}
       onBeforeInput={storeSelectionInReact}
       onKeyDown={storeSelectionInReact}

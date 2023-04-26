@@ -18,4 +18,7 @@ router.use('/analytics', analytics);
 import user from './user'
 router.use('/user', user);
 
+import patients from './patients'
+router.use('/patients', patients);
+
 export default router;

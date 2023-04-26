@@ -218,7 +218,7 @@ export default function PatientCard(props) {
                         <PatientTasks />
                     </Grid>
                     <Grid item xs={3}>
-                        <FreetextArea />
+                        <FreetextArea container={props.patient.container} patient_id={props.patient._id}/>
                     </Grid>
                     <Grid item xs={1}>
 
