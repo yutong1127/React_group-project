@@ -21,7 +21,8 @@ function App() {
           <Route path='myteam' element={< MyTeam />}/>
           <Route path='myprofile' element={< MyProfile />}/>
           <Route path='patientlist' element={< PatientList />}/>
-          <Route path='patientdetails' element={< PatientListGrid />}/>
+          <Route path='patientdetails/:patientId' element={<PatientListGrid />}/>
+
       </Route>
     </Routes>
   );

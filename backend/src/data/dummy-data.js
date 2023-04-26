@@ -6,6 +6,12 @@ const patient = [
     location: "Auckland",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
+    progress: {
+      problems:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+      history: 'Curabitur id ipsum lectus.',
+      plan: 'Donec commodo mollis suscipit.',
+  },
     birth_date: "1967-11-30T12:00:00.000+00:00",
     gender: "Female",
   },
@@ -16,6 +22,12 @@ const patient = [
     location: "Wellington",
     responsibleClinicians: null,
     quickAdd: 'radiology',
+    progress: {
+      problems:
+          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+      history: 'In consectetur libero at mauris vehicula venenatis.',
+      plan: ' Nam pulvinar mattis posuere.',
+  },
     birth_date: "1965-04-22T12:00:00.000+00:00",
     gender: "Male",
   },
@@ -26,6 +38,12 @@ const patient = [
     location: "Queenstown",
     responsibleClinicians: null,
     quickAdd: null,
+    progress: {
+      problems:
+          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+      history: 'In consectetur libero at mauris vehicula venenatis.',
+      plan: ' Nam pulvinar mattis posuere.',
+  },
     birth_date: "1955-02-21T12:00:00.000+00:00",
     gender: "Male",
   },
@@ -36,6 +54,12 @@ const patient = [
     location: "Christchurch",
     responsibleClinicians: null,
     quickAdd: 'radiology',
+    progress: {
+      problems:
+          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+      history: 'In consectetur libero at mauris vehicula venenatis.',
+      plan: ' Nam pulvinar mattis posuere.',
+  },
     birth_date: "1943-07-01T12:00:00.000+00:00",
     gender: "Female",
   },
@@ -46,6 +70,12 @@ const patient = [
     location: "Wellington",
     responsibleClinicians: null,
     quickAdd: 'radiology',
+    progress: {
+      problems:
+          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+      history: 'In consectetur libero at mauris vehicula venenatis.',
+      plan: ' Nam pulvinar mattis posuere.',
+  },
     birth_date: "1967-05-29T12:00:00.000+00:00",
     gender: "Female",
   },
@@ -56,6 +86,12 @@ const patient = [
     location: "Auckland",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
+    progress: {
+      problems:
+          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+      history: 'In consectetur libero at mauris vehicula venenatis.',
+      plan: ' Nam pulvinar mattis posuere.',
+  },
     birth_date: "1947-09-11T12:00:00.000+00:00",
     gender: "Male",
   },
@@ -76,6 +112,12 @@ const patient = [
     location: "Wellington",
     responsibleClinicians: null,
     quickAdd: 'radiology',
+    progress: {
+      problems:
+          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+      history: 'In consectetur libero at mauris vehicula venenatis.',
+      plan: ' Nam pulvinar mattis posuere.',
+  },
     birth_date: "1965-04-22T12:00:00.000+00:00",
     gender: "Female",
   },
@@ -86,6 +128,12 @@ const patient = [
     location: "Queenstown",
     responsibleClinicians: null,
     quickAdd: null,
+    progress: {
+      problems:
+          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+      history: 'In consectetur libero at mauris vehicula venenatis.',
+      plan: ' Nam pulvinar mattis posuere.',
+  },
     birth_date: "1955-02-21T12:00:00.000+00:00",
     gender: "Female",
   },
@@ -96,6 +144,12 @@ const patient = [
     location: "Christchurch",
     responsibleClinicians: null,
     quickAdd: 'radiology',
+    progress: {
+      problems:
+          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+      history: 'In consectetur libero at mauris vehicula venenatis.',
+      plan: ' Nam pulvinar mattis posuere.',
+  },
     birth_date: "1943-07-01T12:00:00.000+00:00",
     gender: "Female",
   },
@@ -106,6 +160,12 @@ const patient = [
     location: "Wellington",
     responsibleClinicians: null,
     quickAdd: 'radiology',
+    progress: {
+      problems:
+          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+      history: 'In consectetur libero at mauris vehicula venenatis.',
+      plan: ' Nam pulvinar mattis posuere.',
+  },
     birth_date: "1967-05-29T12:00:00.000+00:00",
     gender: "Female",
   },
@@ -116,6 +176,12 @@ const patient = [
     location: "Auckland",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
+    progress: {
+      problems:
+          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+      history: 'In consectetur libero at mauris vehicula venenatis.',
+      plan: ' Nam pulvinar mattis posuere.',
+  },
     birth_date: "1947-09-11T12:00:00.000+00:00",
     gender: "Male",
   },
@@ -126,6 +192,12 @@ const patient = [
       location: "Auckland",
       responsibleClinicians: null,
       quickAdd: 'blood-test',
+      progress: {
+        problems:
+            'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+        history: 'In consectetur libero at mauris vehicula venenatis.',
+        plan: ' Nam pulvinar mattis posuere.',
+    },
       birth_date: "1992-05-17T12:00:00.000+00:00",
       gender: "Male",
     },
@@ -136,6 +208,12 @@ const patient = [
       location: "Queenstown",
       responsibleClinicians: null,
       quickAdd: 'blood-test',
+      progress: {
+        problems:
+            'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+        history: 'In consectetur libero at mauris vehicula venenatis.',
+        plan: ' Nam pulvinar mattis posuere.',
+    },
       birth_date: "1987-11-30T12:00:00.000+00:00",
       gender: "Female",
     },
@@ -146,6 +224,12 @@ const patient = [
       location: "Wellington",
       responsibleClinicians: null,
       quickAdd: 'radiology',
+      progress: {
+        problems:
+            'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+        history: 'In consectetur libero at mauris vehicula venenatis.',
+        plan: ' Nam pulvinar mattis posuere.',
+    },
       birth_date: "1995-02-22T12:00:00.000+00:00",
       gender: "Male",
     },
@@ -156,6 +240,12 @@ const patient = [
       location: "Christchurch",
       responsibleClinicians: null,
       quickAdd: 'blood-test',
+      progress: {
+        problems:
+            'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+        history: 'In consectetur libero at mauris vehicula venenatis.',
+        plan: ' Nam pulvinar mattis posuere.',
+    },
       birth_date: "1990-08-11T12:00:00.000+00:00",
       gender: "Female",
     },
@@ -166,6 +256,12 @@ const patient = [
         location: "Auckland",
         responsibleClinicians: null,
         quickAdd: 'blood-test',
+        progress: {
+          problems:
+              'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+          history: 'In consectetur libero at mauris vehicula venenatis.',
+          plan: ' Nam pulvinar mattis posuere.',
+      },
         birth_date: "1992-05-17T12:00:00.000+00:00",
         gender: "Male",
       },
@@ -176,6 +272,12 @@ const patient = [
         location: "Queenstown",
         responsibleClinicians: null,
         quickAdd: 'blood-test',
+        progress: {
+          problems:
+              'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+          history: 'In consectetur libero at mauris vehicula venenatis.',
+          plan: ' Nam pulvinar mattis posuere.',
+      },
         birth_date: "1987-11-30T12:00:00.000+00:00",
         gender: "Female",
       },
@@ -186,6 +288,12 @@ const patient = [
         location: "Wellington",
         responsibleClinicians: null,
         quickAdd: 'radiology',
+        progress: {
+          problems:
+              'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+          history: 'In consectetur libero at mauris vehicula venenatis.',
+          plan: ' Nam pulvinar mattis posuere.',
+      },
         birth_date: "1995-02-22T12:00:00.000+00:00",
         gender: "Male",
       },
@@ -196,6 +304,12 @@ const patient = [
         location: "Christchurch",
         responsibleClinicians: null,
         quickAdd: 'blood-test',
+        progress: {
+          problems:
+              'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
+          history: 'In consectetur libero at mauris vehicula venenatis.',
+          plan: ' Nam pulvinar mattis posuere.',
+      },
         birth_date: "1990-08-11T12:00:00.000+00:00",
         gender: "Female",
       }

@@ -1,5 +1,21 @@
+import mongoose from 'mongoose';
+
 import { Patient, User, Team } from "../patientlist-db/schema";
 import { getUserById } from "./user-dao";
+
+async function retrievePatient(id) {
+    return await Patient.findById(id);
+}
+
+async function updatePatient(id, data) {
+    return await Patient.findByIdAndUpdate(id, data, { new: false });
+}
+
+async function deletePatient(id) {
+    return await Patient.deleteOne({ _id: mongoose.Types.ObjectId(id) });
+}
+
+
 
 async function addPatient(data) {
     const patient = new Patient({
@@ -39,5 +55,5 @@ async function getCliniciansByUserId(user) {
 }
 
 export {
-    addPatient, getCliniciansByUserId, updatePatient
+    addPatient, getCliniciansByUserId, updatePatient,retrievePatient, deletePatient
 }
