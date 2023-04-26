@@ -2,13 +2,11 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const patientSchema = new Schema({
-    id: {type: String},
     fname: {type: String},
     lname: {type: String},
     description: {type: String},
     location: {type: String},
-    responsibleClinicians: {type: String},
-    //responsibleClinicians:{ type: Schema.Types.ObjectId, ref: 'User'},
+    responsibleClinicians:{ type: Schema.Types.ObjectId, ref: 'User'},
     quickAdd: { type: String },
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
@@ -22,8 +20,6 @@ const patientSchema = new Schema({
 })
 
 const userSchema = new Schema({
-    // Jant: temporary hardcode for testing
-    id:{type: Number},
     fname: {type: String},
     lname: {type: String},
     phone: {type: Number},
@@ -37,8 +33,6 @@ const userSchema = new Schema({
     isAdmin: {type: Boolean, default: false},
     role: {type: String},
     avatar: {type: String},
-    // Jant: add team
-    team: { type: Number },
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
     team:{type: Schema.Types.ObjectId, ref:'Team'},
@@ -50,7 +44,7 @@ const taskSchema = new Schema({
     name: String,
     type: String,
     patient: { type: Schema.Types.ObjectId, ref: 'Patient' },
-    clinician: { type: Number},
+    clinician: { type: Schema.Types.ObjectId, ref: 'User' },
     priority: Number,
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now },
@@ -60,10 +54,6 @@ const taskSchema = new Schema({
 })
 
 const teamSchema = new Schema({
-    id: {type: Number},
-    name: {type: String},
-    patients: [{ type: Schema.Types.ObjectId, ref: 'Patient'}],
-    clinicians: [{type: Number}],
     id: Number,
     name: String,
     patients: [{ type: Schema.Types.ObjectId, ref: 'Patient'}],
