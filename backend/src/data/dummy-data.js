@@ -62,7 +62,6 @@ const user = [
     isAdmin: false,
     role: "HS",
     avatar: "",
-    team: 1,
   },
   {
     id: 2,
@@ -75,7 +74,6 @@ const user = [
     isAdmin: false,
     role: "REG",
     avatar: "",
-    team: 1,
   },
   {
     id: 3,
@@ -88,7 +86,6 @@ const user = [
     isAdmin: true,
     role: "SMO",
     avatar: "",
-    team: 1,
   },
   {
     id: 4,
@@ -101,7 +98,6 @@ const user = [
     isAdmin: false,
     role: "HS",
     avatar: "",
-    team: 2,
   }, 
   {
     id: 5,
@@ -114,7 +110,6 @@ const user = [
     isAdmin: false,
     role: "HS",
     avatar: "",
-    team: 2,
   }, 
   {
     id: 6,
@@ -128,7 +123,7 @@ const user = [
     },
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar6",
   },
   {
     fname: "Andrew",
@@ -141,7 +136,7 @@ const user = [
     },
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar1",
   },
   {
     fname: "Tyne",
@@ -152,7 +147,7 @@ const user = [
     // isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar2",
   },
   {
     fname: "Vita",
@@ -163,7 +158,7 @@ const user = [
     // isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar3",
   },
   {
     fname: "Yucheng",
@@ -174,7 +169,7 @@ const user = [
     // isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar4",
   },
   {
     fname: "Dee",
@@ -185,7 +180,7 @@ const user = [
     // isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar5",
   },
   {
     fname: "Robyn",
@@ -197,7 +192,6 @@ const user = [
     isAdmin: false,
     role: "HS",
     avatar: "",
-    team: 2,
   },
 ]
 
@@ -208,9 +202,6 @@ const team = [
     // patients: ["643ca27a0293d379cd4e4f03", "643ca27a0293d379cd4e4f05", "643ca46667ab9e4b039eb90f"],
     // clinicians: ["643ca1aef72f49a5254081c1", "643ca1aef72f49a5254081c3"],
     // supervisors: ["643ca27a0293d379cd4e4f19"]
-    //patients: ["643ca27a0293d379cd4e4f03", "643ca27a0293d379cd4e4f05", "643ca46667ab9e4b039eb90f"],
-    clinicians: ["1", "2"],
-    //supervisors: ["643ca27a0293d379cd4e4f19"]
   }, 
   {
     id: 2,
@@ -218,9 +209,6 @@ const team = [
     // patients: ["643ca46667ab9e4b039eb911", "643ca46667ab9e4b039eb913", "643ca46667ab9e4b039eb915"],
     // clinicians: ["643ca1aef72f49a5254081c5", "643ca1aef72f49a5254081c7"],
     // supervisors: ["643ca1aef72f49a5254081c9"]
-    //patients: ["643ca46667ab9e4b039eb911", "643ca46667ab9e4b039eb913", "643ca46667ab9e4b039eb915"],
-    clinicians: ["3", "4"],
-    //supervisors: ["643ca1aef72f49a5254081c9"]
   }
 ]
 export { patient, user,team };
