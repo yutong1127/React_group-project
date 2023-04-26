@@ -20,6 +20,7 @@
     "dummy-json": "^3.0.5",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "faker": "^6.6.6",
     "mongoose": "^6.10.5",
     "multer": "^1.4.5-lts.1",
     "passport": "^0.6.0",
