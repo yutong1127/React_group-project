@@ -17,9 +17,9 @@ import {  Link } from 'react-router-dom'
 export default function Notifications() {
 
 
-    const { notification, deleteNotification } = useContext(AppContext);
+    const { notification, deleteNotification, readNotification } = useContext(AppContext);
 
-    console.log(notification);
+    // console.log(notification);
     return (
         <Container className={styles.container}>
             <Box className={styles.cardContainer}>
@@ -40,7 +40,7 @@ export default function Notifications() {
                         </CardContent>
                         <CardActions>
                             <Link to='/patientdetails' className={styles.link}>
-                                <Button size='small' variant='outlined'>
+                                <Button size='small' variant='outlined' onClick={()=> readNotification(item._id)}>
                                     View
                                 </Button>
                             </Link>

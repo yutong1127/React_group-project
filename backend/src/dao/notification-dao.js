@@ -28,7 +28,7 @@ async function retrieveUnreadNotification(name){
     const unReadNotification = await Notification.find( {isRead:0, recipient:user._id} ).populate('patient').populate('entity');
     // await unReadNotification.populate()
 
-    console.log(`The unread notifications of this user patients: ${unReadNotification}`);
+    // console.log(`The unread notifications of this user patients: ${unReadNotification}`);
 
     return unReadNotification;
 
@@ -45,6 +45,19 @@ async function deleteNotification(id){
         { $pull:{notification:id}}
     )
 }
+async function updateNotificationSatus(id){
+
+   const notification = await Notification.findOne({ _id:id });
+   
+    if (notification){
+        notification.isRead = 1;
+        await notification.save();
+
+        return true;
+    }
+    return false;
+    
+}
 
 async function findPatientOfNotification(id){
     return await Patient.findOne({_id:id});
@@ -54,5 +67,6 @@ export {
     retrieveNotificationList,
     retrieveUserOfNotification,
     retrieveUnreadNotification,
-    deleteNotification
+    deleteNotification,
+    updateNotificationSatus
 };

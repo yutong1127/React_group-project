@@ -38,6 +38,16 @@ export function AppContextProvider ({ children }){
         console.log(deleteResponse);
 
         refreshNotifications();
+        refreshUnreadNotifications();
+
+    }
+    async function readNotification(id){
+        console.log(id)
+        const updateResponse = await axios.put(`${API_BASE_URL}/api/notification/unread/${id}`);
+
+        console.log(updateResponse);
+
+        refreshUnreadNotifications();
 
     }
 
@@ -80,6 +90,7 @@ export function AppContextProvider ({ children }){
         unreadNotification,
         unreadNotificationLoading,
         deleteNotification,
+        readNotification,
         drawerOpen,
         handleDrawerOpen,
         handleDrawerClose,

@@ -3,7 +3,8 @@ import {
     retrieveNotificationList,
     retrieveUserOfNotification,
     deleteNotification,
-    retrieveUnreadNotification
+    retrieveUnreadNotification,
+    updateNotificationSatus
 } from '../../dao/notification-dao';
 
 const HTTP_CREATED = 201;
@@ -31,6 +32,21 @@ router.delete('/:id', (req, res) => {
     const { id } = req.params;
     deleteNotification(id);
     res.status(HTTP_NO_CONTENT).end();
+    
+});
+
+router.put('/unread/:id', async (req, res) => {
+    // const { id } = req.params;
+    // const article = req.body;
+    // article._id = id;
+    // const success = await updateArticle(article);
+    // res.sendStatus(success ? HTTP_NO_CONTENT : HTTP_NOT_FOUND);
+
+    const { id } = req.params;
+    const success = await updateNotificationSatus(id);
+    res.sendStatus(success ?HTTP_NO_CONTENT : HTTP_NOT_FOUND )
+    // updateNotificationSatus(id);
+    // res.status(HTTP_NO_CONTENT).end();
     
 });
 
