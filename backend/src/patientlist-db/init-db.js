@@ -109,14 +109,15 @@ async function addResponsibleClinicians() {
         s.forEach(element => {
             supervisors.push(element);
         });
-        
     }
     for (const patient of patients) {
         const randomNum = Math.floor(Math.random() * supervisors.length);
         patient.responsibleClinicians = supervisors[randomNum];
+        const team = await Team.findOne({supervisors: supervisors[randomNum]});
+        team.patients.push(patient)
+        await team.save();
         await patient.save();
-      }
-
+    }
 }
 
 async function addTasks() {
