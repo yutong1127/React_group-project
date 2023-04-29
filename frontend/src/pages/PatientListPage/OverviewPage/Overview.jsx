@@ -27,7 +27,6 @@ export default function Overview() {
             setPatients(p);
         }
         getPatients();
-        console.log(patients);
     }, []);
 
     return (
