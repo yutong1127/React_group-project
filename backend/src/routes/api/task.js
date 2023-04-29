@@ -1,4 +1,4 @@
-import { retrieveTask, retrieveTasks, updateTask, deleteTask, retrieveCompletedTasks } from "../../dao/task-dao"
+import { retrieveTask, retrieveTasks, updateTask, deleteTask, retrieveTasksByPatientId,retrieveCompletedTasks } from "../../dao/task-dao"
 import express from 'express';
 
 const HTTP_CREATED = 201;
@@ -35,6 +35,16 @@ router.get('/completed/:clinicianId', async (req, res) => {
    }
 });
 
+
+router.get('/patient/:id', async (req, res) => {
+   const { id } = req.params;
+   const tasks = await retrieveTasksByPatientId(id);
+   if (tasks) {
+       res.json(tasks);
+   } else {
+       res.sendStatus(HTTP_NOT_FOUND);
+   }
+});
 
 router.put('/assignclinician/:id', async (req, res) => {
    const { id } = req.params;

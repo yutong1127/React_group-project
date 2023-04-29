@@ -1,5 +1,6 @@
 import { Task } from "../patientlist-db/schema";
 import dayjs from 'dayjs';
+import mongoose from 'mongoose';
 
 async function retrieveTasks() {
     return await Task.find().populate('patient').populate('clinician');
@@ -7,6 +8,10 @@ async function retrieveTasks() {
 
 async function retrieveTask(id) {
     return await Task.findById(id);
+}
+
+async function retrieveTasksByPatientId(id) {
+    return await Task.find({ patient: mongoose.Types.ObjectId(id) });
 }
 
 async function updateTask(task) {
@@ -44,5 +49,6 @@ export {
     retrieveTask,
     updateTask,
     deleteTask,
-    retrieveCompletedTasks
-}
+    retrieveCompletedTasks,
+    retrieveTasksByPatientId
+};

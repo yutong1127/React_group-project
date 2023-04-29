@@ -7,6 +7,10 @@
 
 `npm install react-hook-form`
 
+`npm install @mui/x-date-pickers`
+
+`npm install dayjs`
+
 `npm run dev`
 
 # TO START BACKEND RUNNING

@@ -24,4 +24,7 @@ router.use('/user_profile', user_profile);
 import user from './user'
 router.use('/user', user);
 
+import patient from './patient';
+router.use('/patient', patient);
+
 export default router;
