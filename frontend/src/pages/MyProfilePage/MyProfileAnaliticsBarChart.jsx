@@ -2,19 +2,39 @@
 import {ResponsiveBar} from '@nivo/bar';
 import{data} from "./DummyData";
 import styles from "./MyProfileAnalitics.module.css";
+import { useContext } from 'react';
+import { AppContext } from '../../../src/utils/AppContextProvider';
+import { Typography } from '@mui/material';
 
 
 export default function MyProfileAnaliticsBarChart() {
+    const {tasksCompleted}  = useContext(AppContext);
+    // console.log("MyProfileAnalitics");
+    // const item1 = tasksCompleted[0];
+    // console.log(item1);
+    // console.log("date " + date.substring(0,10));
+    // console.log("date " + date.getDate());
+
+    // const unix ="1682661408";
+    //conver unix to year month day
+    // const date = new Date(unix*1000);
+    // const year = date.getFullYear();
+    // const month = date.getMonth();
+    // const day = date.getDay();
+    // console.log("Date: "+ year + "/" + month + "/" + day);
     return (
-        <div className={styles.bar_chart} >        
+        <div className={styles.bar_chart} >
+
         <ResponsiveBar 
         data={data}
         keys={[
-            'Bloods',
-            'Discharge',
-            'reviews'
+            'bloodTest',
+            'radiology',
+            'reviews',
+            'discharge',
+            'other'
         ]}
-        indexBy="country"
+        indexBy="date"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: 'linear' }}
@@ -92,3 +112,4 @@ export default function MyProfileAnaliticsBarChart() {
     </div>
     )
 }
+

@@ -2,6 +2,8 @@
 import * as React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
 import styles from './MyProfileAnalitics.module.css'
+// import { useContext } from 'react';
+// import { AppContext } from '../../utils/AppContextProvider';
 
 import MyProfileAnaliticsBarChart from './MyProfileAnaliticsBarChart';
 const style = {
@@ -12,6 +14,9 @@ const style = {
 
 
 export default function MyProfileAnalitics() {
+    // const {tasksCompleted}  = useContext(AppContext);
+    // console.log("MyProfileAnalitics");
+    // console.log(tasksCompleted);
     return (
         <div >
             <Card >

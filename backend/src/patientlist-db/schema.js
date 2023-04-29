@@ -49,7 +49,7 @@ const taskSchema = new Schema({
     priority: Number,
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now },
-    finished_at: { type: Date },
+    finished_at: { type: Date, default: Date.now  },
     status: { type: Number },
     result:{ type: String },
 })

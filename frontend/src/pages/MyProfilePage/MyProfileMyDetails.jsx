@@ -29,7 +29,14 @@ export default function MyProfileMyDetails() {
 
 
 function MyDetails({ setEditOn }) {
-    const { userProfile } = useContext(AppContext);
+    const { userProfile, tasksCompleted } = useContext(AppContext);
+
+
+    if(tasksCompleted[0]){
+        console.log("taks:");
+        const date = new Date(tasksCompleted[0].finished_at);
+        console.log(date.getFullYear());
+    }
 
     function hancleEditClick() {
         setEditOn();
@@ -46,7 +53,9 @@ function MyDetails({ setEditOn }) {
                 <List sx={style} component="nav" aria-label="mailbox folders">
 
                     <Typography gutterBottom variant="h5" component="div" textAlign="center">
-                        Dr. {userProfile.fname} {userProfile.lname}
+                        Dr. {userProfile.fname} {userProfile.lname} 
+                        {/* {tasksCompleted[0].finished_at} */}
+            
                     </Typography>
                     <Divider />
 
