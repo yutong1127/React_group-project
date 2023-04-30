@@ -36,7 +36,7 @@ export function AppContextProvider ({ children }){
         data: tasksCompleted,
         isLoading: tasksCompletedLoading,
         refresh: refreshtasksCompleted
-    } = useGet(`${API_BASE_URL}/api/task/completed/6447444d9db315d605b720e7`, []);
+    } = useGet(`${API_BASE_URL}/api/task/completed/644dbcce7a40f6e2ec991506`, []);
 
     
     const {
@@ -61,7 +61,7 @@ export function AppContextProvider ({ children }){
         data: userProfile,
         isLoading: userProfileLoading,
         refresh: refreshUserProfile
-    } = useGet(`${API_BASE_URL}/api/user_profile/6447444d9db315d605b720e7`, []);
+    } = useGet(`${API_BASE_URL}/api/user_profile/644dbcce7a40f6e2ec991506`, []);
 
 
     async function deleteNotification(id){

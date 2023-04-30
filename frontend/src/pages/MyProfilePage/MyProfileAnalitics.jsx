@@ -14,9 +14,7 @@ const style = {
 
 
 export default function MyProfileAnalitics() {
-    // const {tasksCompleted}  = useContext(AppContext);
-    // console.log("MyProfileAnalitics");
-    // console.log(tasksCompleted);
+
     return (
         <div >
             <Card >

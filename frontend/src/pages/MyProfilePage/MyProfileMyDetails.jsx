@@ -32,11 +32,7 @@ function MyDetails({ setEditOn }) {
     const { userProfile, tasksCompleted } = useContext(AppContext);
 
 
-    if(tasksCompleted[0]){
-        console.log("taks:");
-        const date = new Date(tasksCompleted[0].finished_at);
-        console.log(date.getFullYear());
-    }
+
 
     function hancleEditClick() {
         setEditOn();

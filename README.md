@@ -22,3 +22,6 @@
 
 `npm start`
 - DB connection URL = mongodb://127.0.0.1:27017/project
+
+
+npm i @mui/x-date-pickers
