@@ -22,11 +22,6 @@ export default function PatientTasks(props) {
         
     }, []);
 
-    useEffect(()=> {
-        console.log(tasks);
-    },[tasks]);
-    
-
     return (
         <Grid item container spacing={2} className={styles.patientTasks}>
            {tasks.map(task => <Task key={task._id} task={task}/>)}

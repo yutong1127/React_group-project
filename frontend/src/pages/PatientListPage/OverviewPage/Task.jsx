@@ -5,7 +5,7 @@ export default function Task(props) {
     return (
         <Grid item xs={6}>
             <FormGroup>
-                <FormControlLabel control={<Checkbox defaultChecked />} label={props.task.type} />
+                <FormControlLabel control={<Checkbox />} label={props.task.type} />
             </FormGroup>
         </Grid>
     )

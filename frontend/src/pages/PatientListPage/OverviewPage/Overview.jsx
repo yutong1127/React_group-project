@@ -15,6 +15,7 @@ export default function Overview() {
     useEffect(() => {
         async function getPatients() {
             const p = [];
+            // retrive all patients from team 1 for testing
             const {data}  = await axios.get(`${API_BASE_URL}/api/team/1/patient_list`);
             for (const d of data) {
                 const patient = {
