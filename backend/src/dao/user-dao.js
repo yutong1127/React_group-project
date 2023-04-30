@@ -25,8 +25,22 @@ async function updateUser(userId, data) {
   return await User.findByIdAndUpdate(userId, data, { new: true });
 }
 
+async function updateUserProfile(userProfile) {
+  const dbUserProfile = await User.findByIdAndUpdate({_id: userProfile._id}, userProfile,)
+  return dbUserProfile !== undefined;
+
+}
+
+
 async function deleteUser(userId) {
   return await User.findByIdAndDelete(userId);
 }
 
-export { createUser, getUserByEmail, getUserById, updateUser, deleteUser };
+export { 
+  createUser, 
+  getUserByEmail, 
+  getUserById, 
+  updateUser, 
+  updateUserProfile,
+  deleteUser 
+};

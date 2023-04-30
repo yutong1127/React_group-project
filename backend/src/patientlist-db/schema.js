@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const patientSchema = new Schema({
-    id: {type: String},
     fname: {type: String},
     lname: {type: String},
     description: {type: String},
@@ -32,6 +31,7 @@ const userSchema = new Schema({
     avatar: {type: String},
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
+    team:{type: Schema.Types.ObjectId, ref:'Team'},
 })
 
 
@@ -44,7 +44,11 @@ const taskSchema = new Schema({
     priority: Number,
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now },
-    finished_at: { type: Date },
+    // set default finished_at to a random day in past 7 days
+    finished_at: { type: Date},
+
+    // finished_at: { type: Date, default: Date.now() - Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000 },
+    // finished_at: { type: Date, default: Date.now  },
     status: { type: Number },
     result:{ type: String },
 })
@@ -60,10 +64,11 @@ const teamSchema = new Schema({
 const notificationSchema = new Schema({
     id: Number,
     type: String,
-    recipient: [{type: Schema.Types.ObjectId, ref:'User'}],
-    sender: [{type: Schema.Types.ObjectId, ref:'User'}],
-    patient:[{ type: Schema.Types.ObjectId, ref: 'Patient'}],
+    recipient: {type: Schema.Types.ObjectId, ref:'User'},
+    // sender: {type: Schema.Types.ObjectId, ref:'User'},
+    patient:{ type: Schema.Types.ObjectId, ref: 'Patient'},
     entity: String,
+    isRead: Boolean,
     created_at:{ type: Date, default: Date.now},
 })
 

@@ -3,11 +3,17 @@
 }
 .cardContainer{
     margin-left: 0;
-    width:80%;
+    width:95%;
+    display: flex;
+    flex-direction: column;
 }
 .cardContent{
     margin-left: 0;
     background-color: #2196F3;
+}
+.cardContentRead{
+    margin-left: 0;
+    background-color: lightgrey;
 }
 .link{
     text-decoration: none;

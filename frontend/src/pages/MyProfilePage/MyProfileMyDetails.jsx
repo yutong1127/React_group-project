@@ -1,8 +1,11 @@
 
 import { useState } from 'react';
-import { Button, Typography, List,ListItem,ListItemText,Divider,TextField,Container, Box } from '@mui/material';
+import { Button, Typography, List, ListItem, ListItemText, Divider, TextField, Container, Box } from '@mui/material';
 import ImageAvatars from '../../utils/Avatar.jsx';
 import { useForm } from "react-hook-form";
+import { useContext } from 'react';
+import { AppContext } from '../../utils/AppContextProvider';
+
 
 const style = {
     width: '100%',
@@ -26,6 +29,11 @@ export default function MyProfileMyDetails() {
 
 
 function MyDetails({ setEditOn }) {
+    const { userProfile, tasksCompleted } = useContext(AppContext);
+
+
+
+
     function hancleEditClick() {
         setEditOn();
 
@@ -41,29 +49,33 @@ function MyDetails({ setEditOn }) {
                 <List sx={style} component="nav" aria-label="mailbox folders">
 
                     <Typography gutterBottom variant="h5" component="div" textAlign="center">
-                        Dr. {DoctorDummyData.firstName} {DoctorDummyData.lastName}
+                        Dr. {userProfile.fname} {userProfile.lname} 
+                        {/* {tasksCompleted[0].finished_at} */}
+            
                     </Typography>
                     <Divider />
 
                     <ListItem button>
                         <ListItemText
                             primary="Role"
-                            secondary={DoctorDummyData.role} />
+                            secondary={userProfile.role} />
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemText primary="Team"
+                            secondary="Pink Panda" />
                     </ListItem>
                     <ListItem button>
                         <ListItemText
                             primary="Contact Number"
-                            secondary={DoctorDummyData.phone} />
+                            secondary={userProfile.phone} />
                     </ListItem>
                     <ListItem button>
                         <ListItemText
                             primary="Email"
-                            secondary={DoctorDummyData.email} />
+                            secondary={userProfile.email} />
                     </ListItem>
-                    <ListItem button>
-                        <ListItemText primary="Team"
-                            secondary={DoctorDummyData.team} />
-                    </ListItem>
+
+
                 </List>
                 <Button
                     variant="contained"
@@ -77,18 +89,15 @@ function MyDetails({ setEditOn }) {
 }
 
 function MyDetailsForm({ setEditOff }) {
+    const { userProfile, updateUserProfile } = useContext(AppContext);
+    const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
-    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const [showPassword, setShowPassword] = useState(false);
 
     function onSubmit(data) {
 
 
-        for (let key in data) {
-            
-            DoctorDummyData[key] = data[key];
-
-        }
-
+        updateUserProfile(userProfile._id, data);
 
 
         setEditOff();
@@ -107,10 +116,12 @@ function MyDetailsForm({ setEditOff }) {
                         varient="outlined"
                         label="First Name"
                         fullWidth
-                        defaultValue={DoctorDummyData.firstName}
-                        {...register("firstName", {
+                        defaultValue={userProfile.fname}
+                        {...register("fname", {
                             required: "Required field"
                         })}
+                        error={!!errors?.fname}
+                        helperText={errors.fname?.message}
 
                     />
                     <TextField
@@ -118,10 +129,12 @@ function MyDetailsForm({ setEditOff }) {
                         varient="outlined"
                         label="Last Name"
                         fullWidth
-                        defaultValue={DoctorDummyData.lastName}
-                        {...register("lastName", {
+                        defaultValue={userProfile.lname}
+                        {...register("lname", {
                             required: "Required field"
                         })}
+                        error={!!errors?.lname}
+                        helperText={errors.lname?.message}
                     />
 
                     <TextField
@@ -129,17 +142,19 @@ function MyDetailsForm({ setEditOff }) {
                         varient="outlined"
                         label="Phone Number"
                         fullWidth
-                        defaultValue={DoctorDummyData.phone}
+                        defaultValue={userProfile.phone}
                         {...register("phone", {
                             required: "Required field"
                         })}
+                        error={!!errors?.phone}
+                        helperText={errors.phone?.message}
                     />
                     <TextField
                         margin='dense'
                         varient="outlined"
-                        label="Email"
+                        label="email"
                         fullWidth
-                        defaultValue={DoctorDummyData.email}
+                        defaultValue={userProfile.email}
                         {...register("email", {
                             required: "Required field",
                             pattern: {
@@ -149,13 +164,14 @@ function MyDetailsForm({ setEditOff }) {
                         })}
                         error={!!errors?.email}
                         helperText={errors?.email ? errors.email.message : null}
+
                     />
                     <TextField
                         margin='dense'
                         varient="outlined"
                         label="Role"
                         fullWidth
-                        defaultValue={DoctorDummyData.role}
+                        defaultValue={userProfile.role}
                         disabled
 
                     />
@@ -164,10 +180,11 @@ function MyDetailsForm({ setEditOff }) {
                         varient="outlined"
                         label="Team"
                         fullWidth
-                        defaultValue={DoctorDummyData.team}
+                        defaultValue={userProfile.team}
                         disabled
 
                     />
+
                 </Box>
                 <Button type="submit" variant="contained" color="primary" fullWidth>
                     Save
@@ -177,14 +194,3 @@ function MyDetailsForm({ setEditOff }) {
     );
 };
 
-let DoctorDummyData = {
-
-    firstName: "Donald",
-    lastName: "Duck",
-    phone: "0101011010",
-    email: "donaldduck@gmail.com",
-    role: "Surgeon",
-    team: "XY",
-    avatar: "DoctorAvartar"
-
-}

@@ -9,6 +9,12 @@ export const AppContext = React.createContext({
   patients: [],
   notifications: [],
   tasks: [],
+  tasksCompleted: [],
+  patientList: [],
+  clinicianList: [],
+  team: {},
+  userProfile: {},
+  unreadNotification: [],
 });
 
 export function AppContextProvider({ children }) {
@@ -24,14 +30,76 @@ export function AppContextProvider({ children }) {
     refresh: refreshTasks,
   } = useGet(`${API_BASE_URL}/api/task`, []);
 
+  const {
+    data: unreadNotification,
+    isLoading: unreadNotificationLoading,
+    refresh: refreshUnreadNotifications,
+  } = useGet(`${API_BASE_URL}/api/notification/unread`, []);
+
+  console.log(deleteResponse);
+
+  const {
+    data: tasksCompleted,
+    isLoading: tasksCompletedLoading,
+    refresh: refreshtasksCompleted,
+  } = useGet(`${API_BASE_URL}/api/task/completed/644dd32fb5a92f161d367b36`, []);
+
+  const {
+    data: patientList,
+    isLoading: patientListLoading,
+    refresh: refreshPatientList,
+  } = useGet(`${API_BASE_URL}/api/team/1/patient_list`, []);
+
+  const {
+    data: clinicianList,
+    isLoading: clinicianListLoading,
+    refresh: refreshClinicianList,
+  } = useGet(`${API_BASE_URL}/api/team/1/clinician_list`, []);
+
+  const {
+    data: team,
+    isLoading: teamLoading,
+    refresh: refreshTeam,
+  } = useGet(`${API_BASE_URL}/api/team/1`, []);
+
+  const {
+    data: userProfile,
+    isLoading: userProfileLoading,
+    refresh: refreshUserProfile,
+  } = useGet(`${API_BASE_URL}/api/user_profile/644dd32fb5a92f161d367b36`, []);
+
   async function deleteNotification(id) {
     const deleteResponse = await axios.delete(
       `${API_BASE_URL}/api/notification/${id}`
     );
 
-    console.log(deleteResponse);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     refreshNotifications();
+    refreshUnreadNotifications();
+  }
+
+  async function readNotification(id) {
+    console.log(id);
+    const updateResponse = await axios.put(
+      `${API_BASE_URL}/api/notification/unread/${id}`
+    );
+
+    console.log(updateResponse);
+
+    refreshUnreadNotifications();
+    refreshNotifications();
+  }
+
+  async function updateUserProfile(id, data) {
+    const updateResponse = await axios.put(
+      `${API_BASE_URL}/api/user_profile/${id}`,
+      data
+    );
+
+    console.log(updateResponse && "you have updated profile for" + data.fname);
+
+    refreshUserProfile();
   }
 
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -75,27 +143,39 @@ export function AppContextProvider({ children }) {
         withCredentials: true,
       });
       setLoggedIn(response.data.loggedIn);
-    //   console.log("Login status:", response.data.loggedIn);
+      //   console.log("Login status:", response.data.loggedIn);
     } catch (error) {
       console.error("Error checking login status:", error);
     }
+
+    useEffect(() => {
+      checkLoginStatus();
+    }, []);
   }
-  
-  useEffect(() => {
-    checkLoginStatus();
-  }, []);
-  
 
   const context = {
     notification,
     notificationsLoading,
+    unreadNotification,
+    unreadNotificationLoading,
     deleteNotification,
+    readNotification,
     drawerOpen,
     handleDrawerOpen,
     handleDrawerClose,
     patients,
     tasks,
     tasksLoading,
+    tasksCompleted,
+    patientList,
+    patientListLoading,
+    clinicianList,
+    clinicianListLoading,
+    team,
+    teamLoading,
+    userProfile,
+    userProfileLoading,
+    updateUserProfile,
     loggedIn,
     setLoggedIn,
   };
