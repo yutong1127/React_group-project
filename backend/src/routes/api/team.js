@@ -30,9 +30,9 @@ router.get('/:teamId/patient_list', async(req,res)=>{
     console.log(`teamId: ${teamId}`);
     const patientList =await retrievePatientList(teamId);
     console.log(`patientList: ${patientList}`);
-
     if(patientList) {
         return res.json(patientList);
+        
     }
         return res.sendStatus(HTTP_NOT_FOUND);
 

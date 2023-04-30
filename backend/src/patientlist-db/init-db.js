@@ -24,9 +24,9 @@ async function run() {
     await addPatient();
     await addUser();
     await addTeam();
-    await addTasks();
     await addNotification();
     await addResponsibleClinicians();
+    await addTasks();
 
     await mongoose.disconnect();
     console.log('Done!');
@@ -119,7 +119,7 @@ async function addResponsibleClinicians() {
         await patient.save();
     }
 }
-
+/**
 async function addTasks() {
     for (const data of task) {
         const userJantandJingyi = await User.find({ fname: { $in: ['Jant', 'Jingyi'] } });
@@ -141,8 +141,27 @@ async function addTasks() {
         console.log(`Taks for ${dbUser.fname} saved! _id=${dbTask._id}`);
 
     }
-}
+}**/
 
+async function addTasks() {
+    const teams = await Team.find();
+    for(const data of task) {
+        //const randomTeam = teams[Math.floor(Math.random() * teams.length)];
+        // add all task to team 1 for testing
+        const randomTeam = teams[0];
+        const teamPatients = randomTeam.patients;
+        const teamClinicians = randomTeam.clinicians;
+        const randomPatient = Math.floor(Math.random() * teamPatients.length);
+        const randomClinician = Math.floor(Math.random()* teamClinicians.length);
+        const newTask = {
+            ...data,
+            patient: teamPatients[randomPatient],
+            clinician: teamClinicians[randomClinician],
+        }
+        const dbTask = new Task(newTask);
+        await dbTask.save();
+    }
+}
 async function addNotification() {
     // This should be modified later
     const userJant = await User.findOne({ fname: 'Jant' });
