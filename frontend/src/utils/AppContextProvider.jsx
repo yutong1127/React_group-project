@@ -36,13 +36,12 @@ export function AppContextProvider({ children }) {
     refresh: refreshUnreadNotifications,
   } = useGet(`${API_BASE_URL}/api/notification/unread`, []);
 
-  console.log(deleteResponse);
 
   const {
     data: tasksCompleted,
     isLoading: tasksCompletedLoading,
     refresh: refreshtasksCompleted,
-  } = useGet(`${API_BASE_URL}/api/task/completed/644dd32fb5a92f161d367b36`, []);
+  } = useGet(`${API_BASE_URL}/api/task/completed/644df7643f213262d45ce9f3`, []);
 
   const {
     data: patientList,
@@ -66,18 +65,17 @@ export function AppContextProvider({ children }) {
     data: userProfile,
     isLoading: userProfileLoading,
     refresh: refreshUserProfile,
-  } = useGet(`${API_BASE_URL}/api/user_profile/644dd32fb5a92f161d367b36`, []);
+  } = useGet(`${API_BASE_URL}/api/user_profile/644df7643f213262d45ce9f3`, []);
 
-  async function deleteNotification(id) {
-    const deleteResponse = await axios.delete(
-      `${API_BASE_URL}/api/notification/${id}`
-    );
+  async function deleteNotification(id){
+    const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
 
-    const [drawerOpen, setDrawerOpen] = useState(false);
+    console.log(deleteResponse);
 
     refreshNotifications();
     refreshUnreadNotifications();
-  }
+
+}
 
   async function readNotification(id) {
     console.log(id);

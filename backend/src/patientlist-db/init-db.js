@@ -7,6 +7,7 @@ import { Patient, User, Team, Notification, Task } from './schema';
 import { patient, user, team } from '../data/dummy-data';
 import { notification } from '../data/notification-data';
 import { task } from '../data/task-data';
+import bcrypt from 'bcrypt';
 
 mongoose.set('strictQuery', false);
 
@@ -130,31 +131,6 @@ async function addResponsibleClinicians() {
         await patient.save();
     }
 }
-/**
-async function addTasks() {
-    for (const data of task) {
-        const userJantandJingyi = await User.find({ fname: { $in: ['Jant', 'Jingyi'] } });
-        const userIndex = Math.floor(Math.random() * userJantandJingyi.length)
-        const user = userJantandJingyi[userIndex];
-        const dbUser = await User.findOne({ _id: user._id });
-
-        const allPatients = await Patient.find();
-        const patientIndex = Math.floor(Math.random() * allPatients.length)
-        const patient = allPatients[patientIndex];
-        const dbPatient = await Patient.findOne({ _id: patient._id });
-
-        const dbTask = new Task(data);
-
-        dbTask.clinician = dbUser._id;
-        dbTask.patient = dbPatient._id;
-        // set finished_at to a random day in past 7 days
-        dbTask.finished_at = Date.now() - Math.floor(Math.random() * 6 * 24 * 60 * 60 * 1000 )
-  
-        await dbTask.save();
-        console.log(`Taks for ${dbUser.fname} saved! _id=${dbTask._id}`);
-
-    }
-}**/
 
 async function addTasks() {
     const teams = await Team.find();
@@ -170,11 +146,13 @@ async function addTasks() {
             ...data,
             patient: teamPatients[randomPatient],
             clinician: teamClinicians[randomClinician],
+            finished_at: Date.now() - Math.floor(Math.random() * 6 * 24 * 60 * 60 * 1000 )
         }
         const dbTask = new Task(newTask);
         await dbTask.save();
     }
 }
+
 async function addNotification() {
     // This should be modified later
     const userJant = await User.findOne({ fname: 'Jant' });
