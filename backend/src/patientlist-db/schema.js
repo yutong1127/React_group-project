@@ -25,11 +25,7 @@ const userSchema = new Schema({
     phone: {type: Number},
     email: {type: String},
     password: {type: String}, //??
-    // isSupervisor: {type: Boolean, default: false},
-    isSupervisor:{
-        supervisor: {type:Boolean, default:false},
-        team:[{ type: Schema.Types.ObjectId, ref: 'Team'}],
-    },
+    isSupervisor: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     role: {type: String},
     avatar: {type: String},
@@ -68,11 +64,11 @@ const teamSchema = new Schema({
 const notificationSchema = new Schema({
     id: Number,
     type: String,
-    recipient: [{type: Schema.Types.ObjectId, ref:'User'}],
-    sender: {type: Schema.Types.ObjectId, ref:'User'},
+    recipient: {type: Schema.Types.ObjectId, ref:'User'},
+    // sender: {type: Schema.Types.ObjectId, ref:'User'},
     patient:{ type: Schema.Types.ObjectId, ref: 'Patient'},
     entity: String,
-    status: Number,
+    isRead: Boolean,
     created_at:{ type: Date, default: Date.now},
 })
 

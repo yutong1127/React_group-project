@@ -13,7 +13,7 @@ export const AppContext = React.createContext({
     clinicianList: [],
     team: {},
     userProfile: {},
-
+    unreadNotification:[],
 });
 
 export function AppContextProvider ({ children }){
@@ -23,6 +23,12 @@ export function AppContextProvider ({ children }){
         isLoading: notificationsLoading,
         refresh: refreshNotifications
     } =useGet (`${API_BASE_URL}/api/notification`, []);
+
+    const {
+        data: unreadNotification,
+        isLoading: unreadNotificationLoading,
+        refresh: refreshUnreadNotifications
+    } =useGet (`${API_BASE_URL}/api/notification/unread`, []);
 
 
     const {
@@ -36,7 +42,7 @@ export function AppContextProvider ({ children }){
         data: tasksCompleted,
         isLoading: tasksCompletedLoading,
         refresh: refreshtasksCompleted
-    } = useGet(`${API_BASE_URL}/api/task/completed/644dc76a7ac855d4afb6f632`, []);
+    } = useGet(`${API_BASE_URL}/api/task/completed/644dd32fb5a92f161d367b36`, []);
 
     
     const {
@@ -61,7 +67,7 @@ export function AppContextProvider ({ children }){
         data: userProfile,
         isLoading: userProfileLoading,
         refresh: refreshUserProfile
-    } = useGet(`${API_BASE_URL}/api/user_profile/644dc76a7ac855d4afb6f632`, []);
+    } = useGet(`${API_BASE_URL}/api/user_profile/644dd32fb5a92f161d367b36`, []);
 
 
     async function deleteNotification(id){
@@ -70,6 +76,19 @@ export function AppContextProvider ({ children }){
         console.log(deleteResponse);
 
         refreshNotifications();
+        refreshUnreadNotifications();
+
+    }
+
+    async function readNotification(id){
+        console.log(id)
+        const updateResponse = await axios.put(`${API_BASE_URL}/api/notification/unread/${id}`);
+
+        console.log(updateResponse);
+
+        refreshUnreadNotifications();
+        refreshNotifications();
+
 
     }
 
@@ -120,7 +139,10 @@ export function AppContextProvider ({ children }){
     const context = {
         notification,
         notificationsLoading,
+        unreadNotification,
+        unreadNotificationLoading,
         deleteNotification,
+        readNotification,
         drawerOpen,
         handleDrawerOpen,
         handleDrawerClose,
