@@ -227,7 +227,7 @@ function formatBarChartData(tasksCompleted) {
     tasksCompleted.map(task => {
         if (!task) return;
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i <= 6; i++) {
             if (checkDatesMatch(new Date(task.finished_at), new Date(new Date().setDate(new Date().getDate() - i)))) {
 
                 if (types.includes(task.type)) {
