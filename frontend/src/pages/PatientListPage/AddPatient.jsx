@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, React, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormControl, FormGroup, FormLabel,FormControlLabel,Radio, RadioGroup, Switch, Button, Select, MenuItem, InputLabel, Checkbox} from '@mui/material';
@@ -11,12 +11,12 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export default function AddPatient(){
 
-  const [gender, setGender] = React.useState('');
-  const [location, setLocation] = React.useState('');
-  const [dob, setDob] = React.useState('');
-  const [clinicians, setClinicians] = React.useState([]);
+  const [gender, setGender] = useState('');
+  const [location, setLocation] = useState('');
+  const [dob, setDob] = useState('');
+  const [clinicians, setClinicians] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function getClinicians() {
       // should pass in userID instead
       const { data } = await axios.get(`${API_BASE_URL}/api/patient`);

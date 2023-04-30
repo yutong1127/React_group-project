@@ -197,10 +197,10 @@ export default function PatientCard(props) {
                         <PatientDetails patient={props.patient} />
                     </Grid>
                     <Grid item xs={4}>
-                        <PatientProgress />
+                        <PatientProgress patient={props.patient}/>
                     </Grid>
                     <Grid item xs={4}>
-                        <PatientTasks />
+                        <PatientTasks patient={props.patient}/>
                     </Grid>
                     <Grid item xs={3}>
                         <FreetextArea />
