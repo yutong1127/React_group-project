@@ -1,4 +1,4 @@
-import {User, Task} from '../patientlist-db/schema';
+import {User, Task} from '../patientlist-db/schema.js';
 
 //find user by id
 async function findUserById(userId) {

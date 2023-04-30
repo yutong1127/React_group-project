@@ -1,6 +1,6 @@
 import passport from "passport";
 import LocalStrategy from "passport-local";
-import { getUserByEmail, getUserById } from "../dao/user-dao";
+import { getUserByEmail, getUserById } from "../dao/user-dao.js";
 import bcrypt from "bcrypt";
 
 // Passport configuration
@@ -34,16 +34,19 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
-  
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await getUserById(id);
-      done(null, user);
-    } catch (err) {
-      done(err);
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await getUserById(id);
+    if (!user) {
+      return done(null, false);
     }
-  });
-  
-  export default passport;
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
+export default passport;

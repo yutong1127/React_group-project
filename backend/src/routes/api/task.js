@@ -1,4 +1,4 @@
-import { retrieveTask, retrieveTasks, updateTask, deleteTask } from "../../dao/task-dao"
+import { retrieveTask, retrieveTasks, updateTask, deleteTask } from "../../dao/task-dao.js"
 import express from 'express';
 
 const HTTP_CREATED = 201;

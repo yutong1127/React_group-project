@@ -1,114 +1,122 @@
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 dotenv.config();
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
+import { Patient, User, Team, Notification } from "./schema.js";
+import { patient, user, team } from "../data/dummy-data.js";
+import { notification } from "../data/notification-data.js";
 
-import { Patient, User, Team, Notification } from './schema';
-import { patient, user, team } from '../data/dummy-data';
-import { notification } from '../data/notification-data';
-
-mongoose.set('strictQuery', false);
+mongoose.set("strictQuery", false);
 
 async function run() {
-    console.log('Connecting to database...');
-    await mongoose.connect(process.env.DB_URL, { useNewUrlParser: true }); 
-    
-    console.log('Clearing db...');
-    // Clear the database by deleting all Pokedex entries
-    await clearDatabase();
+  console.log("Connecting to database...");
+  await mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
 
+  console.log("Clearing db...");
+  // Clear the database by deleting all Pokedex entries
+  await clearDatabase();
 
-    console.log('Adding data...');
-    // Add patients
-    await addPatient();
-    await addUser();
-    await addTeam();
-    await addNotification();
+  console.log("Adding data...");
+  // Add patients
+  await addPatient();
+  await addUser();
+  await addTeam();
+  await addNotification();
 
-    await mongoose.disconnect();
-    console.log('Done!');
+  await mongoose.disconnect();
+  console.log("Done!");
 }
 
 run();
 
 async function clearDatabase() {
-    const patientsDeleted = await Patient.deleteMany({});
-    console.log(`Cleared database (removed ${patientsDeleted.deletedCount} patients).`)
-    const usersDelete = await User.deleteMany({});
-    console.log(`Cleared database (removed ${usersDelete.deletedCount} users).`)
-    const teamsDelete = await Team.deleteMany({});
-    console.log(`Cleared database (removed ${teamsDelete.deletedCount} teams).`)
-    const notificationDelete = await Notification.deleteMany({});
-    console.log(`Cleared database (removed ${notificationDelete.deletedCount} notifications).`)
+  const patientsDeleted = await Patient.deleteMany({});
+  console.log(
+    `Cleared database (removed ${patientsDeleted.deletedCount} patients).`
+  );
+  const usersDelete = await User.deleteMany({});
+  console.log(`Cleared database (removed ${usersDelete.deletedCount} users).`);
+  const teamsDelete = await Team.deleteMany({});
+  console.log(`Cleared database (removed ${teamsDelete.deletedCount} teams).`);
+  const notificationDelete = await Notification.deleteMany({});
+  console.log(
+    `Cleared database (removed ${notificationDelete.deletedCount} notifications).`
+  );
 }
 
 async function addPatient() {
-    for(const data of patient) {
-        const dbMon = new Patient(data);
+  for (const data of patient) {
+    const dbMon = new Patient(data);
 
-        await dbMon.save();
-        console.log(`Patient saved! _id = ${dbMon._id}`);
-    }
+    await dbMon.save();
+    console.log(`Patient saved! _id = ${dbMon._id}`);
+  }
 }
 
 async function addUser() {
-    for(const data of user) {
-        const dbMon = new User(data);
-        await dbMon.save();
-        console.log(`User saved! _id = ${dbMon._id}`);
-    }
+  for (const data of user) {
+    let password = await bcrypt.hash(data.password, 10);
+
+    const dbMon = new User(data);
+
+    dbMon.password = password;
+
+    await dbMon.save();
+    console.log(`User saved! _id = ${dbMon._id}`);
+  }
 }
 
 async function addTeam() {
-    for(const data of team) {
-        const dbMon = new Team(data);
-        await dbMon.save();
-        console.log(`Team saved! _id = ${dbMon._id}`);
-    }
+  for (const data of team) {
+    const dbMon = new Team(data);
+    await dbMon.save();
+    console.log(`Team saved! _id = ${dbMon._id}`);
+  }
 }
 
-async function addNotification(){
-    const userJant = await User.findOne( {fname:'Jant'} );
-    const userJiewen = await User.findOne( {fname:'Jiewen'} );
-    const userKevin = await User.findOne( {fname:'Kevin'} );
+async function addNotification() {
+  const userJant = await User.findOne({ fname: "Jant" });
+  const userJiewen = await User.findOne({ fname: "Jiewen" });
+  const userKevin = await User.findOne({ fname: "Kevin" });
 
+  const allPatients = await Patient.find();
 
-    const allPatients = await Patient.find();
+  for (const data of notification) {
+    if (data.type == "Admin") {
+      const patientIndex = Math.floor(Math.random() * allPatients.length);
+      const patient = allPatients[patientIndex];
 
-    for (const data of notification) {
-        if (data.type=='Admin'){
-            const patientIndex = Math.floor(Math.random() * allPatients.length)
-            const patient = allPatients[patientIndex];
+      const dbNotification = new Notification(data);
 
-            const dbNotification = new Notification(data);
+      dbNotification.recipient = userJant._id;
+      dbNotification.sender = userJiewen._id;
+      dbNotification.patient = patient._id;
 
+      await dbNotification.save();
+      console.log(
+        `Notification for ${userJant.fname} saved! _id=${dbNotification._id}, recipient=${dbNotification.recipient.fname}`
+      );
 
-            dbNotification.recipient = userJant._id;
-            dbNotification.sender = userJiewen._id;
-            dbNotification.patient = patient._id;
+      userJant.notification.push(dbNotification._id);
+      await userJant.save();
+    } else if (data.type == "Task") {
+      const patientIndex = Math.floor(Math.random() * allPatients.length);
 
-            await dbNotification.save();
-            console.log(`Notification for ${userJant.fname} saved! _id=${dbNotification._id}, recipient=${dbNotification.recipient.fname}`);
+      const patient = allPatients[patientIndex];
+      const dbNotification = new Notification(data);
 
-            userJant.notification.push(dbNotification._id);
-            await userJant.save();
-        } else if (data.type=='Task'){
+      dbNotification.recipient = userJant._id;
+      dbNotification.sender = userKevin._id;
+      dbNotification.patient = patient._id;
 
-            const patientIndex = Math.floor(Math.random() * allPatients.length)
+      await dbNotification.save();
+      console.log(
+        `Notification for ${userJant.fname} saved! _id=${dbNotification._id}, recipient=${dbNotification.recipient.fname}`
+      );
 
-            const patient = allPatients[patientIndex];
-            const dbNotification = new Notification(data);
-
-            dbNotification.recipient = userJant._id;
-            dbNotification.sender = userKevin._id;
-            dbNotification.patient = patient._id;
-
-            await dbNotification.save();
-            console.log(`Notification for ${userJant.fname} saved! _id=${dbNotification._id}, recipient=${dbNotification.recipient.fname}`);
-
-            userJant.notification.push(dbNotification._id);
-            await userJant.save();
-
-        }
+      userJant.notification.push(dbNotification._id);
+      await userJant.save();
     }
+  }
 }

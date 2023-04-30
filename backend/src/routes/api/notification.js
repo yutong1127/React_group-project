@@ -3,7 +3,7 @@ import {
     retrieveNotificationList,
     retrieveUserOfNotification,
     deleteNotification
-} from '../../dao/notification-dao';
+} from '../../dao/notification-dao.js';
 
 const HTTP_CREATED = 201;
 const HTTP_NOT_FOUND = 404;
