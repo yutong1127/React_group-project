@@ -1,17 +1,20 @@
 import bcrypt from "bcrypt";
-import { User } from "../patientlist-db/schema";
+import { User } from "../patientlist-db/schema.js";
 
-async function createUser(data) {   
-  const hashedPassword = await bcrypt.hash(data.password, 10);
+async function createUser(data) {
+  password = await bcrypt.hash(data.password, 10);
+
   const user = new User({
     ...data,
-    password: hashedPassword,
+    password: password,
   });
   return await user.save();
 }
 
 async function getUserByEmail(email) {
-  return await User.findOne({ email: email });
+  return await User.findOne({ email: email }).select(
+    "+password +isPlainTextPassword"
+  );
 }
 
 async function getUserById(userId) {

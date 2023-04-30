@@ -58,10 +58,15 @@ async function addPatient() {
 
 async function addUser() {
     for (const data of user) {
+        let password = await bcrypt.hash(data.password, 10);
+    
         const dbMon = new User(data);
+    
+        dbMon.password = password;
+    
         await dbMon.save();
         console.log(`User saved! _id = ${dbMon._id}`);
-    }
+      }
 }
 
 async function addTeam() {

@@ -1,4 +1,4 @@
-import { Notification, User, Patient } from "../patientlist-db/schema";
+import { Notification, User, Patient } from "../patientlist-db/schema.js";
 
 async function retrieveNotificationList (){
     return await Notification.find();

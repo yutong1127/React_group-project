@@ -1,62 +1,76 @@
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 dotenv.config();
 
-import express from 'express';
-import path from 'path';
-import mongoose from 'mongoose';
-import * as url from 'url';
-import cors from 'cors';
+import express from "express";
+import path from "path";
+import mongoose from "mongoose";
+import * as url from "url";
+import cors from "cors";
 
-import passport from './middleware/passport';
-import session from 'express-session';
+import passport from "./middleware/passport.js";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+
 
 // Setup Express
 const app = express();
 const port = process.env.PORT ?? 3000;
 
-app.use(cors());
+// app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 // Setup body-parser
 app.use(express.json());
 
-// Setup express-session
-app.use(session({
-    secret: 'your_secret_key',
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  next();
+});
+
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
+
+const connection = mongoose.connection;
+
+export const store = new MongoStore({
+  mongoUrl: process.env.DB_URL,
+  collection: "sessions",
+});
+
+app.use(
+  session({
+    secret: "secret_keyjdwifwfqhqif",
     resave: false,
-    saveUninitialized: true
-}));
+    store: store,
+    saveUninitialized: false,
+    unset: "destroy",
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+  })
+);
 
 // Setup passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-    console.log(`Incoming request: ${req.method} ${req.url}`);
-    next();
-  });
-
 // Setup our routes.
-import routes from './routes';
-app.use('/', routes);
+import routes from "./routes/index.js";
+app.use("/", routes);
 
-const dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
 // Make the "public" folder available statically
-app.use(express.static(path.join(dirname, '../public')));
+app.use(express.static(path.join(dirname, "../public")));
 
 // Serve up the frontend's "dist" directory, if we're running in production mode.
-if (process.env.NODE_ENV === 'production') {
-    console.log('Running in production!');
+if (process.env.NODE_ENV === "production") {
+  console.log("Running in production!");
 
-    // Make all files in that folder public
-    app.use(express.static(path.join(dirname, '../../frontend/dist')));
+  // Make all files in that folder public
+  app.use(express.static(path.join(dirname, "../../frontend/dist")));
 
-    // If we get any GET request we can't process using one of the server routes, serve up index.html by default.
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(dirname, '../../frontend/dist/index.html'));
-    });
+  // If we get any GET request we can't process using one of the server routes, serve up index.html by default.
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(dirname, "../../frontend/dist/index.html"));
+  });
 }
 
-// Start the DB running. Then, once it's connected, start the server.
-mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
-    .then(() => app.listen(port, () => console.log(`App server listening on port ${port}!`)));
+app.listen(port, () => console.log(`App server listening on port ${port}!`));

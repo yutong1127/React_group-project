@@ -1,4 +1,4 @@
-import { Task } from "../patientlist-db/schema";
+import { Task } from "../patientlist-db/schema.js";
 import dayjs from 'dayjs';
 import mongoose from 'mongoose';
 
