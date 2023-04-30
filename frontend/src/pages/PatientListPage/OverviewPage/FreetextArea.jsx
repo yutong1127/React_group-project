@@ -37,23 +37,16 @@ function useSharedString(container_id, patient_id) {
 
     // TODO 2: Get the container from the Fluid service.
     let container;
-
     let containerId = container_id;
-    console.log(containerId)
 
     if (container_id === "") {
       ({ container } = await client.createContainer(containerSchema));
       const id = await container.attach();
-      //need to save id to db and set the containerId to the new id
-
-      // window.location.href = id;
       // Return the Fluid SharedString object.
-      console.log(id)
-      const patient_id = '6441045775c54d273abff3f9'
-      await createContainer(patient_id,id)
+      await createContainer(patient_id, id)
+      containerId = id
       return container.initialObjects.sharedString;
     }
-
 
     ({ container } = await client.getContainer(containerId, containerSchema));
     if (container.connectionState !== ConnectionState.Connected) {

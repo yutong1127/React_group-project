@@ -41,7 +41,7 @@ export function AppContextProvider({ children }) {
         data: tasksCompleted,
         isLoading: tasksCompletedLoading,
         refresh: refreshtasksCompleted,
-    } = useGet(`${API_BASE_URL}/api/task/completed/644dfe831da67c9793a8684e`, []);
+    } = useGet(`${API_BASE_URL}/api/task/completed/644e476b566b34805b8b69b5`, []);
 
     const {
         data: teamPatients,
@@ -128,12 +128,11 @@ export function AppContextProvider({ children }) {
         data: userProfile,
         isLoading: userProfileLoading,
         refresh: refreshUserProfile,
-    } = useGet(`${API_BASE_URL}/api/user_profile/644dfe831da67c9793a8684e`, []);
+    } = useGet(`${API_BASE_URL}/api/user_profile/644e476b566b34805b8b69b5`, []);
 
 
     async function createContainer(id, container_id) {
-        const res = await axios.put(`${API_BASE_URL}/api/patient/${id}`, { container: container_id });
-        console.log(res);
+        await axios.put(`${API_BASE_URL}/api/patient/${id}`, { container: container_id });
     }
 
 

@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const patientSchema = new Schema({
     fname: {type: String},
     lname: {type: String},
+    identifier: {type: String, default: 'AAA1234'},
     description: {type: String},
     location: {type: String},
     responsibleClinicians:{ type: Schema.Types.ObjectId, ref: 'User'},
@@ -17,7 +18,7 @@ const patientSchema = new Schema({
     },
     birth_date: {type: Date},
     gender: {type: String},
-    container: {type: String}
+    container: {type: String, default: ''}
 })
 
 const userSchema = new Schema({

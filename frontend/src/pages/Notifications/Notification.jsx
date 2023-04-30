@@ -19,7 +19,7 @@ export default function Notifications() {
 
     const { notification, deleteNotification } = useContext(AppContext);
 
-    console.log(notification);
+    //console.log(notification);
     return (
         <Container className={styles.container}>
             <Box className={styles.cardContainer}>

@@ -14,7 +14,7 @@ export default function PatientTasks(props) {
 
     useEffect(() => {
         async function getTasks() {
-            const { data }  = await axios.get(`${API_BASE_URL}/api/task/patient/${props.patient.identifier}`);
+            const { data }  = await axios.get(`${API_BASE_URL}/api/task/patient/${props.patient._id}`);
             setTasks(data);
         }
         getTasks();
