@@ -37,10 +37,18 @@ async function deleteTask(id) {
     await Task.deleteOne({ _id: id });
 }
 
+// retrieve tasks that have already been completed within the last 7 days
+async function retrieveCompletedTasks(clinicianId) {
+    const tasks = await Task.find({clinician: clinicianId});
+    const completedTasks = tasks.filter(task => dayjs(task.completedAt).isAfter(dayjs().subtract(7, 'day')));
+    return completedTasks;
+}
+
 export {
     retrieveTasks,
     retrieveTask,
     updateTask,
     deleteTask,
+    retrieveCompletedTasks,
     retrieveTasksByPatientId
 };

@@ -48,7 +48,11 @@ const taskSchema = new Schema({
     priority: Number,
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now },
-    finished_at: { type: Date },
+    // set default finished_at to a random day in past 7 days
+    finished_at: { type: Date},
+
+    // finished_at: { type: Date, default: Date.now() - Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000 },
+    // finished_at: { type: Date, default: Date.now  },
     status: { type: Number },
     result:{ type: String },
 })

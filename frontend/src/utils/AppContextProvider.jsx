@@ -8,6 +8,7 @@ export const AppContext = React.createContext({
     patients: [],
     notifications: [],
     tasks: [],
+    tasksCompleted: [],
     patientList: [],
     clinicianList: [],
     team: {},
@@ -32,6 +33,13 @@ export function AppContextProvider ({ children }){
 
 
     const {
+        data: tasksCompleted,
+        isLoading: tasksCompletedLoading,
+        refresh: refreshtasksCompleted
+    } = useGet(`${API_BASE_URL}/api/task/completed/644dc76a7ac855d4afb6f632`, []);
+
+    
+    const {
         data: patientList,
         isLoading: patientListLoading,
         refresh: refreshPatientList
@@ -53,7 +61,7 @@ export function AppContextProvider ({ children }){
         data: userProfile,
         isLoading: userProfileLoading,
         refresh: refreshUserProfile
-    } = useGet(`${API_BASE_URL}/api/user_profile/64473cc7f3d635bb9defdef8`, []);
+    } = useGet(`${API_BASE_URL}/api/user_profile/644dc76a7ac855d4afb6f632`, []);
 
 
     async function deleteNotification(id){
@@ -65,10 +73,13 @@ export function AppContextProvider ({ children }){
 
     }
 
+
+
     async function updateUserProfile(id, data){
         const updateResponse = await axios.put(`${API_BASE_URL}/api/user_profile/${id}`, data);
 
         console.log(updateResponse && "you have updated profile for" + data.fname);
+        
 
         refreshUserProfile();
     }
@@ -116,6 +127,7 @@ export function AppContextProvider ({ children }){
         patients,
         tasks,
         tasksLoading,
+        tasksCompleted,
         patientList,
         patientListLoading,
         clinicianList,
