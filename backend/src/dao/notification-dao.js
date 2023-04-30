@@ -25,7 +25,7 @@ async function retrieveUnreadNotification(name){
     const user = await User.findOne({ fname:name });
     // console.log(`The user with fname  '${name}' is ${user.fname} ${user.lname} ${user._id}`);
 
-    const unReadNotification = await Notification.find( {isRead:0, recipient:user._id} ).populate('patient').populate('entity');
+    const unReadNotification = await Notification.find( {isRead:false, recipient:user._id} ).populate('patient').populate('entity');
     // await unReadNotification.populate()
 
     // console.log(`The unread notifications of this user patients: ${unReadNotification}`);
@@ -50,7 +50,7 @@ async function updateNotificationSatus(id){
    const notification = await Notification.findOne({ _id:id });
    
     if (notification){
-        notification.isRead = 1;
+        notification.isRead = true;
         await notification.save();
 
         return true;

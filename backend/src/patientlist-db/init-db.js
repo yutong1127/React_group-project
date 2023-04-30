@@ -73,7 +73,7 @@ async function addTeam() {
     let initialValue = 0;
 
     for (const data of team) {
-        const supervisor = await User.find({ 'isSupervisor.supervisor': true });
+        const supervisor = await User.find({ isSupervisor: true });
         const dbSupervisor = await User.findOne(supervisor[index]._id);
         index++;
 

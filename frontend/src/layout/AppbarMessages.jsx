@@ -15,7 +15,6 @@ import styles from '.././layout/Appbar.module.css'
 export default function MessageMenu() {
 
     const { notification, unreadNotification } = useContext(AppContext);
-    console.log(unreadNotification);
 
     const [anchorElNotification, setAnchorElNotification] = useState(null);
     

@@ -36,17 +36,10 @@ router.delete('/:id', (req, res) => {
 });
 
 router.put('/unread/:id', async (req, res) => {
-    // const { id } = req.params;
-    // const article = req.body;
-    // article._id = id;
-    // const success = await updateArticle(article);
-    // res.sendStatus(success ? HTTP_NO_CONTENT : HTTP_NOT_FOUND);
 
     const { id } = req.params;
     const success = await updateNotificationSatus(id);
-    res.sendStatus(success ?HTTP_NO_CONTENT : HTTP_NOT_FOUND )
-    // updateNotificationSatus(id);
-    // res.status(HTTP_NO_CONTENT).end();
+    res.sendStatus(success ?HTTP_NO_CONTENT : HTTP_NOT_FOUND )    
     
 });
 

@@ -41,6 +41,7 @@ export function AppContextProvider ({ children }){
         refreshUnreadNotifications();
 
     }
+
     async function readNotification(id){
         console.log(id)
         const updateResponse = await axios.put(`${API_BASE_URL}/api/notification/unread/${id}`);
@@ -48,6 +49,8 @@ export function AppContextProvider ({ children }){
         console.log(updateResponse);
 
         refreshUnreadNotifications();
+        refreshNotifications();
+
 
     }
 
