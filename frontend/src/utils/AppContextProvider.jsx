@@ -7,8 +7,13 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 export const AppContext = React.createContext({
     patients: [],
     notifications: [],
-    unreadNotification:[],
     tasks: [],
+    tasksCompleted: [],
+    patientList: [],
+    clinicianList: [],
+    team: {},
+    userProfile: {},
+    unreadNotification:[],
 });
 
 export function AppContextProvider ({ children }){
@@ -32,6 +37,39 @@ export function AppContextProvider ({ children }){
         refresh: refreshTasks
     } = useGet(`${API_BASE_URL}/api/task`, []);
 
+
+    const {
+        data: tasksCompleted,
+        isLoading: tasksCompletedLoading,
+        refresh: refreshtasksCompleted
+    } = useGet(`${API_BASE_URL}/api/task/completed/644dd32fb5a92f161d367b36`, []);
+
+    
+    const {
+        data: patientList,
+        isLoading: patientListLoading,
+        refresh: refreshPatientList
+    } = useGet(`${API_BASE_URL}/api/team/1/patient_list`, []);
+
+    const {
+        data: clinicianList,
+        isLoading: clinicianListLoading,
+        refresh: refreshClinicianList
+    } = useGet(`${API_BASE_URL}/api/team/1/clinician_list`, []);
+
+    const {
+        data: team,
+        isLoading: teamLoading,
+        refresh: refreshTeam
+    } = useGet(`${API_BASE_URL}/api/team/1`, []);
+
+    const {
+        data: userProfile,
+        isLoading: userProfileLoading,
+        refresh: refreshUserProfile
+    } = useGet(`${API_BASE_URL}/api/user_profile/644dd32fb5a92f161d367b36`, []);
+
+
     async function deleteNotification(id){
         const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
 
@@ -52,6 +90,17 @@ export function AppContextProvider ({ children }){
         refreshNotifications();
 
 
+    }
+
+
+
+    async function updateUserProfile(id, data){
+        const updateResponse = await axios.put(`${API_BASE_URL}/api/user_profile/${id}`, data);
+
+        console.log(updateResponse && "you have updated profile for" + data.fname);
+        
+
+        refreshUserProfile();
     }
 
    
@@ -99,7 +148,17 @@ export function AppContextProvider ({ children }){
         handleDrawerClose,
         patients,
         tasks,
-        tasksLoading
+        tasksLoading,
+        tasksCompleted,
+        patientList,
+        patientListLoading,
+        clinicianList,
+        clinicianListLoading,
+        team,
+        teamLoading,
+        userProfile,
+        userProfileLoading,
+        updateUserProfile
         
     }
 

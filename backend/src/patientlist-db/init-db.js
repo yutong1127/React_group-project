@@ -26,6 +26,7 @@ async function run() {
     await addTeam();
     await addTasks();
     await addNotification();
+    await addResponsibleClinicians();
 
     await mongoose.disconnect();
     console.log('Done!');
@@ -105,6 +106,26 @@ async function addTeam() {
 
 }
 
+async function addResponsibleClinicians() {
+    const teams = await Team.find();
+    const patients = await Patient.find();
+    let supervisors = [];
+    for(const team of teams) {
+        let s = team.supervisors;
+        s.forEach(element => {
+            supervisors.push(element);
+        });
+    }
+    for (const patient of patients) {
+        const randomNum = Math.floor(Math.random() * supervisors.length);
+        patient.responsibleClinicians = supervisors[randomNum];
+        const team = await Team.findOne({supervisors: supervisors[randomNum]});
+        team.patients.push(patient)
+        await team.save();
+        await patient.save();
+    }
+}
+
 async function addTasks() {
     for (const data of task) {
         const userJantandJingyi = await User.find({ fname: { $in: ['Jant', 'Jingyi'] } });
@@ -121,7 +142,9 @@ async function addTasks() {
 
         dbTask.clinician = dbUser._id;
         dbTask.patient = dbPatient._id;
-
+        // set finished_at to a random day in past 7 days
+        dbTask.finished_at = Date.now() - Math.floor(Math.random() * 6 * 24 * 60 * 60 * 1000 )
+  
         await dbTask.save();
         console.log(`Taks for ${dbUser.fname} saved! _id=${dbTask._id}`);
 

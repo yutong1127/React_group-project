@@ -325,7 +325,7 @@ const user = [
     isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar1",
   },
   {
     fname: "Zhiyan",
@@ -336,7 +336,7 @@ const user = [
     isSupervisor: false,
     isAdmin: false,
     role: "REG",
-    avatar: "",
+    avatar: "DoctorAvatar2",
   },
   {
     fname: "Jiewen",
@@ -347,7 +347,7 @@ const user = [
     isSupervisor: false,
     isAdmin: true,
     role: "SMO",
-    avatar: "",
+    avatar: "DoctorAvatar3",
   },
   {
     fname: "Olivia",
@@ -358,7 +358,7 @@ const user = [
     isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar4",
   }, 
   {
     fname: "Jingyi",
@@ -369,7 +369,7 @@ const user = [
     isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar5",
   }, 
   {
     fname: "Kevin",
@@ -380,7 +380,7 @@ const user = [
     isSupervisor: true,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar6",
   },
   {
     fname: "Andrew",
@@ -391,7 +391,7 @@ const user = [
     isSupervisor: true,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar1",
   },
   {
     fname: "Tyne",
@@ -402,7 +402,7 @@ const user = [
     isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar2",
   },
   {
     fname: "Vita",
@@ -413,7 +413,7 @@ const user = [
     isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar3",
   },
   {
     fname: "Yucheng",
@@ -424,7 +424,7 @@ const user = [
     isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar4",
   },
   {
     fname: "Dee",
@@ -435,7 +435,7 @@ const user = [
     isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar5",
   },
   {
     fname: "Robyn",
@@ -446,7 +446,7 @@ const user = [
     isSupervisor: false,
     isAdmin: false,
     role: "HS",
-    avatar: "",
+    avatar: "DoctorAvatar6",
   },
 ]
 
