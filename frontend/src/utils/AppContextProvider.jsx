@@ -93,6 +93,11 @@ export function AppContextProvider({ children }) {
         setDrawerOpen(false);
     }
 
+    async function createContainer(id, container_id) {
+        const res = await axios.put(`${API_BASE_URL}/api/patients/${id}`, { container: container_id });
+        console.log(res);
+    }
+
     const context = {
         notification,
         notificationsLoading,
@@ -105,7 +110,8 @@ export function AppContextProvider({ children }) {
         tasksLoading,
         createTask,
         deleteTask,
-        claimTask
+        claimTask,
+        createContainer
     }
 
     return (

@@ -18,6 +18,7 @@ const patientSchema = new Schema({
     },
     birth_date: {type: Date},
     gender: {type: String},
+    container: {type: String}
 })
 
 const userSchema = new Schema({

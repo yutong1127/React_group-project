@@ -1,10 +1,11 @@
 import { TextField } from '@mui/material'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { TinyliciousClient } from "@fluidframework/tinylicious-client";
 import { ConnectionState, SharedString } from "fluid-framework";
 import { CollaborativeTextArea } from '../../../CollaborativeTextArea/CollaborativeTextArea';
 import { SharedStringHelper } from "@fluid-experimental/react-inputs";
+import { AppContext } from '../../../utils/AppContextProvider';
 
 export default function FreetextArea(props) {
   const sharedString = useSharedString(props.container, props.patient_id);
@@ -23,6 +24,8 @@ export default function FreetextArea(props) {
 
 function useSharedString(container_id, patient_id) {
   const [sharedString, setSharedString] = useState();
+  const { createContainer } = useContext(AppContext)
+
   const getFluidData = async () => {
     // TODO 1: Configure the container.
     const client = new TinyliciousClient();
@@ -34,7 +37,7 @@ function useSharedString(container_id, patient_id) {
 
     // TODO 2: Get the container from the Fluid service.
     let container;
-    
+
     let containerId = container_id;
     console.log(containerId)
 
@@ -42,15 +45,17 @@ function useSharedString(container_id, patient_id) {
       ({ container } = await client.createContainer(containerSchema));
       const id = await container.attach();
       //need to save id to db and set the containerId to the new id
-      
+
       // window.location.href = id;
       // Return the Fluid SharedString object.
       console.log(id)
+      const patient_id = '6441045775c54d273abff3f9'
+      await createContainer(patient_id,id)
       return container.initialObjects.sharedString;
     }
-    
-    
-      ({ container } = await client.getContainer(containerId, containerSchema));
+
+
+    ({ container } = await client.getContainer(containerId, containerSchema));
     if (container.connectionState !== ConnectionState.Connected) {
       await new Promise((resolve) => {
         container.once("connected", () => {
