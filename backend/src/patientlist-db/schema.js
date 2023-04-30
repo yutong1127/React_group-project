@@ -25,11 +25,7 @@ const userSchema = new Schema({
     phone: {type: Number},
     email: {type: String},
     password: {type: String}, //??
-    // isSupervisor: {type: Boolean, default: false},
-    isSupervisor:{
-        supervisor: {type:Boolean, default:false},
-        team:[{ type: Schema.Types.ObjectId, ref: 'Team'}],
-    },
+    isSupervisor: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     role: {type: String},
     avatar: {type: String},
@@ -48,7 +44,11 @@ const taskSchema = new Schema({
     priority: Number,
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now },
-    finished_at: { type: Date },
+    // set default finished_at to a random day in past 7 days
+    finished_at: { type: Date},
+
+    // finished_at: { type: Date, default: Date.now() - Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000 },
+    // finished_at: { type: Date, default: Date.now  },
     status: { type: Number },
     result:{ type: String },
 })
@@ -64,11 +64,11 @@ const teamSchema = new Schema({
 const notificationSchema = new Schema({
     id: Number,
     type: String,
-    recipient: [{type: Schema.Types.ObjectId, ref:'User'}],
-    sender: {type: Schema.Types.ObjectId, ref:'User'},
+    recipient: {type: Schema.Types.ObjectId, ref:'User'},
+    // sender: {type: Schema.Types.ObjectId, ref:'User'},
     patient:{ type: Schema.Types.ObjectId, ref: 'Patient'},
     entity: String,
-    status: Number,
+    isRead: Boolean,
     created_at:{ type: Date, default: Date.now},
 })
 

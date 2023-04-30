@@ -58,21 +58,28 @@ async function addPatient() {
 
 async function addUser() {
     for (const data of user) {
+        let password = await bcrypt.hash(data.password, 10);
+    
         const dbMon = new User(data);
+    
+        dbMon.password = password;
+    
         await dbMon.save();
         console.log(`User saved! _id = ${dbMon._id}`);
-    }
+      }
 }
 
 async function addTeam() {
     const clinicians = await User.find();
+    const patients = await Patient.find();
+
     let index = 0;
     let teamSize = clinicians.length / team.length;
     console.log(`team size: ${teamSize}`);
     let initialValue = 0;
 
     for (const data of team) {
-        const supervisor = await User.find({ 'isSupervisor.supervisor': true });
+        const supervisor = await User.find({ isSupervisor: true });
         const dbSupervisor = await User.findOne(supervisor[index]._id);
         index++;
 
@@ -83,14 +90,18 @@ async function addTeam() {
         dbTeam.supervisors = dbSupervisor._id;
 
         const dbClinicians = clinicians.slice(initialValue, initialValue + teamSize);
+        const dbPatients = patients.slice(initialValue, initialValue + teamSize);
+
         initialValue+=teamSize;
         console.log(`initial value: ${initialValue}`);
         console.log(`dbClinicians: ${dbClinicians}`)
         for (const user of dbClinicians) {
             dbTeam.clinicians.push(user._id);
-
             user.team=dbTeam._id;
             await user.save();
+        }
+        for (const patient of dbPatients){
+            dbTeam.patients.push(patient._id);
         }
         console.log(`Team saved! _id = ${dbTeam._id}`);
         await dbTeam.save();
@@ -136,7 +147,9 @@ async function addTasks() {
 
         dbTask.clinician = dbUser._id;
         dbTask.patient = dbPatient._id;
-
+        // set finished_at to a random day in past 7 days
+        dbTask.finished_at = Date.now() - Math.floor(Math.random() * 6 * 24 * 60 * 60 * 1000 )
+  
         await dbTask.save();
         console.log(`Taks for ${dbUser.fname} saved! _id=${dbTask._id}`);
 
