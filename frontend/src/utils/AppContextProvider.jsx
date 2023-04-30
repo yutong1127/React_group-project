@@ -1,34 +1,53 @@
-import React, { useState } from "react";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import useGet from "../hooks/useGet";
+import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
 export const AppContext = React.createContext({
     patients: [],
     notifications: [],
-    tasks: []
+    tasks: [],
+    tasksCompleted: [],
+    patientList: [],
+    clinicianList: [],
+    team: {},
+    userProfile: {},
+    unreadNotification: [],
 });
 
 export function AppContextProvider({ children }) {
-
     const {
         data: notification,
         isLoading: notificationsLoading,
-        refresh: refreshNotifications
+        refresh: refreshNotifications,
     } = useGet(`${API_BASE_URL}/api/notification`, []);
 
     const {
         data: tasks,
         isLoading: tasksLoading,
-        refresh: refreshTasks
+        refresh: refreshTasks,
     } = useGet(`${API_BASE_URL}/api/task`, []);
+
+    const {
+        data: unreadNotification,
+        isLoading: unreadNotificationLoading,
+        refresh: refreshUnreadNotifications,
+    } = useGet(`${API_BASE_URL}/api/notification/unread`, []);
+
+
+    const {
+        data: tasksCompleted,
+        isLoading: tasksCompletedLoading,
+        refresh: refreshtasksCompleted,
+    } = useGet(`${API_BASE_URL}/api/task/completed/644dfe831da67c9793a8684e`, []);
 
     const {
         data: teamPatients,
         isLoading: teamPatientsLoading,
         refresh: refreshTeamPatients
-    } = useGet(`${API_BASE_URL}/api/patients`, []);
+    } = useGet(`${API_BASE_URL}/api/patient`, []);
 
     async function createTask(task) {
         await axios.post(`${API_BASE_URL}/api/task/createtask`, {
@@ -79,44 +98,123 @@ export function AppContextProvider({ children }) {
 
     async function deleteNotification(id) {
         const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
+
         console.log(deleteResponse);
+
+        refreshNotifications();
+        refreshUnreadNotifications();
+
+    }
+
+    const {
+        data: patientList,
+        isLoading: patientListLoading,
+        refresh: refreshPatientList,
+    } = useGet(`${API_BASE_URL}/api/team/1/patient_list`, []);
+
+    const {
+        data: clinicianList,
+        isLoading: clinicianListLoading,
+        refresh: refreshClinicianList,
+    } = useGet(`${API_BASE_URL}/api/team/1/clinician_list`, []);
+
+    const {
+        data: team,
+        isLoading: teamLoading,
+        refresh: refreshTeam,
+    } = useGet(`${API_BASE_URL}/api/team/1`, []);
+
+    const {
+        data: userProfile,
+        isLoading: userProfileLoading,
+        refresh: refreshUserProfile,
+    } = useGet(`${API_BASE_URL}/api/user_profile/644dfe831da67c9793a8684e`, []);
+
+
+    async function createContainer(id, container_id) {
+        const res = await axios.put(`${API_BASE_URL}/api/patient/${id}`, { container: container_id });
+        console.log(res);
+    }
+
+
+    async function readNotification(id) {
+        console.log(id);
+        const updateResponse = await axios.put(
+            `${API_BASE_URL}/api/notification/unread/${id}`
+        );
+
+        console.log(updateResponse);
+
+        refreshUnreadNotifications();
         refreshNotifications();
     }
 
+    async function updateUserProfile(id, data) {
+        const updateResponse = await axios.put(
+            `${API_BASE_URL}/api/user_profile/${id}`,
+            data
+        );
+
+        console.log(updateResponse && "you have updated profile for" + data.fname);
+
+        refreshUserProfile();
+    }
 
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const handleDrawerOpen = () => {
         setDrawerOpen(true);
-    }
+    };
     const handleDrawerClose = () => {
         setDrawerOpen(false);
-    }
+    };
 
-    async function createContainer(id, container_id) {
-        const res = await axios.put(`${API_BASE_URL}/api/patients/${id}`, { container: container_id });
-        console.log(res);
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    async function checkLoginStatus() {
+        // console.log("Checking login status...");
+        try {
+            const response = await axios.get(`${API_BASE_URL}/api/user/status`, {
+                withCredentials: true,
+            });
+            setLoggedIn(response.data.loggedIn);
+            //   console.log("Login status:", response.data.loggedIn);
+        } catch (error) {
+            console.error("Error checking login status:", error);
+        }
+
+        useEffect(() => {
+            checkLoginStatus();
+        }, []);
     }
 
     const context = {
         notification,
         notificationsLoading,
+        unreadNotification,
+        unreadNotificationLoading,
         deleteNotification,
+        readNotification,
         drawerOpen,
         handleDrawerOpen,
         handleDrawerClose,
         teamPatients,
         tasks,
         tasksLoading,
-        createTask,
-        deleteTask,
-        claimTask,
+        tasksCompleted,
+        patientList,
+        patientListLoading,
+        clinicianList,
+        clinicianListLoading,
+        team,
+        teamLoading,
+        userProfile,
+        userProfileLoading,
+        updateUserProfile,
+        loggedIn,
+        setLoggedIn,
         createContainer
-    }
+    };
 
-    return (
-        <AppContext.Provider value={context}>
-            {children}
-        </AppContext.Provider>
-    )
+    return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 }

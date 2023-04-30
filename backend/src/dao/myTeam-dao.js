@@ -1,4 +1,4 @@
-import {Patient, User, Task, Team} from '../patientlist-db/schema';
+import {Patient, User, Task, Team} from '../patientlist-db/schema.js';
 
 //find supervisor by team
 async function findSupervisorByTeam(teamId) {

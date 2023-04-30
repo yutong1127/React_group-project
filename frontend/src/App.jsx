@@ -16,17 +16,14 @@ function App() {
     <Routes>
       <Route path="/" element={<PageWithNavbar />}>
           <Route index element={<Navigate to="login" replace />} />
-
           <Route path='login' element={< LoginPage />}/>
           <Route path='notification' element={< Notifications />}/>
           <Route path='myteam' element={< MyTeam />}/>
           <Route path='myprofile' element={< MyProfile />}/>
           <Route path='patientlist' element={< PatientList />}/>
-          <Route path='patientdetails' element={< PatientListGrid />}/>
+          <Route path='patientdetails/:patientId' element={<PatientListGrid />}/>
 
       </Route>
-
-
     </Routes>
   );
 }

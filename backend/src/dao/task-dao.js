@@ -1,5 +1,6 @@
-import { Task } from "../patientlist-db/schema";
+import { Task } from "../patientlist-db/schema.js";
 import dayjs from 'dayjs';
+import mongoose from 'mongoose';
 
 async function retrieveTasks() {
     return await Task.find().populate('patient').populate('clinician');
@@ -7,6 +8,10 @@ async function retrieveTasks() {
 
 async function retrieveTask(id) {
     return await Task.findById(id);
+}
+
+async function retrieveTasksByPatientId(id) {
+    return await Task.find({ patient: mongoose.Types.ObjectId(id) });
 }
 
 async function updateTask(task) {
@@ -39,12 +44,19 @@ async function createTask(task) {
     return dbTask !== undefined;
 }
 
-
+// retrieve tasks that have already been completed within the last 7 days
+async function retrieveCompletedTasks(clinicianId) {
+    const tasks = await Task.find({clinician: clinicianId});
+    const completedTasks = tasks.filter(task => dayjs(task.completedAt).isAfter(dayjs().subtract(7, 'day')));
+    return completedTasks;
+}
 
 export {
     retrieveTasks,
     retrieveTask,
     updateTask,
     deleteTask,
-    createTask
-}
+    createTask,
+    retrieveCompletedTasks,
+    retrieveTasksByPatientId
+};
