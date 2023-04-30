@@ -12,6 +12,9 @@ import {
     Modal
 } from '@mui/material/';
 import { AppContext } from "../../../utils/AppContextProvider"
+import { useNavigate } from "react-router"
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 const style = {
     position: 'absolute',
@@ -193,6 +196,7 @@ function OtherModal() {
 
 export default function PatientCard(props) {
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
     const handleOpen = () => {
         setOpen(true);
     };
@@ -209,7 +213,9 @@ export default function PatientCard(props) {
             <Box sx={{ flexGrow: 1 }}>
                 <Grid item container spacing={2}>
                     <Grid item xs={1}>
+                        <Button  onClick={() => navigate(`/patientdetails/${props.patient._id}`)}>
                         <PatientDetails patient={props.patient} />
+                        </Button>
                     </Grid>
                     <Grid item xs={4}>
                         <PatientProgress patient={props.patient}/>

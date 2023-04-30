@@ -27,9 +27,9 @@ router.get('/:teamId', async(req,res)=>{
 router.get('/:teamId/patient_list', async(req,res)=>{
     const { teamId } = req.params;
 
-    //console.log(`teamId: ${teamId}`);
+    // console.log(`teamId: ${teamId}`);
     const patientList =await retrievePatientList(teamId);
-    //console.log(`patientList: ${patientList}`);
+    // console.log(`patientList: ${patientList}`);
     if(patientList) {
         return res.json(patientList);
         

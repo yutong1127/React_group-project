@@ -50,7 +50,7 @@ export default function PatientDetailsInfo(props) {
                 <List>
                     <ListItem divider>
                         <ListItemText
-                            primary={'Patient ID: ' + `${patient._id}`}
+                            primary={'Patient ID: ' + `${patient.identifier}`}
                         />
                     </ListItem>
                     <ListItem divider>

@@ -26,6 +26,9 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useContext } from 'react';
 import { AppContext } from '../../../utils/AppContextProvider';
+import axios from 'axios';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export default function Tasks() {
     const DEFAULT_ORDER = 'asc';
@@ -41,7 +44,37 @@ export default function Tasks() {
     const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
     const [paddingHeight, setPaddingHeight] = useState(0);
     const { tasks, deleteTask, claimTask } = useContext(AppContext)
-    
+
+    const [taskz, setTaskz] = useState([]);
+
+    useEffect(() => {
+        async function getTeamsTasks() {
+            const teamTasks = [];
+            // retrive all patients from team 1 for testing
+            const { data } = await axios.get(`${API_BASE_URL}/api/team/1/patient_list`);
+            
+            for (const patient of data) {
+                const { data } = await axios.get(`${API_BASE_URL}/api/task/patient/${patient._id}`);
+                for (const db_task of data) {
+                  
+                    const task = {
+                        _id: db_task._id,
+                        name: db_task.name,
+                        type: db_task.type,
+                        patient: db_task.patient.fname + " " + db_task.patient.lname,
+                        clinician: db_task.clinician.fname + " " + db_task.clinician.lname,
+                        priority: db_task.priority,
+                        time: db_task.created_at
+                    }
+                    teamTasks.push(task)
+                }
+
+            }
+            setTaskz(teamTasks);
+        }
+        getTeamsTasks();
+    }, []);
+
     //Table headers,toolbars etc.
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
@@ -231,7 +264,8 @@ export default function Tasks() {
     //Table cells.
     useEffect(() => {
         let rowsOnMount = stableSort(
-            tasks,
+            //
+            taskz,
             getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
         );
 
@@ -241,7 +275,7 @@ export default function Tasks() {
         );
 
         setVisibleRows(rowsOnMount);
-    }, [tasks]);
+    }, [taskz]);
 
     const handleRequestSort = useCallback(
         (event, newOrderBy) => {
@@ -250,7 +284,7 @@ export default function Tasks() {
             setOrder(toggledOrder);
             setOrderBy(newOrderBy);
 
-            const sortedRows = stableSort(tasks, getComparator(toggledOrder, newOrderBy));
+            const sortedRows = stableSort(taskz, getComparator(toggledOrder, newOrderBy));
             const updatedRows = sortedRows.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
@@ -258,7 +292,7 @@ export default function Tasks() {
 
             setVisibleRows(updatedRows);
         },
-        [order, orderBy, page, rowsPerPage, tasks],
+        [order, orderBy, page, rowsPerPage, taskz],
     );
 
     const handleClick = (event, name) => {
@@ -285,7 +319,7 @@ export default function Tasks() {
         (event, newPage) => {
             setPage(newPage);
 
-            const sortedRows = stableSort(tasks, getComparator(order, orderBy));
+            const sortedRows = stableSort(taskz, getComparator(order, orderBy));
             const updatedRows = sortedRows.slice(
                 newPage * rowsPerPage,
                 newPage * rowsPerPage + rowsPerPage,
@@ -295,12 +329,12 @@ export default function Tasks() {
 
             // Avoid a layout jump when reaching the last page with empty rows.
             const numEmptyRows =
-                newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - tasks.length) : 0;
+                newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - taskz.length) : 0;
 
             const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
             setPaddingHeight(newPaddingHeight);
         },
-        [order, orderBy, dense, rowsPerPage, tasks],
+        [order, orderBy, dense, rowsPerPage, taskz],
     );
 
     const handleChangeRowsPerPage = useCallback(
@@ -310,7 +344,7 @@ export default function Tasks() {
 
             setPage(0);
 
-            const sortedRows = stableSort(tasks, getComparator(order, orderBy));
+            const sortedRows = stableSort(taskz, getComparator(order, orderBy));
             const updatedRows = sortedRows.slice(
                 0 * updatedRowsPerPage,
                 0 * updatedRowsPerPage + updatedRowsPerPage,
@@ -321,7 +355,7 @@ export default function Tasks() {
             // There is no layout jump to handle on the first page.
             setPaddingHeight(0);
         },
-        [order, orderBy],
+        [order, orderBy, taskz],
     );
 
     const handleChangeDense = (event) => {
@@ -344,7 +378,7 @@ export default function Tasks() {
                             order={order}
                             orderBy={orderBy}
                             onRequestSort={handleRequestSort}
-                            rowCount={tasks.length}
+                            rowCount={taskz.length}
                         />
                         <TableBody>
                             {visibleRows
@@ -382,10 +416,10 @@ export default function Tasks() {
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="right">{row.type}</TableCell>
-                                            <TableCell align="right">{row.patient.fname + row.patient.lname}</TableCell>
-                                            <TableCell align="right">{row.clinician.fname + row.clinician.lname}</TableCell>
+                                            <TableCell align="right">{row.patient}</TableCell>
+                                            <TableCell align="right">{row.clinician}</TableCell>
                                             <TableCell align="right">{row.priority}</TableCell>
-                                            <TableCell align="right">{row.created_at}</TableCell>
+                                            <TableCell align="right">{row.time}</TableCell>
                                         </TableRow>
                                     );
                                 })
@@ -405,7 +439,7 @@ export default function Tasks() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={tasks.length}
+                    count={taskz.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

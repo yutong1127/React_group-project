@@ -212,7 +212,10 @@ export function AppContextProvider({ children }) {
         updateUserProfile,
         loggedIn,
         setLoggedIn,
-        createContainer
+        createContainer,
+        createTask,
+        deleteTask,
+        claimTask
     };
 
     return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

@@ -11,7 +11,7 @@ async function retrieveTask(id) {
 }
 
 async function retrieveTasksByPatientId(id) {
-    return await Task.find({ patient: mongoose.Types.ObjectId(id) });
+    return await Task.find({ patient: mongoose.Types.ObjectId(id) }).populate('patient').populate('clinician');
 }
 
 async function updateTask(task) {
