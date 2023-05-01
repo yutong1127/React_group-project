@@ -52,11 +52,11 @@ export default function Tasks() {
             const teamTasks = [];
             // retrive all patients from team 1 for testing
             const { data } = await axios.get(`${API_BASE_URL}/api/team/1/patient_list`);
-            
+
             for (const patient of data) {
                 const { data } = await axios.get(`${API_BASE_URL}/api/task/patient/${patient._id}`);
                 for (const db_task of data) {
-                  
+
                     const task = {
                         _id: db_task._id,
                         name: db_task.name,
@@ -363,6 +363,18 @@ export default function Tasks() {
     };
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const offset = date.getTimezoneOffset() / 60;
+        const nzOffset = 12; // New Zealand time zone offset is UTC+12
+        const hours = (date.getHours() + offset + nzOffset).toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      
+        return `${day}-${month} ${hours}:${minutes}`;
+      }
+
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
@@ -419,7 +431,7 @@ export default function Tasks() {
                                             <TableCell align="right">{row.patient}</TableCell>
                                             <TableCell align="right">{row.clinician}</TableCell>
                                             <TableCell align="right">{row.priority}</TableCell>
-                                            <TableCell align="right">{row.time}</TableCell>
+                                            <TableCell align="right">{formatDate(row.time)}</TableCell>
                                         </TableRow>
                                     );
                                 })

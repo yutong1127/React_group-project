@@ -56,16 +56,16 @@ router.post('/add', async (req, res)=> {
     res.sendStatus(success? HTTP_CREATED: HTTP_NOT_FOUND);
 })
 
-// router.get('/', async (req, res) => {
-//     try {
-//       const { id } = req.params;
-//       const clinicians = await getCliniciansByUserId(id);
-//       res.json(clinicians);
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).send('Server Error');
-//     }
-//   });
+router.get('/supervisors/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const clinicians = await getCliniciansByUserId(id);
+      res.json(clinicians);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server Error');
+    }
+  });
   
 
 export default router;

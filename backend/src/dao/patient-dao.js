@@ -33,17 +33,9 @@ async function addPatient(data) {
     return await patient.save();
 }
 
-async function getRandomUser() {
-    const user = await User.find();
-    const randomNum = Math.floor(Math.random() * user.length);
-    return user[randomNum];
-}
-
-async function getCliniciansByUserId(user) {
-    //temporary
-    const random = await getRandomUser();
+async function getCliniciansByUserId(id) {
     let data = [];
-    const team = await Team.findOne({ clinicians: random._id });
+    const team = await Team.findOne({ clinicians: id });
     const clinicians = team.supervisors;
     await Promise.all(clinicians.map(async (c) => {
         const user = await getUserById(c);

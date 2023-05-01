@@ -41,7 +41,7 @@ export function AppContextProvider({ children }) {
         data: tasksCompleted,
         isLoading: tasksCompletedLoading,
         refresh: refreshtasksCompleted,
-    } = useGet(`${API_BASE_URL}/api/task/completed/644e476b566b34805b8b69b5`, []);
+    } = useGet(`${API_BASE_URL}/api/task/completed/644e6a5918221787c7ddb5e1`, []);
 
     const {
         data: teamPatients,
@@ -128,7 +128,7 @@ export function AppContextProvider({ children }) {
         data: userProfile,
         isLoading: userProfileLoading,
         refresh: refreshUserProfile,
-    } = useGet(`${API_BASE_URL}/api/user_profile/644e476b566b34805b8b69b5`, []);
+    } = useGet(`${API_BASE_URL}/api/user_profile/644e6a5918221787c7ddb5e1`, []);
 
 
     async function createContainer(id, container_id) {
