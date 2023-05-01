@@ -19,7 +19,7 @@ export default function AddPatient(){
   useEffect(() => {
     async function getClinicians() {
       // should pass in userID instead
-      const { data } = await axios.get(`${API_BASE_URL}/api/patient/supervisors/644e6a5918221787c7ddb5e1`);
+      const { data } = await axios.get(`${API_BASE_URL}/api/patient/supervisors/644f4559ac0b8e7ad2933bab`);
       let renderClinicians = [];
       for(const c of data) {
         const name = `${c.fname} ${c.lname}`
