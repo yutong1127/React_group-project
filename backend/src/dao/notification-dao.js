@@ -8,10 +8,10 @@ async function retrieveNotificationList (){
 async function retrieveUserOfNotification(name){
 
     const user = await User.findOne({ fname:name });
-    // console.log(`The user with fname  '${name}' is ${user.fname} ${user.lname} ${user._id}`);
+    console.log(`The user with fname  '${name}' is ${user.fname} ${user.lname} ${user._id}`);
 
     const notificationsOfUser = await User.populate(user, 'notification');
-    // console.log(`The notification of this user patients: ${notificationsOfUser}`);
+    console.log(`The notification of this user patients: ${notificationsOfUser}`);
 
     const notifications = notificationsOfUser.notification;
     
