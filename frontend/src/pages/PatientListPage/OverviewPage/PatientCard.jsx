@@ -213,20 +213,22 @@ export default function PatientCard(props) {
             <Box sx={{ flexGrow: 1, maxHeight: 300 }}>
                 <Grid item container spacing={2}>
                     <Grid item xs={1}>
-                        <Button  onClick={() => navigate(`/patientdetails/${props.patient._id}`)}>
-                        <PatientDetails patient={props.patient} />
+                        <Button onClick={() => navigate(`/patientdetails/${props.patient._id}`)}>
+                            <PatientDetails patient={props.patient} />
                         </Button>
                     </Grid>
                     <Grid item xs={4}>
-                        <PatientProgress patient={props.patient}/>
+                        <Box component="div" sx={{ overflowY: "scroll", maxHeight: 200 }}>
+                            <PatientProgress patient={props.patient} />
+                        </Box>
                     </Grid>
                     <Grid item xs={4}>
                         <Box component="div" sx={{ overflowY: "scroll", maxHeight: 200 }}>
-                        <PatientTasks patient={props.patient}/>
+                            <PatientTasks patient={props.patient} />
                         </Box>
                     </Grid>
                     <Grid item xs={3}>
-                        <FreetextArea container={props.patient.container} patient_id={props.patient._id}/>
+                        <FreetextArea container={props.patient.container} patient_id={props.patient._id} />
                     </Grid>
                     <Grid item xs={1}>
 
