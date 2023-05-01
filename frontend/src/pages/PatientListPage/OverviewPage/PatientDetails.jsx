@@ -7,7 +7,7 @@ export default function PatientDetails(props) {
         <div className={styles.patientDetails}>
             <List>
                 <ListItem >
-                    <ListItemText primary={props.patient.name} />
+                    <ListItemText primary={props.patient.fname + " " + props.patient.lname} />
                 </ListItem>
                 <Divider />
                 <ListItem>

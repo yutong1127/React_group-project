@@ -91,8 +91,7 @@ async function addTeam() {
         dbTeam.supervisors = dbSupervisor._id;
 
         const dbClinicians = clinicians.slice(initialValue, initialValue + teamSize);
-        const dbPatients = patients.slice(initialValue, initialValue + teamSize);
-
+     
         initialValue+=teamSize;
         console.log(`initial value: ${initialValue}`);
         console.log(`dbClinicians: ${dbClinicians}`)
@@ -101,9 +100,7 @@ async function addTeam() {
             user.team=dbTeam._id;
             await user.save();
         }
-        for (const patient of dbPatients){
-            dbTeam.patients.push(patient._id);
-        }
+        
         console.log(`Team saved! _id = ${dbTeam._id}`);
         await dbTeam.save();
 

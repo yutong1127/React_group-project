@@ -1,4 +1,4 @@
-import { useState, React } from "react"
+import { useState, React, useContext } from "react"
 import FreetextArea from "./FreetextArea"
 import PatientDetails from "./PatientDetails"
 import PatientProgress from "./PatientProgress"
@@ -11,6 +11,10 @@ import {
     Button,
     Modal
 } from '@mui/material/';
+import { AppContext } from "../../../utils/AppContextProvider"
+import { useNavigate } from "react-router"
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 const style = {
     position: 'absolute',
@@ -87,6 +91,7 @@ function BloodTestModal() {
 }
 
 function ReviewModal() {
+    const { createTask } = useContext(AppContext)
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -94,6 +99,18 @@ function ReviewModal() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleCreateTask = async () => {
+        const task = {
+            name: 'Review',
+            type: 'Review',
+            patient: '6441045775c54d273abff3f9',
+            clinician: '6441045875c54d273abff405',
+            priority: 0,
+            status: 0
+        }
+        await createTask(task)
+    }
 
     return (
         < >
@@ -109,6 +126,7 @@ function ReviewModal() {
                     <p id="child-modal-description">
                         Review patient
                     </p>
+                    <Button onClick={handleCreateTask}>Create</Button>
                     <Button onClick={handleClose}>Close</Button>
                 </Box>
             </Modal>
@@ -178,6 +196,7 @@ function OtherModal() {
 
 export default function PatientCard(props) {
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
     const handleOpen = () => {
         setOpen(true);
     };
@@ -191,19 +210,25 @@ export default function PatientCard(props) {
             padding: 8,
             margin: 5
         }}>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box sx={{ flexGrow: 1, maxHeight: 300 }}>
                 <Grid item container spacing={2}>
                     <Grid item xs={1}>
-                        <PatientDetails patient={props.patient} />
+                        <Button onClick={() => navigate(`/patientdetails/${props.patient._id}`)}>
+                            <PatientDetails patient={props.patient} />
+                        </Button>
                     </Grid>
                     <Grid item xs={4}>
-                        <PatientProgress patient={props.patient}/>
+                        <Box component="div" sx={{ overflowY: "scroll", maxHeight: 200 }}>
+                            <PatientProgress patient={props.patient} />
+                        </Box>
                     </Grid>
                     <Grid item xs={4}>
-                        <PatientTasks patient={props.patient}/>
+                        <Box component="div" sx={{ overflowY: "scroll", maxHeight: 200 }}>
+                            <PatientTasks patient={props.patient} />
+                        </Box>
                     </Grid>
                     <Grid item xs={3}>
-                        <FreetextArea />
+                        <FreetextArea container={props.patient.container} patient_id={props.patient._id} />
                     </Grid>
                     <Grid item xs={1}>
 

@@ -14,10 +14,14 @@ async function findUsersByTeam(teamId) {
     return users;
 }
 
-// find all patients by team
-async function findPatientsByTeam(teamId) {
-    const patients = await Team.find({teams: teamId}, { patients: 1});
-    return patients;
+// retrieve patient list from Team collection
+async function retrievePatientList(teamId) {
+
+    const result = await Team.findOne({ id: teamId }, { patients: 1 })
+        .populate('patients');
+
+    // console.log(`result: ${await Team.findOne({ id: teamId })}`);
+    return result.patients;
 }
 
 // find all tasks by team
@@ -54,6 +58,10 @@ async function findSevenDayDoneTasksByUser(userId) {
     const tasks = await Task.find({clinician: userId, finished_at: {$gte: new Date(Date.now() - 7*24*60*60*1000)}});
     return tasks;
 
+}
+
+export {
+    retrievePatientList
 }
 
 

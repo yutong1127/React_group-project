@@ -14,20 +14,19 @@ import {
     Button
 } from '@mui/material';
 
-import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
+import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
-import HourglassFullIcon from '@mui/icons-material/HourglassFull';
-
-import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import useGet from '../../hooks/useGet';
 
 const TASK_ICONS = {
-    0: <HourglassEmptyIcon />,
-    1: <HourglassTopIcon />,
-    2: <HourglassFullIcon />
+    0: <CircleOutlinedIcon />,
+    1: <ChangeCircleOutlinedIcon />,
+    2: <CheckCircleOutlineOutlinedIcon />
 };
 
 const style = {

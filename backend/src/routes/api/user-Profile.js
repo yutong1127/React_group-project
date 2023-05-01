@@ -10,22 +10,22 @@ const HTTP_NO_CONTENT = 204;
 
 const router = express.Router();
 
-router.get('/:userId', async(req,res)=>{
+router.get('/:userId', async (req, res) => {
     const { userId } = req.params;
 
-console.log(`userId: ${userId}`);
-    const user =await getUserById(userId);
-    console.log(`user: ${user}`);
-    if(user) {
+    //console.log(`userId: ${userId}`);
+    const user = await getUserById(userId);
+    //console.log(`user: ${user}`);
+    if (user) {
         return res.json(user);
     }
-        return res.sendStatus(HTTP_NOT_FOUND);
+    return res.sendStatus(HTTP_NOT_FOUND);
 
 });
 
-router.put('/:userId', async(req,res)=>{
+router.put('/:userId', async (req, res) => {
     const { userId } = req.params;
-  
+
     const userProfile = req.body;
 
     userProfile._id = userId;

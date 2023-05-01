@@ -11,7 +11,7 @@ async function retrieveTask(id) {
 }
 
 async function retrieveTasksByPatientId(id) {
-    return await Task.find({ patient: mongoose.Types.ObjectId(id) });
+    return await Task.find({ patient: mongoose.Types.ObjectId(id) }).populate('patient').populate('clinician');
 }
 
 async function updateTask(task) {
@@ -37,6 +37,13 @@ async function deleteTask(id) {
     await Task.deleteOne({ _id: id });
 }
 
+async function createTask(task) {
+
+    const dbTask = new Task(task);
+    await dbTask.save();
+    return dbTask !== undefined;
+}
+
 // retrieve tasks that have already been completed within the last 7 days
 async function retrieveCompletedTasks(clinicianId) {
     const tasks = await Task.find({clinician: clinicianId});
@@ -49,6 +56,7 @@ export {
     retrieveTask,
     updateTask,
     deleteTask,
+    createTask,
     retrieveCompletedTasks,
     retrieveTasksByPatientId
 };

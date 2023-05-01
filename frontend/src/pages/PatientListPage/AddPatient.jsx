@@ -19,11 +19,11 @@ export default function AddPatient(){
   useEffect(() => {
     async function getClinicians() {
       // should pass in userID instead
-      const { data } = await axios.get(`${API_BASE_URL}/api/patient`);
+      const { data } = await axios.get(`${API_BASE_URL}/api/patient/supervisors/644f4559ac0b8e7ad2933bab`);
       let renderClinicians = [];
       for(const c of data) {
         const name = `${c.fname} ${c.lname}`
-        renderClinicians.push( <FormControlLabel value={c.id} control={<Radio />} label={name} name="responsibleClinicians"/>)
+        renderClinicians.push( <FormControlLabel key={c.id} value={c.id} control={<Radio />} label={name} name="responsibleClinicians"/>)
       }
       setClinicians(renderClinicians);
     }
@@ -67,14 +67,14 @@ export default function AddPatient(){
               <LocalizationProvider dateAdapter={AdapterDayjs} >
                 <DateField sx={{ width: '100%' }} format="DD-MM-YYYY" label="Date of Birth" value={dob} onChange={(e) => setDob(e)}/>
               </LocalizationProvider>
-              <FormControl multiline fullWidth sx={{ml: 2, textAlign:'left'}} >
+              <FormControl fullWidth sx={{ml: 2, textAlign:'left'}} >
                 <InputLabel id="select-gender" >Gender</InputLabel>
                   <Select labelId="select-gender" value={gender} label="Gender" onChange={onGenderChange}>
                     <MenuItem value="Male">Male</MenuItem>
                     <MenuItem value="Female">Female</MenuItem>
                   </Select>
                 </FormControl>
-              <FormControl multiline fullWidth sx={{ml: 2, textAlign:'left'}} >
+              <FormControl fullWidth sx={{ml: 2, textAlign:'left'}} >
                 <InputLabel id="select-location" >Location</InputLabel>
                   <Select labelId="select-location" value={location} label="Location" onChange={onLocationChange}>
                     <MenuItem value="Auckland">Auckland</MenuItem>

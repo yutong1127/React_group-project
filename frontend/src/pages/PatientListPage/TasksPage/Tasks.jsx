@@ -28,6 +28,8 @@ import { useContext } from 'react';
 import { AppContext } from '../../../utils/AppContextProvider';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+
 export default function Tasks() {
     const DEFAULT_ORDER = 'asc';
     const DEFAULT_ORDER_BY = 'type';
@@ -41,10 +43,37 @@ export default function Tasks() {
     const [visibleRows, setVisibleRows] = useState(null);
     const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
     const [paddingHeight, setPaddingHeight] = useState(0);
-    const { tasks } = useContext(AppContext)
-    const [displayedTasks, setdisplayedTasks] = useState(tasks)
+    const { tasks, deleteTask, claimTask } = useContext(AppContext)
 
-    console.log(tasks);
+    const [taskz, setTaskz] = useState([]);
+
+    useEffect(() => {
+        async function getTeamsTasks() {
+            const teamTasks = [];
+            // retrive all patients from team 1 for testing
+            const { data } = await axios.get(`${API_BASE_URL}/api/team/1/patient_list`);
+
+            for (const patient of data) {
+                const { data } = await axios.get(`${API_BASE_URL}/api/task/patient/${patient._id}`);
+                for (const db_task of data) {
+
+                    const task = {
+                        _id: db_task._id,
+                        name: db_task.name,
+                        type: db_task.type,
+                        patient: db_task.patient.fname + " " + db_task.patient.lname,
+                        clinician: db_task.clinician.fname + " " + db_task.clinician.lname,
+                        priority: db_task.priority,
+                        time: db_task.created_at
+                    }
+                    teamTasks.push(task)
+                }
+
+            }
+            setTaskz(teamTasks);
+        }
+        getTeamsTasks();
+    }, []);
 
     //Table headers,toolbars etc.
     function descendingComparator(a, b, orderBy) {
@@ -62,10 +91,7 @@ export default function Tasks() {
             ? (a, b) => descendingComparator(a, b, orderBy)
             : (a, b) => -descendingComparator(a, b, orderBy);
     }
-    // Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-    // stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-    // only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-    // with exampleArray.slice().sort(exampleComparator)
+
     function stableSort(array, comparator) {
         const stabilizedThis = array.map((el, index) => [el, index]);
         stabilizedThis.sort((a, b) => {
@@ -83,7 +109,7 @@ export default function Tasks() {
             id: 'name',
             numeric: false,
             disablePadding: true,
-            label: 'Select All',
+            label: 'Tasks',
         },
         {
             id: 'type',
@@ -118,7 +144,7 @@ export default function Tasks() {
     ];
 
     function EnhancedTableHead(props) {
-        const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+        const { order, orderBy, numSelected, rowCount, onRequestSort } =
             props;
         const createSortHandler = (newOrderBy) => (event) => {
             onRequestSort(event, newOrderBy);
@@ -127,17 +153,7 @@ export default function Tasks() {
         return (
             <TableHead>
                 <TableRow>
-                    <TableCell padding="checkbox">
-                        <Checkbox
-                            color="primary"
-                            indeterminate={numSelected > 0 && numSelected < rowCount}
-                            checked={rowCount > 0 && numSelected === rowCount}
-                            onChange={onSelectAllClick}
-                            inputProps={{
-                                'aria-label': 'select all desserts',
-                            }}
-                        />
-                    </TableCell>
+                    <TableCell padding="checkbox" />
                     {headCells.map((headCell) => (
                         <TableCell
                             key={headCell.id}
@@ -167,7 +183,6 @@ export default function Tasks() {
     EnhancedTableHead.propTypes = {
         numSelected: PropTypes.number.isRequired,
         onRequestSort: PropTypes.func.isRequired,
-        onSelectAllClick: PropTypes.func.isRequired,
         order: PropTypes.oneOf(['asc', 'desc']).isRequired,
         orderBy: PropTypes.string.isRequired,
         rowCount: PropTypes.number.isRequired,
@@ -175,34 +190,6 @@ export default function Tasks() {
 
     function EnhancedTableToolbar(props) {
         const { numSelected, tasksSelected } = props;
-
-        // console.log(tasksSelected[0])
-
-        const deleteTask = async () => {
-            await fetch(`http://localhost:3000/api/tasks/${tasksSelected[0]}`, { method: 'DELETE' });
-            const taskToBeRemoved = tasksSelected[0]
-            const findIndex = displayedTasks.findIndex(task => task._id === taskToBeRemoved)
-            // console.log(findIndex)
-            setdisplayedTasks(displayedTasks.splice(findIndex, 1))
-            // console.log(displayedTasks)
-        }
-
-        const claimTask = async () => {
-            const taskToBeUpdated = tasksSelected[0]
-            const requestOptions = {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(taskToBeUpdated)
-            };
-
-            //Need user dao to retrieve the user object ID to updated the displayedtask object to send to server
-            await fetch(`http://localhost:3000/api/tasks/assignclinician/${taskToBeUpdated}`, requestOptions);
-
-            const findIndex = displayedTasks.findIndex(task => task._id === taskToBeUpdated)
-            // console.log(findIndex)
-            setdisplayedTasks(displayedTasks.splice(findIndex, 1))
-            // console.log(displayedTasks)
-        }
 
         return (
             <Toolbar
@@ -238,7 +225,10 @@ export default function Tasks() {
                 {numSelected > 0 ? (
                     <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                         <Tooltip title="Claim">
-                            <IconButton onClick={claimTask}>
+                            <IconButton onClick={() => {
+                                claimTask(tasksSelected)
+                                setSelected([])
+                            }}>
                                 <DoneOutlineIcon />
                             </IconButton>
                         </Tooltip>
@@ -248,7 +238,10 @@ export default function Tasks() {
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Delete">
-                            <IconButton onClick={deleteTask}>
+                            <IconButton onClick={() => {
+                                deleteTask(tasksSelected)
+                                setSelected([])
+                            }}>
                                 <DeleteIcon />
                             </IconButton>
                         </Tooltip>
@@ -259,8 +252,9 @@ export default function Tasks() {
                             <FilterListIcon />
                         </IconButton>
                     </Tooltip>
-                )}
-            </Toolbar>
+                )
+                }
+            </Toolbar >
         );
     }
 
@@ -270,7 +264,8 @@ export default function Tasks() {
     //Table cells.
     useEffect(() => {
         let rowsOnMount = stableSort(
-            displayedTasks,
+            //
+            taskz,
             getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
         );
 
@@ -280,7 +275,7 @@ export default function Tasks() {
         );
 
         setVisibleRows(rowsOnMount);
-    }, []);
+    }, [taskz]);
 
     const handleRequestSort = useCallback(
         (event, newOrderBy) => {
@@ -289,7 +284,7 @@ export default function Tasks() {
             setOrder(toggledOrder);
             setOrderBy(newOrderBy);
 
-            const sortedRows = stableSort(displayedTasks, getComparator(toggledOrder, newOrderBy));
+            const sortedRows = stableSort(taskz, getComparator(toggledOrder, newOrderBy));
             const updatedRows = sortedRows.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
@@ -297,17 +292,8 @@ export default function Tasks() {
 
             setVisibleRows(updatedRows);
         },
-        [order, orderBy, page, rowsPerPage],
+        [order, orderBy, page, rowsPerPage, taskz],
     );
-
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelected = displayedTasks.map((n) => n.name);
-            setSelected(newSelected);
-            return;
-        }
-        setSelected([]);
-    };
 
     const handleClick = (event, name) => {
         const selectedIndex = selected.indexOf(name);
@@ -333,7 +319,7 @@ export default function Tasks() {
         (event, newPage) => {
             setPage(newPage);
 
-            const sortedRows = stableSort(displayedTasks, getComparator(order, orderBy));
+            const sortedRows = stableSort(taskz, getComparator(order, orderBy));
             const updatedRows = sortedRows.slice(
                 newPage * rowsPerPage,
                 newPage * rowsPerPage + rowsPerPage,
@@ -343,12 +329,12 @@ export default function Tasks() {
 
             // Avoid a layout jump when reaching the last page with empty rows.
             const numEmptyRows =
-                newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - displayedTasks.length) : 0;
+                newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - taskz.length) : 0;
 
             const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
             setPaddingHeight(newPaddingHeight);
         },
-        [order, orderBy, dense, rowsPerPage],
+        [order, orderBy, dense, rowsPerPage, taskz],
     );
 
     const handleChangeRowsPerPage = useCallback(
@@ -358,7 +344,7 @@ export default function Tasks() {
 
             setPage(0);
 
-            const sortedRows = stableSort(displayedTasks, getComparator(order, orderBy));
+            const sortedRows = stableSort(taskz, getComparator(order, orderBy));
             const updatedRows = sortedRows.slice(
                 0 * updatedRowsPerPage,
                 0 * updatedRowsPerPage + updatedRowsPerPage,
@@ -369,13 +355,25 @@ export default function Tasks() {
             // There is no layout jump to handle on the first page.
             setPaddingHeight(0);
         },
-        [order, orderBy],
+        [order, orderBy, taskz],
     );
 
     const handleChangeDense = (event) => {
         setDense(event.target.checked);
     };
     const isSelected = (name) => selected.indexOf(name) !== -1;
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const offset = date.getTimezoneOffset() / 60;
+        const nzOffset = 12; // New Zealand time zone offset is UTC+12
+        const hours = (date.getHours() + offset + nzOffset).toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      
+        return `${day}-${month} ${hours}:${minutes}`;
+      }
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -391,9 +389,8 @@ export default function Tasks() {
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={displayedTasks.length}
+                            rowCount={taskz.length}
                         />
                         <TableBody>
                             {visibleRows
@@ -431,10 +428,10 @@ export default function Tasks() {
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="right">{row.type}</TableCell>
-                                            <TableCell align="right">{row.patient.fname}</TableCell>
-                                            <TableCell align="right">{row.clinician.lname}</TableCell>
+                                            <TableCell align="right">{row.patient}</TableCell>
+                                            <TableCell align="right">{row.clinician}</TableCell>
                                             <TableCell align="right">{row.priority}</TableCell>
-                                            <TableCell align="right">{row.created_at}</TableCell>
+                                            <TableCell align="right">{formatDate(row.time)}</TableCell>
                                         </TableRow>
                                     );
                                 })
@@ -454,7 +451,7 @@ export default function Tasks() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={displayedTasks.length}
+                    count={taskz.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
