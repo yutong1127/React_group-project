@@ -67,14 +67,14 @@ export default function AddPatient(){
               <LocalizationProvider dateAdapter={AdapterDayjs} >
                 <DateField sx={{ width: '100%' }} format="DD-MM-YYYY" label="Date of Birth" value={dob} onChange={(e) => setDob(e)}/>
               </LocalizationProvider>
-              <FormControl multiline fullWidth sx={{ml: 2, textAlign:'left'}} >
+              <FormControl fullWidth sx={{ml: 2, textAlign:'left'}} >
                 <InputLabel id="select-gender" >Gender</InputLabel>
                   <Select labelId="select-gender" value={gender} label="Gender" onChange={onGenderChange}>
                     <MenuItem value="Male">Male</MenuItem>
                     <MenuItem value="Female">Female</MenuItem>
                   </Select>
                 </FormControl>
-              <FormControl multiline fullWidth sx={{ml: 2, textAlign:'left'}} >
+              <FormControl fullWidth sx={{ml: 2, textAlign:'left'}} >
                 <InputLabel id="select-location" >Location</InputLabel>
                   <Select labelId="select-location" value={location} label="Location" onChange={onLocationChange}>
                     <MenuItem value="Auckland">Auckland</MenuItem>

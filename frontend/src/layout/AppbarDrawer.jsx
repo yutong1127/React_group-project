@@ -34,10 +34,6 @@ export default function DrawerMenu() {
             text: 'Patient List'
         },
         {
-            link: 'patientdetails',
-            text: 'Patient Details'
-        },
-        {
             link: 'myteam',
             text: 'My Team'
         },
