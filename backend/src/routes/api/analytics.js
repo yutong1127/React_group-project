@@ -1,3 +1,3 @@
-export default function dummyFunction (){
-   console.log("Testing") 
+export default function dummyFunction() {
+   console.log("Testing")
 }
