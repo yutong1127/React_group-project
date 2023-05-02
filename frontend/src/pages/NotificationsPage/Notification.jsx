@@ -7,7 +7,7 @@ import {
     CardActions,
     Button,
     Select,
-    FormControl,  
+    FormControl,
     InputLabel,
     MenuItem
 
@@ -22,47 +22,47 @@ export default function Notifications() {
 
 
     const { notification, deleteNotification, readNotification } = useContext(AppContext);
-    
+
     // console.log(notification);
-   
+
     const [sortNotification, setSortNotification] = useState([]);
-    useEffect(()=>{
+    useEffect(() => {
         setSortNotification(notification);
     }, [notification]);
- 
 
-    const handleSortNotifictaion = (event)=>{
+
+    const handleSortNotifictaion = (event) => {
         console.log(event.target.value);
-        if (event.target.value==10){
+        if (event.target.value == 10) {
             setSortNotification(notification)
-        } 
-        else if (event.target.value == 20){
-            const sortedTime = [...notification].sort((a,b)=>
-           a.created_at > b.created_at ? 1: -1,);
-        //    console.log(sortedTime);
-           setSortNotification(sortedTime)
         }
-        else if (event.target.value == 30){
-            const sortedName = [...notification].sort((a,b)=>
-           a.patient.lname > b.patient.lname ? 1: -1,);
-        //    console.log(sortedName);
-           setSortNotification(sortedName)
-        } 
-        else if (event.target.value == 40){
-            const sortedType = [...notification].sort((a,b)=>
-           a.type > b.type ? 1: -1,);
-        //    console.log(sortedType);
-           setSortNotification(sortedType)
-        } 
-        else if (event.target.value == 50){
-            const sortedRead = [...notification].sort((a,b)=>
-           a.isRead > b.isRead ? 1: -1,);
-        //    console.log(sortedRead);
-           setSortNotification(sortedRead)
+        else if (event.target.value == 20) {
+            const sortedTime = [...notification].sort((a, b) =>
+                a.created_at > b.created_at ? 1 : -1);
+            //    console.log(sortedTime);
+            setSortNotification(sortedTime)
         }
-       
+        else if (event.target.value == 30) {
+            const sortedName = [...notification].sort((a, b) =>
+                a.patient.lname > b.patient.lname ? 1 : -1);
+            //    console.log(sortedName);
+            setSortNotification(sortedName)
+        }
+        else if (event.target.value == 40) {
+            const sortedType = [...notification].sort((a, b) =>
+                a.type > b.type ? 1 : -1);
+            //    console.log(sortedType);
+            setSortNotification(sortedType)
+        }
+        else if (event.target.value == 50) {
+            const sortedRead = [...notification].sort((a, b) =>
+                a.isRead > b.isRead ? 1 : -1);
+            //    console.log(sortedRead);
+            setSortNotification(sortedRead)
+        }
+
     }
-     
+
 
     return (
         <Container className={styles.container}>
@@ -90,12 +90,12 @@ export default function Notifications() {
                     <Card key={index}
                         variant='outlined'
                         sx={{ margin: '20px' }}>
-                        <CardContent className={item.isRead? styles.cardContentRead:styles.cardContent} id={`${item.id}`}>
-                            <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color:'white', fontWeight:'bold' }} >New {item.type} Message</Typography>
-                           
+                        <CardContent className={item.isRead ? styles.cardContentRead : styles.cardContent} id={`${item.id}`}>
+                            <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} >New {item.type} Message</Typography>
+
                             <Typography sx={{ textAlign: 'left', fontSize: 18, paddingBottom: '10px', color: 'white' }}>Time: {item.created_at}</Typography>
 
-                            <Typography sx={{ textAlign: 'left', bgcolor: item.isRead? 'grey':'#9ED0F9', padding: '30px' }}>{item.entity} {item.patient.fname} {item.patient.lname}</Typography>
+                            <Typography sx={{ textAlign: 'left', bgcolor: item.isRead ? 'grey' : '#9ED0F9', padding: '30px' }}>{item.entity} {item.patient.fname} {item.patient.lname}</Typography>
 
 
                         </CardContent>

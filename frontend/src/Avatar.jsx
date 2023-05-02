@@ -16,9 +16,9 @@ export default function ImageAvatars(props) {
     return (
 
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="DoctorAvatar" 
-        src={DoctorAvartar} 
+        <Avatar
+          alt="DoctorAvatar"
+          src={DoctorAvartar}
         // sx={{ bgcolor: deepOrange[500] }}
         />
       </Stack>
@@ -26,50 +26,50 @@ export default function ImageAvatars(props) {
   } else if (props.id === 'PatientAvatar1') {
     return (
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="PatientAvatar1" 
-        src={PatientAvatar1} 
-        sx={{ mr: 1 }}
+        <Avatar
+          alt="PatientAvatar1"
+          src={PatientAvatar1}
+          sx={{ mr: 1 }}
         />
       </Stack>
     )
   } else if (props.id === 'PatientAvatar2') {
     return (
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="PatientAvatar2" 
-        src={PatientAvatar2} 
-        sx={{ mr: 1 }}/>
+        <Avatar
+          alt="PatientAvatar2"
+          src={PatientAvatar2}
+          sx={{ mr: 1 }} />
       </Stack>
     )
   } else if (props.id === 'PatientAvatar3') {
     return (
 
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="PatientAvatar3" 
-        src={PatientAvatar3} 
-        sx={{ mr: 1 }}/>
+        <Avatar
+          alt="PatientAvatar3"
+          src={PatientAvatar3}
+          sx={{ mr: 1 }} />
       </Stack>
     )
   } else if (props.id === 'PatientAvatar4') {
     return (
 
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="PatientAvatar4" 
-        src={PatientAvatar4} 
-        sx={{ mr: 1 }}/>
+        <Avatar
+          alt="PatientAvatar4"
+          src={PatientAvatar4}
+          sx={{ mr: 1 }} />
       </Stack>
     )
   } else if (props.id === 'PatientAvatar5') {
     return (
 
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="PatientAvatar5" 
-        src={PatientAvatar5} 
-        sx={{ mr: 1 }}/>
+        <Avatar
+          alt="PatientAvatar5"
+          src={PatientAvatar5}
+          sx={{ mr: 1 }} />
       </Stack>
     )
   } else {

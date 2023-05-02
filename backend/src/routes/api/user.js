@@ -19,7 +19,7 @@ router.post("/login", (req, res, next) => {
       }
       req.session.user = user;
 
-      return res.status(200).json({ message: "Login successful.", redirect: "/patientlist" });
+      return res.status(200).json({ message: "Login successful.", user: user.toObject(), redirect: "/patientlist" });
     });
   })(req, res, next);
 });
