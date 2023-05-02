@@ -19,7 +19,7 @@ export default function AddPatient(){
   useEffect(() => {
     async function getClinicians() {
       // should pass in userID instead
-      const { data } = await axios.get(`${API_BASE_URL}/api/patient/supervisors/644f4559ac0b8e7ad2933bab`);
+      const { data } = await axios.get(`${API_BASE_URL}/api/patient/supervisors/6450450af4b731864a60262c`);
       let renderClinicians = [];
       for(const c of data) {
         const name = `${c.fname} ${c.lname}`
@@ -77,10 +77,10 @@ export default function AddPatient(){
               <FormControl fullWidth sx={{ml: 2, textAlign:'left'}} >
                 <InputLabel id="select-location" >Location</InputLabel>
                   <Select labelId="select-location" value={location} label="Location" onChange={onLocationChange}>
-                    <MenuItem value="Auckland">Auckland</MenuItem>
-                    <MenuItem value="Wellington">Wellington</MenuItem>
-                    <MenuItem value="Queenstown">Queenstown</MenuItem>
-                    <MenuItem value="Christchurch">Christchurch</MenuItem>
+                    <MenuItem value="Ward 1">Ward 1</MenuItem>
+                    <MenuItem value="Ward 2">Ward 2</MenuItem>
+                    <MenuItem value="Ward 3">Ward 3</MenuItem>
+                    <MenuItem value="Ward 4">Ward 4</MenuItem>
                   </Select>
               </FormControl>
             </Box>

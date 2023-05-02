@@ -6,8 +6,6 @@ async function findSupervisorByTeam(teamId) {
     return supervisor;
 }
 
-
-
 // find all users by team
 async function findUsersByTeam(teamId) {
     const users = await Team.find({teams: teamId}, { clinicians: 1});

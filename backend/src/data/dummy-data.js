@@ -3,7 +3,7 @@ const patient = [
     fname: "Laureen",
     lname: "Lance",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id ipsum lectus. Donec commodo mollis suscipit. Donec ut purus nec nibh pharetra finibus. Nunc vitae suscipit urna. Vivamus efficitur turpis nibh, nec tristique purus tempus eu. Sed finibus sagittis tortor hendrerit suscipit. Vestibulum porta ex quis dui volutpat, ac mollis arcu ornare. Fusce sit amet efficitur odio, eu pharetra augue. Suspendisse ut ullamcorper lorem. Aenean at odio in dui tempor eleifend. Nullam a viverra enim. Aenean nec felis mattis, pharetra magna in, molestie lacus.",
-    location: "Auckland",
+    location: "Ward 1",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
     progress: {
@@ -19,7 +19,7 @@ const patient = [
     fname: "Bram",
     lname: "Gene",
     description: "Aenean ac lorem facilisis, dignissim urna nec, malesuada erat. In consectetur libero at mauris vehicula venenatis. Nam pulvinar mattis posuere. Aenean ligula magna, ultrices nec vestibulum ut, rutrum vehicula nisl. Phasellus egestas placerat sapien eget malesuada. Proin nibh nisi, fermentum id tincidunt eu, iaculis eget erat. Ut sit amet odio sit amet felis tincidunt placerat. Vestibulum ac aliquet mauris. Pellentesque tincidunt vulputate magna et tristique.",
-    location: "Wellington",
+    location: "Ward 2",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
@@ -35,7 +35,7 @@ const patient = [
     fname: "Cearra",
     lname: "Buffy",
     description: "Vestibulum commodo interdum molestie. Quisque aliquet, tellus ac iaculis dictum, lectus ante euismod velit, volutpat luctus augue magna sit amet purus. Donec euismod aliquam nisi sit amet volutpat. Sed ut ullamcorper augue, sed interdum lacus. Cras sodales tincidunt lectus, ut suscipit metus cursus non. Etiam ipsum nibh, porta blandit vestibulum sit amet, suscipit ut lorem. Suspendisse potenti. Vestibulum fringilla lorem libero, sed ultricies elit porttitor eu. Quisque non nulla sagittis, varius ex sed, ullamcorper eros. Aliquam dictum iaculis dolor. Proin semper vehicula turpis, id hendrerit ante fermentum id. Donec euismod efficitur ligula, vitae tristique velit egestas sed. Etiam eleifend mauris sed eros fringilla suscipit. Aliquam nunc tellus, efficitur mollis magna sed, tincidunt volutpat odio. Phasellus blandit, nisi in varius tempor, dolor ipsum pharetra est, in volutpat massa felis nec mauris.",
-    location: "Queenstown",
+    location: "Ward 4",
     responsibleClinicians: null,
     quickAdd: null,
     progress: {
@@ -51,7 +51,7 @@ const patient = [
     fname: "Laureen",
     lname: "Lance",
     description: "Quisque eros leo, venenatis eu interdum a, mattis quis turpis. Suspendisse potenti. Nulla ut consectetur urna. In lobortis finibus orci ac condimentum. Aenean ut sem et ex vestibulum scelerisque id eget augue. Cras vulputate feugiat magna quis tincidunt. Curabitur in ante semper, consequat nisl a, imperdiet velit. Etiam feugiat in sapien ut eleifend. Pellentesque dolor lectus, dictum ut pellentesque at, varius interdum mi. Nulla non nisi eget nunc rhoncus fringilla et sit amet dui. Nam lobortis dui eu rutrum aliquam.",
-    location: "Christchurch",
+    location: "Ward 3",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
@@ -67,7 +67,7 @@ const patient = [
     fname: "Ross",
     lname: "Carlisle",
     description: "Integer in viverra eros. Integer imperdiet placerat ligula quis aliquam. Sed non accumsan libero. Curabitur ac quam nulla. Vivamus et est nec leo semper ornare in et purus. Phasellus arcu tortor, ullamcorper quis ultrices quis, gravida sit amet magna. Curabitur enim turpis, tincidunt vel tortor tincidunt, bibendum venenatis elit. Nulla et nibh urna.",
-    location: "Wellington",
+    location: "Ward 2",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
@@ -83,7 +83,7 @@ const patient = [
     fname: "Ferdie",
     lname: "Kurt",
     description: "Pellentesque vel aliquet mi, vel gravida tortor. Aenean sit amet velit lacinia, convallis erat vestibulum, ullamcorper elit. Fusce ullamcorper porta blandit. Nulla facilisi. Etiam porttitor justo vitae eros pretium aliquam. Donec sed libero vestibulum, laoreet ligula ac, consectetur felis. Vivamus et facilisis odio, quis faucibus purus. Nam eget neque vel massa pulvinar scelerisque ut id urna. In hac habitasse platea dictumst. Donec vitae turpis et risus condimentum luctus eu a arcu. Duis dignissim mattis ultrices.",
-    location: "Auckland",
+    location: "Ward 1",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
     progress: {
@@ -99,7 +99,7 @@ const patient = [
     fname: "Ruby",
     lname: "Davis",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id ipsum lectus. Donec commodo mollis suscipit. Donec ut purus nec nibh pharetra finibus. Nunc vitae suscipit urna. Vivamus efficitur turpis nibh, nec tristique purus tempus eu. Sed finibus sagittis tortor hendrerit suscipit. Vestibulum porta ex quis dui volutpat, ac mollis arcu ornare. Fusce sit amet efficitur odio, eu pharetra augue. Suspendisse ut ullamcorper lorem. Aenean at odio in dui tempor eleifend. Nullam a viverra enim. Aenean nec felis mattis, pharetra magna in, molestie lacus.",
-    location: "Auckland",
+    location: "Ward 1",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
     birth_date: "1967-11-30T12:00:00.000+00:00",
@@ -109,7 +109,7 @@ const patient = [
     fname: "Natalie",
     lname: "Jackson",
     description:"Aenean ac lorem facilisis, dignissim urna nec, malesuada erat. In consectetur libero at mauris vehicula venenatis. Nam pulvinar mattis posuere. Aenean ligula magna, ultrices nec vestibulum ut, rutrum vehicula nisl. Phasellus egestas placerat sapien eget malesuada. Proin nibh nisi, fermentum id tincidunt eu, iaculis eget erat. Ut sit amet odio sit amet felis tincidunt placerat. Vestibulum ac aliquet mauris. Pellentesque tincidunt vulputate magna et tristique.",
-    location: "Wellington",
+    location: "Ward 2",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
@@ -125,7 +125,7 @@ const patient = [
     fname: "Leah",
     lname: "Green",
     description:"Vestibulum commodo interdum molestie. Quisque aliquet, tellus ac iaculis dictum, lectus ante euismod velit, volutpat luctus augue magna sit amet purus. Donec euismod aliquam nisi sit amet volutpat. Sed ut ullamcorper augue, sed interdum lacus. Cras sodales tincidunt lectus, ut suscipit metus cursus non. Etiam ipsum nibh, porta blandit vestibulum sit amet, suscipit ut lorem. Suspendisse potenti. Vestibulum fringilla lorem libero, sed ultricies elit porttitor eu. Quisque non nulla sagittis, varius ex sed, ullamcorper eros. Aliquam dictum iaculis dolor. Proin semper vehicula turpis, id hendrerit ante fermentum id. Donec euismod efficitur ligula, vitae tristique velit egestas sed. Etiam eleifend mauris sed eros fringilla suscipit. Aliquam nunc tellus, efficitur mollis magna sed, tincidunt volutpat odio. Phasellus blandit, nisi in varius tempor, dolor ipsum pharetra est, in volutpat massa felis nec mauris.",
-    location: "Queenstown",
+    location: "Ward 4",
     responsibleClinicians: null,
     quickAdd: null,
     progress: {
@@ -141,7 +141,7 @@ const patient = [
     fname: "Wyatt",
     lname: "Ramirez",
     description:"Quisque eros leo, venenatis eu interdum a, mattis quis turpis. Suspendisse potenti. Nulla ut consectetur urna. In lobortis finibus orci ac condimentum. Aenean ut sem et ex vestibulum scelerisque id eget augue. Cras vulputate feugiat magna quis tincidunt. Curabitur in ante semper, consequat nisl a, imperdiet velit. Etiam feugiat in sapien ut eleifend. Pellentesque dolor lectus, dictum ut pellentesque at, varius interdum mi. Nulla non nisi eget nunc rhoncus fringilla et sit amet dui. Nam lobortis dui eu rutrum aliquam.",
-    location: "Christchurch",
+    location: "Ward 3",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
@@ -157,7 +157,7 @@ const patient = [
     fname: "Madison",
     lname: "Turner",
     description:"Integer in viverra eros. Integer imperdiet placerat ligula quis aliquam. Sed non accumsan libero. Curabitur ac quam nulla. Vivamus et est nec leo semper ornare in et purus. Phasellus arcu tortor, ullamcorper quis ultrices quis, gravida sit amet magna. Curabitur enim turpis, tincidunt vel tortor tincidunt, bibendum venenatis elit. Nulla et nibh urna.",
-    location: "Wellington",
+    location: "Ward 2",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
@@ -173,7 +173,7 @@ const patient = [
     fname: "Oscar",
     lname: "Lee",
     description:"Pellentesque vel aliquet mi, vel gravida tortor. Aenean sit amet velit lacinia, convallis erat vestibulum, ullamcorper elit. Fusce ullamcorper porta blandit. Nulla facilisi. Etiam porttitor justo vitae eros pretium aliquam. Donec sed libero vestibulum, laoreet ligula ac, consectetur felis. Vivamus et facilisis odio, quis faucibus purus. Nam eget neque vel massa pulvinar scelerisque ut id urna. In hac habitasse platea dictumst. Donec vitae turpis et risus condimentum luctus eu a arcu. Duis dignissim mattis ultrices.",
-    location: "Auckland",
+    location: "Ward 1",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
     progress: {
@@ -189,7 +189,7 @@ const patient = [
       fname: "Oliver",
       lname: "Ng",
       description: "Ut convallis velit ante, ut auctor velit bibendum vel. Nulla facilisi. Nulla at suscipit metus, vitae suscipit turpis. Sed id interdum leo. Nam auctor mollis lorem quis ornare. Donec sed arcu vitae leo gravida tempor quis eu dolor. Sed vulputate laoreet bibendum. Suspendisse euismod quam nec ex tincidunt, sed feugiat purus lacinia. ",
-      location: "Auckland",
+      location: "Ward 1",
       responsibleClinicians: null,
       quickAdd: 'blood-test',
       progress: {
@@ -205,7 +205,7 @@ const patient = [
       fname: "Sophie",
       lname: "Wong",
       description: "Phasellus vehicula commodo sem, in pellentesque ex tristique ac. Etiam commodo dignissim turpis nec hendrerit. Donec vel tincidunt lectus. Sed in maximus justo, ac dictum velit. Ut vitae tincidunt tellus. Nam luctus ipsum sit amet nunc euismod, eget ultrices arcu malesuada. Nulla facilisi. Aenean dignissim fringilla risus nec suscipit. ",
-      location: "Queenstown",
+      location: "Ward 4",
       responsibleClinicians: null,
       quickAdd: 'blood-test',
       progress: {
@@ -221,7 +221,7 @@ const patient = [
       fname: "Liam",
       lname: "Taylor",
       description: "Nam vel semper felis. Sed rutrum sollicitudin elit, ut feugiat lorem bibendum eu. Nunc congue justo nisl, sit amet lobortis quam bibendum ac. Aenean dignissim imperdiet nisl, non eleifend dolor laoreet vel. Donec pharetra auctor velit, in sodales nibh eleifend at. Fusce gravida iaculis augue eu bibendum. Sed malesuada, metus vel vehicula finibus, est mi bibendum sem, non fringilla lacus lorem non lectus. ",
-      location: "Wellington",
+      location: "Ward 2",
       responsibleClinicians: null,
       quickAdd: 'radiology',
       progress: {
@@ -237,7 +237,7 @@ const patient = [
       fname: "Amelia",
       lname: "Wilson",
       description: "Proin pellentesque nibh at elit euismod, sed ornare tellus feugiat. Maecenas eu augue et felis aliquet feugiat eget a nulla. Etiam eu neque eget sapien congue finibus nec vel ex. Suspendisse ullamcorper dolor sit amet lacinia pulvinar. Nulla eget enim sed nunc efficitur vestibulum. Sed suscipit vestibulum sem, eu auctor odio convallis ac. Donec volutpat augue ac purus fermentum convallis. ",
-      location: "Christchurch",
+      location: "Ward 3",
       responsibleClinicians: null,
       quickAdd: 'blood-test',
       progress: {
@@ -253,7 +253,7 @@ const patient = [
         fname: "Oliver",
         lname: "Ng",
         description: "Ut convallis velit ante, ut auctor velit bibendum vel. Nulla facilisi. Nulla at suscipit metus, vitae suscipit turpis. Sed id interdum leo. Nam auctor mollis lorem quis ornare. Donec sed arcu vitae leo gravida tempor quis eu dolor. Sed vulputate laoreet bibendum. Suspendisse euismod quam nec ex tincidunt, sed feugiat purus lacinia. ",
-        location: "Auckland",
+        location: "Ward 1",
         responsibleClinicians: null,
         quickAdd: 'blood-test',
         progress: {
@@ -269,7 +269,7 @@ const patient = [
         fname: "Sophie",
         lname: "Wong",
         description: "Phasellus vehicula commodo sem, in pellentesque ex tristique ac. Etiam commodo dignissim turpis nec hendrerit. Donec vel tincidunt lectus. Sed in maximus justo, ac dictum velit. Ut vitae tincidunt tellus. Nam luctus ipsum sit amet nunc euismod, eget ultrices arcu malesuada. Nulla facilisi. Aenean dignissim fringilla risus nec suscipit. ",
-        location: "Queenstown",
+        location: "Ward 4",
         responsibleClinicians: null,
         quickAdd: 'blood-test',
         progress: {
@@ -285,7 +285,7 @@ const patient = [
         fname: "Liam",
         lname: "Taylor",
         description: "Nam vel semper felis. Sed rutrum sollicitudin elit, ut feugiat lorem bibendum eu. Nunc congue justo nisl, sit amet lobortis quam bibendum ac. Aenean dignissim imperdiet nisl, non eleifend dolor laoreet vel. Donec pharetra auctor velit, in sodales nibh eleifend at. Fusce gravida iaculis augue eu bibendum. Sed malesuada, metus vel vehicula finibus, est mi bibendum sem, non fringilla lacus lorem non lectus. ",
-        location: "Wellington",
+        location: "Ward 2",
         responsibleClinicians: null,
         quickAdd: 'radiology',
         progress: {
@@ -301,7 +301,7 @@ const patient = [
         fname: "Amelia",
         lname: "Wilson",
         description: "Proin pellentesque nibh at elit euismod, sed ornare tellus feugiat. Maecenas eu augue et felis aliquet feugiat eget a nulla. Etiam eu neque eget sapien congue finibus nec vel ex. Suspendisse ullamcorper dolor sit amet lacinia pulvinar. Nulla eget enim sed nunc efficitur vestibulum. Sed suscipit vestibulum sem, eu auctor odio convallis ac. Donec volutpat augue ac purus fermentum convallis. ",
-        location: "Christchurch",
+        location: "Ward 3",
         responsibleClinicians: null,
         quickAdd: 'blood-test',
         progress: {
