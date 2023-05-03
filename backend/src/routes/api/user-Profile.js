@@ -24,45 +24,34 @@ router.get('/:clinicianId', authenticate, async (req, res) => {
 
 });
 
-router.put('/:userId', authenticate, async (req, res) => {
+// router.put('/:userId', authenticate, async (req, res) => {
+router.put('/:userId', async (req, res) => {
     const { userId } = req.params;
 
     const userProfile = req.body;
 
     userProfile._id = userId;
 
-    const succcess = await updateUserProfile(userProfile);
-
-    res.sendStatus(succcess ? HTTP_NO_CONTENT : HTTP_NOT_FOUND);
-
+    try {
+        const success = await updateUserProfile(userProfile);
+        if (success) {
+            const updatedUser = await getUserById(userId);
+            if (!res.headersSent) {
+                req.session.user = updatedUser;
+                req.session.save();
+                return res.json(updatedUser);
+            }
+        } else {
+            if (!res.headersSent) {
+                return res.sendStatus(HTTP_NOT_FOUND);
+            }
+        }
+    } catch (err) {
+        console.error(err);
+        if (!res.headersSent) {
+            return res.sendStatus(500);
+        }
+    }
 });
 
 export default router;
-
-// router.get('/:userId', async(req,res)=>{
-//     const { userId } = req.params;
-
-// console.log(`userId: ${userId}`);
-//     const user =await getUserById(userId);
-//     console.log(`user: ${user}`);
-//     if(user) {
-//         return res.json(user);
-//     }
-//         return res.sendStatus(HTTP_NOT_FOUND);
-
-// });
-
-// router.put('/:userId', async(req,res)=>{
-//     const { userId } = req.params;
-
-//     const userProfile = req.body;
-
-//     userProfile._id = userId;
-
-//     const succcess = await updateUserProfile(userProfile);
-
-//     res.sendStatus(succcess ? HTTP_NO_CONTENT : HTTP_NOT_FOUND);
-
-// });
-
-// export default router;

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useGet from "../hooks/useGet";
 import useGetUser from "../hooks/useGetUser";
-import { logoutUser } from "../api/user";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
@@ -40,7 +39,7 @@ export function AppContextProvider({ children }) {
       setLoggedIn(true);
     }
   }, []);
-  
+
 
   const {
     data: notification,
@@ -111,6 +110,17 @@ export function AppContextProvider({ children }) {
     [loggedIn],
     options);
 
+  async function updateUserProfile(id, data) {
+    const updateResponse = await axios.put(
+      `${API_BASE_URL}/api/user_profile/${id}`,
+      data
+    );
+
+    console.log(updateResponse && "you have updated profile for" + data.fname);
+
+    refreshUserProfile();
+  }
+
   async function deleteNotification(id) {
     const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
 
@@ -133,16 +143,7 @@ export function AppContextProvider({ children }) {
     refreshNotifications();
   }
 
-  async function updateUserProfile(id, data) {
-    const updateResponse = await axios.put(
-      `${API_BASE_URL}/api/user_profile/${id}`,
-      data
-    );
 
-    console.log(updateResponse && "you have updated profile for" + data.fname);
-
-    refreshUserProfile();
-  }
 
   const patients = [
     {
