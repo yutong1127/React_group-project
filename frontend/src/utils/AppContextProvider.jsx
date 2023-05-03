@@ -194,7 +194,7 @@ export function AppContextProvider({ children }) {
 
 
   async function deleteNotification(id) {
-    const deleteResponse = await axios.delete(clinicianId? `${API_BASE_URL}/api/notification/${id}`:null);
+    const deleteResponse = await axios.delete(clinicianId ? `${API_BASE_URL}/api/notification/${id}`:null);
 
     console.log(deleteResponse);
 

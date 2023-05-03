@@ -100,7 +100,7 @@ export default function Notifications() {
 
                         </CardContent>
                         <CardActions>
-                            <Link to='/patientdetails' className={styles.link}>
+                            <Link to={`/patientdetails/${item.patient._id}`} className={styles.link}>
                                 <Button size='small' variant='outlined' onClick={() => readNotification(item._id)}>
                                     View
                                 </Button>
