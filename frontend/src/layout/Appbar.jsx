@@ -14,12 +14,12 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../api/user";
 
 export default function DocAppBar() {
-  const { handleDrawerOpen, loggedIn, setLoggedIn } = useContext(AppContext);
+  const { handleDrawerOpen, loggedIn, setLoggedIn, setLoggedInUser } = useContext(AppContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const logoutResponse = await logoutUser(setLoggedIn, navigate);
+      const logoutResponse = await logoutUser(setLoggedIn, setLoggedInUser, navigate);
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +29,7 @@ export default function DocAppBar() {
     <Box className={styles.appBarContainer}>
       <AppBar
         position="static"
-        // open={drawerOpen}
+      // open={drawerOpen}
       >
         <Toolbar className={styles.toolbar}>
           <IconButton

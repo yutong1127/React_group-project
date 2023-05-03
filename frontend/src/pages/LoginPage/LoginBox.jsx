@@ -27,14 +27,14 @@ function LoginBox() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const { setLoggedIn } = useContext(AppContext);
+  const { setLoggedIn, setLoggedInUser } = useContext(AppContext);
   const navigate = useNavigate();
 
   const onLogin = async (e) => {
     e.preventDefault();
 
     try {
-      await loginUser(email, password, setLoggedIn, navigate);
+      await loginUser(email, password, setLoggedIn, setLoggedInUser, navigate);
     } catch (error) {
       setErrorMessage(error.message);
     }

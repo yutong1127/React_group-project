@@ -11,7 +11,7 @@ import {
 import { useContext } from 'react';
 import { AppContext } from '../../utils/AppContextProvider';
 import styles from './Notification.module.css';
-import {  Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 export default function Notifications() {

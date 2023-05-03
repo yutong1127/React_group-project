@@ -61,11 +61,11 @@ async function addPatient() {
 async function addUser() {
     for (const data of user) {
         let password = await bcrypt.hash(data.password, 10);
-    
+
         const dbMon = new User(data);
-    
+
         dbMon.password = password;
-    
+
         await dbMon.save();
         // console.log(`User saved! _id = ${dbMon._id}`);
       }
@@ -95,14 +95,14 @@ async function addTeam() {
       
         for (const user of dbClinicians) {
             dbTeam.clinicians.push(user._id);
-            user.team=dbTeam._id;
+            user.team = dbTeam._id;
             await user.save();
         }
         
         // console.log(`Team saved! _id = ${dbTeam._id}`);
         await dbTeam.save();
 
-        
+
     }
 
 }
@@ -111,7 +111,7 @@ async function addResponsibleClinicians() {
     const teams = await Team.find();
     const patients = await Patient.find();
     let supervisors = [];
-    for(const team of teams) {
+    for (const team of teams) {
         let s = team.supervisors;
         s.forEach(element => {
             supervisors.push(element);
@@ -120,7 +120,7 @@ async function addResponsibleClinicians() {
     for (const patient of patients) {
         const randomNum = Math.floor(Math.random() * supervisors.length);
         patient.responsibleClinicians = supervisors[randomNum];
-        const team = await Team.findOne({supervisors: supervisors[randomNum]});
+        const team = await Team.findOne({ supervisors: supervisors[randomNum] });
         team.patients.push(patient)
         await team.save();
         await patient.save();
@@ -129,19 +129,19 @@ async function addResponsibleClinicians() {
 
 async function addTasks() {
     const teams = await Team.find();
-    for(const data of task) {
+    for (const data of task) {
         //const randomTeam = teams[Math.floor(Math.random() * teams.length)];
         // add all task to team 1 for testing
         const randomTeam = teams[0];
         const teamPatients = randomTeam.patients;
         const teamClinicians = randomTeam.clinicians;
         const randomPatient = Math.floor(Math.random() * teamPatients.length);
-        const randomClinician = Math.floor(Math.random()* teamClinicians.length);
+        const randomClinician = Math.floor(Math.random() * teamClinicians.length);
         const newTask = {
             ...data,
             patient: teamPatients[randomPatient],
             clinician: teamClinicians[randomClinician],
-            finished_at: Date.now() - Math.floor(Math.random() * 6 * 24 * 60 * 60 * 1000 )
+            finished_at: Date.now() - Math.floor(Math.random() * 6 * 24 * 60 * 60 * 1000)
         }
         const dbTask = new Task(newTask);
         await dbTask.save();
