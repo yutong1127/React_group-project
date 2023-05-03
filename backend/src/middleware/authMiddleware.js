@@ -1,4 +1,5 @@
 export function authenticate(req, res, next) {
+  console.log(`line2 : ${req.session.user}`)
   if (req.session && req.session.user) {
     console.log("authenticate being called")
     req.loggedIn = true;

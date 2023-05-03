@@ -169,7 +169,28 @@ async function addNotification(){
         await user.save();
         await patient.save();
 
-        
+    }
+    const taskRead = await Task.find({ status: {$in:(1,2) } });
+
+    for (const task of taskRead){
+        const user = await User.findOne({_id: task.clinician._id});
+        const patient = await Patient.findOne({_id: task.patient._id});
+        const newNotification = {
+            type: 'Task',
+            recipient:user,
+            patient:patient,
+            isRead:true,
+            entity:task.type + ' needed for ',
+            created_at:task.created_at,
+        }
+        const dbNotification = new Notification(newNotification);
+        await dbNotification.save();
+
+        user.notification.push(dbNotification);
+        patient.notification.push(dbNotification);
+        await user.save();
+        await patient.save();
+
     }
 }
 

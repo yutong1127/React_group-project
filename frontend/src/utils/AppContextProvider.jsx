@@ -18,6 +18,10 @@ export const AppContext = React.createContext({
 });
 
 export function AppContextProvider({ children }) {
+
+
+
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
@@ -31,11 +35,17 @@ export function AppContextProvider({ children }) {
   }, [loggedInUser]);
 
 
+  // add check login status
+  const options = loggedIn ? { withCredentials: true } : {};
+
   const {
     data: notification,
     isLoading: notificationsLoading,
     refresh: refreshNotifications,
-  } = useGet(`${API_BASE_URL}/api/notification`, []);
+  } = useGetUser(clinicianId ? `${API_BASE_URL}/api/notification/${clinicianId}` : null,
+    [],
+    [loggedIn],
+    options);
 
   const {
     data: tasks,
@@ -47,7 +57,11 @@ export function AppContextProvider({ children }) {
     data: unreadNotification,
     isLoading: unreadNotificationLoading,
     refresh: refreshUnreadNotifications,
-  } = useGet(`${API_BASE_URL}/api/notification/unread`, []);
+  } = useGetUser(clinicianId ? `${API_BASE_URL}/api/notification/unread/${clinicianId}` : null,
+    [],
+    [loggedIn],
+    options);
+
 
   const {
     data: teamPatients,
@@ -79,8 +93,8 @@ export function AppContextProvider({ children }) {
     refreshTasks()
   }
 
-  // add check login status
-  const options = loggedIn ? { withCredentials: true } : {};
+  // // add check login status
+  // const options = loggedIn ? { withCredentials: true } : {};
 
   const {
     data: userProfile,
@@ -111,7 +125,7 @@ export function AppContextProvider({ children }) {
   }
 
   async function readNotification(id) {
-    console.log(id);
+    // console.log(id);
     const updateResponse = await axios.put(
       `${API_BASE_URL}/api/notification/unread/${id}`
     );
@@ -180,7 +194,7 @@ export function AppContextProvider({ children }) {
 
 
   async function deleteNotification(id) {
-    const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
+    const deleteResponse = await axios.delete(clinicianId? `${API_BASE_URL}/api/notification/${id}`:null);
 
     console.log(deleteResponse);
 
