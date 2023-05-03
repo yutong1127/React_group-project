@@ -1,4 +1,4 @@
-import { useState, React, useEffect } from 'react';
+import { useState, React, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormControl, FormGroup, FormLabel,FormControlLabel,Radio, RadioGroup, Switch, Button, Select, MenuItem, InputLabel, Checkbox} from '@mui/material';
@@ -6,11 +6,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import axios from 'axios';
+import { AppContext } from "../../utils/AppContextProvider"
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export default function AddPatient(){
-
+  const { loggedInUser } = useContext(AppContext);
   const [gender, setGender] = useState('');
   const [location, setLocation] = useState('');
   const [dob, setDob] = useState('');
@@ -19,7 +20,7 @@ export default function AddPatient(){
   useEffect(() => {
     async function getClinicians() {
       // should pass in userID instead
-      const { data } = await axios.get(`${API_BASE_URL}/api/patient/supervisors/6450450af4b731864a60262c`);
+      const { data } = await axios.get(`${API_BASE_URL}/api/patient/supervisors/${loggedInUser._id}`);
       let renderClinicians = [];
       for(const c of data) {
         const name = `${c.fname} ${c.lname}`
@@ -28,7 +29,7 @@ export default function AddPatient(){
       setClinicians(renderClinicians);
     }
    getClinicians();
-  }, []);
+  }, [loggedInUser]);
 
 
   async function handleSubmit(event) {

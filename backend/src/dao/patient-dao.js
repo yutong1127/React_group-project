@@ -38,6 +38,7 @@ async function addPatientToTeam(patientId, supervisorId) {
     team.patients.push(patientId);
     await team.save();
 }
+
 async function getCliniciansByUserId(id) {
     let data = [];
     const team = await Team.findOne({ clinicians: id });

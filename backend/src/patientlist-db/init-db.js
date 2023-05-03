@@ -139,6 +139,7 @@ async function addTasks() {
         const teamClinicians = randomTeam.clinicians;
         const randomPatient = Math.floor(Math.random() * teamPatients.length);
         const randomClinician = Math.floor(Math.random() * teamClinicians.length);
+        randomTeam.patients.slice(randomPatient);
         const newTask = {
             ...data,
             patient: teamPatients[randomPatient],

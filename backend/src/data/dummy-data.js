@@ -48,7 +48,7 @@ const patient = [
     gender: "Male",
   },
   {
-    fname: "Laureen",
+    fname: "Linda",
     lname: "Lance",
     description: "Quisque eros leo, venenatis eu interdum a, mattis quis turpis. Suspendisse potenti. Nulla ut consectetur urna. In lobortis finibus orci ac condimentum. Aenean ut sem et ex vestibulum scelerisque id eget augue. Cras vulputate feugiat magna quis tincidunt. Curabitur in ante semper, consequat nisl a, imperdiet velit. Etiam feugiat in sapien ut eleifend. Pellentesque dolor lectus, dictum ut pellentesque at, varius interdum mi. Nulla non nisi eget nunc rhoncus fringilla et sit amet dui. Nam lobortis dui eu rutrum aliquam.",
     location: "Ward 3",
@@ -186,7 +186,7 @@ const patient = [
     gender: "Male",
   },
     {
-      fname: "Oliver",
+      fname: "Mary",
       lname: "Ng",
       description: "Ut convallis velit ante, ut auctor velit bibendum vel. Nulla facilisi. Nulla at suscipit metus, vitae suscipit turpis. Sed id interdum leo. Nam auctor mollis lorem quis ornare. Donec sed arcu vitae leo gravida tempor quis eu dolor. Sed vulputate laoreet bibendum. Suspendisse euismod quam nec ex tincidunt, sed feugiat purus lacinia. ",
       location: "Ward 1",
@@ -202,7 +202,7 @@ const patient = [
       gender: "Male",
     },
     {
-      fname: "Sophie",
+      fname: "Sarah",
       lname: "Wong",
       description: "Phasellus vehicula commodo sem, in pellentesque ex tristique ac. Etiam commodo dignissim turpis nec hendrerit. Donec vel tincidunt lectus. Sed in maximus justo, ac dictum velit. Ut vitae tincidunt tellus. Nam luctus ipsum sit amet nunc euismod, eget ultrices arcu malesuada. Nulla facilisi. Aenean dignissim fringilla risus nec suscipit. ",
       location: "Ward 4",
@@ -282,7 +282,7 @@ const patient = [
         gender: "Female",
       },
       {
-        fname: "Liam",
+        fname: "Peter",
         lname: "Taylor",
         description: "Nam vel semper felis. Sed rutrum sollicitudin elit, ut feugiat lorem bibendum eu. Nunc congue justo nisl, sit amet lobortis quam bibendum ac. Aenean dignissim imperdiet nisl, non eleifend dolor laoreet vel. Donec pharetra auctor velit, in sodales nibh eleifend at. Fusce gravida iaculis augue eu bibendum. Sed malesuada, metus vel vehicula finibus, est mi bibendum sem, non fringilla lacus lorem non lectus. ",
         location: "Ward 2",
@@ -298,7 +298,7 @@ const patient = [
         gender: "Male",
       },
       {
-        fname: "Amelia",
+        fname: "Jacinda",
         lname: "Wilson",
         description: "Proin pellentesque nibh at elit euismod, sed ornare tellus feugiat. Maecenas eu augue et felis aliquet feugiat eget a nulla. Etiam eu neque eget sapien congue finibus nec vel ex. Suspendisse ullamcorper dolor sit amet lacinia pulvinar. Nulla eget enim sed nunc efficitur vestibulum. Sed suscipit vestibulum sem, eu auctor odio convallis ac. Donec volutpat augue ac purus fermentum convallis. ",
         location: "Ward 3",
