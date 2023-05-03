@@ -15,8 +15,10 @@ export async function loginUser(email, password, setLoggedIn, setLoggedInUser, n
     );
 
     if (postResponse.status === 200) {
+      const user = postResponse.data.user;
       setLoggedIn(true);
-      setLoggedInUser(postResponse.data.user);
+      setLoggedInUser(user);
+      sessionStorage.setItem('loggedInUser', JSON.stringify(user));
       navigate(postResponse.data.redirect);
     } else {
       throw new Error(postResponse.data.message);
@@ -41,6 +43,7 @@ export async function logoutUser(setLoggedIn, setLoggedInUser, navigate) {
     if (response.status === 200) {
       setLoggedIn(false);
       setLoggedInUser(null);
+      sessionStorage.removeItem('loggedInUser');
       navigate(response.data.redirect);
     }
 
