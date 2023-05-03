@@ -16,10 +16,10 @@ export default function ImageAvatars(props) {
     return (
 
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="DoctorAvatar" 
-        src={DoctorAvartar} 
-        sx={{ width: 100, height: 100, mx: 'auto'}}
+        <Avatar
+          alt="DoctorAvatar"
+          src={DoctorAvartar}
+          sx={{ width: 100, height: 100, mx: 'auto' }}
         // sx={{ bgcolor: deepOrange[500] }}
         />
       </Stack>
@@ -27,60 +27,60 @@ export default function ImageAvatars(props) {
   } else if (props.id === 'DoctorAvatar1') {
     return (
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="DoctorAvatar1" 
-        src={DoctorAvatar1} 
-        sx={{ mr: 1 }}
+        <Avatar
+          alt="DoctorAvatar1"
+          src={DoctorAvatar1}
+          sx={{ mr: 1 }}
         />
       </Stack>
     )
   } else if (props.id === 'DoctorAvatar2') {
     return (
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="DoctorAvatar2" 
-        src={DoctorAvatar2} 
-        sx={{ mr: 1 }}/>
+        <Avatar
+          alt="DoctorAvatar2"
+          src={DoctorAvatar2}
+          sx={{ mr: 1 }} />
       </Stack>
     )
   } else if (props.id === 'DoctorAvatar3') {
     return (
 
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="DoctorAvatar3" 
-        src={DoctorAvatar3} 
-        sx={{ mr: 1 }}/>
+        <Avatar
+          alt="DoctorAvatar3"
+          src={DoctorAvatar3}
+          sx={{ mr: 1 }} />
       </Stack>
     )
   } else if (props.id === 'DoctorAvatar4') {
     return (
 
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="DoctorAvatar4" 
-        src={DoctorAvatar4} 
-        sx={{ mr: 1 }}/>
+        <Avatar
+          alt="DoctorAvatar4"
+          src={DoctorAvatar4}
+          sx={{ mr: 1 }} />
       </Stack>
     )
   } else if (props.id === 'DoctorAvatar5') {
     return (
 
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="DoctorAvatar5" 
-        src={DoctorAvatar5} 
-        sx={{ mr: 1 }}/>
+        <Avatar
+          alt="DoctorAvatar5"
+          src={DoctorAvatar5}
+          sx={{ mr: 1 }} />
       </Stack>
     )
   } else if (props.id === 'DoctorAvatar6') {
     return (
 
       <Stack direction="row" spacing={2}>
-        <Avatar 
-        alt="DoctorAvatar6" 
-        src={DoctorAvatar5} 
-        sx={{ mr: 1 }}/>
+        <Avatar
+          alt="DoctorAvatar6"
+          src={DoctorAvatar5}
+          sx={{ mr: 1 }} />
       </Stack>
     )
   } else {

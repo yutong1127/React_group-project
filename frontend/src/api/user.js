@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export async function loginUser(email, password, setLoggedIn, navigate) {
+export async function loginUser(email, password, setLoggedIn, setLoggedInUser, navigate) {
   console.log("Email:", email);
   console.log("Password:", password);
   console.log("login getting called");
@@ -16,11 +16,13 @@ export async function loginUser(email, password, setLoggedIn, navigate) {
 
     if (postResponse.status === 200) {
       setLoggedIn(true);
+      setLoggedInUser(postResponse.data.user);
       navigate(postResponse.data.redirect);
     } else {
       throw new Error(postResponse.data.message);
     }
   } catch (error) {
+    console.error("Error in loginUser:", error);
     if (error.response) {
       throw new Error(error.response.data.message);
     } else {
@@ -29,7 +31,7 @@ export async function loginUser(email, password, setLoggedIn, navigate) {
   }
 }
 
-export async function logoutUser(setLoggedIn, navigate) {
+export async function logoutUser(setLoggedIn, setLoggedInUser, navigate) {
   console.log("logout getting called");
   try {
     const response = await axios.get(`${API_BASE_URL}/api/user/logout`, {
@@ -38,6 +40,7 @@ export async function logoutUser(setLoggedIn, navigate) {
 
     if (response.status === 200) {
       setLoggedIn(false);
+      setLoggedInUser(null);
       navigate(response.data.redirect);
     }
 
