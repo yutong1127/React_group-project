@@ -96,17 +96,3 @@ export default function DrawerMenu() {
     )
 
 }
-// function useIsActive(to) {
-//     const location = useLocation();
-//     const resolvedPath = useResolvedPath(to);
-
-//     const currentPathname = location.pathname.toLowerCase();
-//     const resolvedPathname = resolvedPath.pathname.toLowerCase();
-
-//     const isActive =
-//         currentPathname === resolvedPathname ||
-//         (currentPathname.startsWith(resolvedPathname) &&
-//             currentPathname.charAt(resolvedPathname.length) === "/");
-
-//     return isActive;
-// }

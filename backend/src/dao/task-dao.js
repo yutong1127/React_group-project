@@ -14,23 +14,10 @@ async function retrieveTasksByPatientId(id) {
     return await Task.find({ patient: mongoose.Types.ObjectId(id) }).populate('patient').populate('clinician');
 }
 
-async function updateTask(task) {
-
-    const dbTask = await Task.findById(task._id);
-    if (dbTask) {
-
-        dbTask.name = task.name;
-        dbTask.type = task.type;
-        dbTask.patient = task.patient;
-        dbTask.clinician = task.clinician;
-        dbTask.priority = task.priority;
-        dbTask.status = task.status;
-   
-        await dbTask.save();
-        return true;
-    }
-
-    return false;
+async function updateTask(id, data) {
+    const updatedTask = await Task.findByIdAndUpdate(id, data, { new: false });
+    
+    return updatedTask !== undefined;
 }
 
 async function deleteTask(id) {

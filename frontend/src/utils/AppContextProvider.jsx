@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useGet from "../hooks/useGet";
 import useGetUser from "../hooks/useGetUser";
-import { logoutUser } from "../api/user";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
@@ -40,7 +39,6 @@ export function AppContextProvider({ children }) {
       setLoggedIn(true);
     }
   }, []);
-  
 
   // add check login status
   const options = loggedIn ? { withCredentials: true } : {};
@@ -69,7 +67,6 @@ export function AppContextProvider({ children }) {
     [loggedIn],
     options);
 
-
   const {
     data: teamPatients,
     isLoading: teamPatientsLoading,
@@ -91,18 +88,6 @@ export function AppContextProvider({ children }) {
     refreshTasks()
   }
 
-  async function deleteTask(tasksSelected) {
-    for (let i = 0; i < tasksSelected.length; i++) {
-      const taskDeleteResponse = await axios.delete(`http://localhost:3000/api/task/${tasksSelected[i]}`);
-      console.log(taskDeleteResponse)
-
-    }
-    refreshTasks()
-  }
-
-  // // add check login status
-  // const options = loggedIn ? { withCredentials: true } : {};
-
   const {
     data: userProfile,
     isLoading: userProfileLoading,
@@ -120,6 +105,17 @@ export function AppContextProvider({ children }) {
     [],
     [loggedIn],
     options);
+
+  async function updateUserProfile(id, data) {
+    const updateResponse = await axios.put(
+      `${API_BASE_URL}/api/user_profile/${id}`,
+      data
+    );
+
+    console.log(updateResponse && "you have updated profile for" + data.fname);
+
+    refreshUserProfile();
+  }
 
   async function deleteNotification(id) {
     const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
@@ -143,60 +139,26 @@ export function AppContextProvider({ children }) {
     refreshNotifications();
   }
 
-  async function updateUserProfile(id, data) {
-    const updateResponse = await axios.put(
-      `${API_BASE_URL}/api/user_profile/${id}`,
-      data
-    );
-
-    console.log(updateResponse && "you have updated profile for" + data.fname);
-
-    refreshUserProfile();
+  async function deleteTask(tasksSelected) {
+    for (let i = 0; i < tasksSelected.length; i++) {
+      await axios.delete(`${API_BASE_URL}/api/task/${tasksSelected[i]}`);
+    }
   }
-
-  const patients = [
-    {
-      name: "Kevin Zheng",
-      location: "Ward 9",
-      identifier: "ABC123",
-    },
-    {
-      name: "Mickey Mouse",
-      location: "Ward 1",
-      identifier: "XYZ123",
-    },
-    {
-      name: "Minnie Mouse",
-      location: "Ward 3",
-      identifier: "DEF456",
-    },
-    {
-      name: "Donald Duck",
-      location: "Ward 21",
-      identifier: "ZZZ888",
-    },
-  ];
 
   async function claimTask(tasksSelected) {
     for (let i = 0; i < tasksSelected.length; i++) {
-      const response = await fetch(`http://localhost:3000/api/task/${tasksSelected[i]}`)
-      let taskToBeUpdated = await response.json()
-
-      taskToBeUpdated = {
-        ...taskToBeUpdated,
-        clinician: '6441045875c54d273abff40f'
-      }
-
-      const requestOptions = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(taskToBeUpdated)
-      };
-
       //Need user dao to retrieve the user object ID to updated the displayedtask object to send to server
-      await fetch(`http://localhost:3000/api/task/assignclinician/${taskToBeUpdated._id}`, requestOptions);
+      await axios.put(`${API_BASE_URL}/api/task/updatetask/${tasksSelected[i]}`, { clinician: clinicianId });
     }
-    refreshTasks()
+  }
+
+  async function completeTask(tasksSelected) {
+    for (let i = 0; i < tasksSelected.length; i++) {
+      await axios.put(`${API_BASE_URL}/api/task/updatetask/${tasksSelected[i]}`, {
+        status: 2, 
+        finished_at: Date.now()
+      });
+    }
   }
 
 
@@ -244,6 +206,14 @@ export function AppContextProvider({ children }) {
 
     refreshUnreadNotifications();
     refreshNotifications();
+  }
+
+  async function addPatientProvider(data){
+    const postResponse= await axios.post(`${API_BASE_URL}/api/patient/add`, data);
+    console.log(postResponse);
+    
+    refreshNotifications();
+    refreshUnreadNotifications();
   }
 
   async function updateUserProfile(id, data) {
@@ -297,6 +267,8 @@ export function AppContextProvider({ children }) {
     claimTask,
     loggedInUser,
     setLoggedInUser,
+    addPatientProvider,
+    completeTask
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

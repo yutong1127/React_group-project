@@ -33,7 +33,6 @@ router.get('/:clinicianId',authenticate, async(req,res)=>{
 router.get('/unread/:clinicianId',authenticate,async(req,res)=>{
 
     const { clinicianId } = req.params;
-    console.log(`Notification ln36: ${clinicianId}`)
     
     const unReadNotifications = await retrieveUnreadNotification(clinicianId);
 

@@ -18,8 +18,15 @@ router.post("/login", (req, res, next) => {
         return res.status(500).json({ message: "Login failed.", redirect: "/login" });
       }
       req.session.user = user;
+      req.session.loggedIn = true;
+      
+      req.session.save((err) => {
+        if (err) {
+          return res.status(500).json({ message: "Error saving session." });
+        }
+        return res.status(200).json({ message: "Login successful.", user: user.toObject(), redirect: "/patientlist" });
 
-      return res.status(200).json({ message: "Login successful.", user: user.toObject(), redirect: "/patientlist" });
+      });
     });
   })(req, res, next);
 });
@@ -46,12 +53,12 @@ router.get("/logout", async (req, res) => {
   });
 });
 
-router.get("/status", (req, res) => {
-  if (req.session.loggedIn) {
-    res.json({ loggedIn: true });
-  } else {
-    res.json({ loggedIn: false });
-  }
-});
+// router.get("/status", (req, res) => {
+//   if (req.session.loggedIn) {
+//     res.json({ loggedIn: true });
+//   } else {
+//     res.json({ loggedIn: false });
+//   }
+// });
 
 export default router;

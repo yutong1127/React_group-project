@@ -16,20 +16,13 @@ async function retrieveUserOfNotification(id) {
     const notifications = notificationsOfUser.notification;
 
     await Notification.populate(notifications, 'patient');
-    await Notification.populate(notifications, 'sender');
 
     return notificationsOfUser.notification;
 }
 
 async function retrieveUnreadNotification(id) {
     const user = await User.findOne({ _id: id });
-    console.log(`line 26: ${user}`);
-    // console.log(`The user with fname  '${id}' is ${user.fname} ${user.lname} ${user._id}`);
-
     const unReadNotification = await Notification.find({ isRead: false, recipient: user._id }).populate('patient').populate('entity');
-    // await unReadNotification.populate()
-
-    // console.log(`The unread notifications of this user patients: ${unReadNotification}`);
 
     return unReadNotification;
 

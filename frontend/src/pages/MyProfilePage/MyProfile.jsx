@@ -1,12 +1,12 @@
 import React from 'react';
-import MyPorfileGrid from './MyPorfileGrid';
+import MyProfileGrid from './MyProfileGrid';
 
 export default function MyProfile() {
 
     return (
         <div>
             <div>
-                <MyPorfileGrid />
+                <MyProfileGrid />
             </div>
         </div>
 

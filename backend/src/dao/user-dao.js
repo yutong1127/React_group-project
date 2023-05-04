@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { User } from "../patientlist-db/schema.js";
 
 async function createUser(data) {
-  password = await bcrypt.hash(data.password, 10);
+  const password = await bcrypt.hash(data.password, 10);
 
   const user = new User({
     ...data,
@@ -26,6 +26,10 @@ async function updateUser(userId, data) {
 }
 
 async function updateUserProfile(userProfile) {
+  const password = await bcrypt.hash(userProfile.password, 10);
+
+  userProfile.password = password;
+
   const dbUserProfile = await User.findByIdAndUpdate({_id: userProfile._id}, userProfile,)
   return dbUserProfile !== undefined;
 

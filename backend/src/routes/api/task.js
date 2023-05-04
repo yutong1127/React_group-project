@@ -1,4 +1,4 @@
-import { retrieveTask, retrieveTasks, updateTask, deleteTask, retrieveTasksByPatientId,retrieveCompletedTasks } from "../../dao/task-dao"
+import { retrieveTask, retrieveTasks, updateTask, deleteTask, createTask, retrieveTasksByPatientId,retrieveCompletedTasks } from "../../dao/task-dao"
 import express from 'express';
 import { authenticate } from '../../middleware/authMiddleware';
 
@@ -9,15 +9,12 @@ const HTTP_NO_CONTENT = 204;
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-
    res.json(await retrieveTasks())
 });
 
 router.get('/:id', async (req, res) => {
    const { id } = req.params;
-
    const task = await retrieveTask(id);
-
    if (task) {
       res.json(task);
    }
@@ -47,7 +44,8 @@ router.get('/completed/:clinicianId', authenticate, async (req, res) => {
 // });
 
 
-router.get('/patient/:id', async (req, res) => {
+//retrieve patient's tasks by patient id
+router.get('/patienttasks/:id', async (req, res) => {
    const { id } = req.params;
    const tasks = await retrieveTasksByPatientId(id);
    if (tasks) {
@@ -57,13 +55,18 @@ router.get('/patient/:id', async (req, res) => {
    }
 });
 
-router.put('/assignclinician/:id', async (req, res) => {
+//retrieve patient's incomplete tasks by patient id
+router.get('/incompletetasks/:id', async (req, res) => {
    const { id } = req.params;
-   const task = req.body;
-   task._id = id;
-   const success = await updateTask(task);
-   res.sendStatus(success ? HTTP_NO_CONTENT : HTTP_NOT_FOUND);
+   const tasks = await retrieveTasksByPatientId(id);
+   const filteredTasks = tasks.filter(task => task.status !== 2);
+   if (filteredTasks) {
+       res.json(filteredTasks);
+   } else {
+       res.sendStatus(HTTP_NOT_FOUND);
+   }
 });
+
 
 router.delete('/:id', async (req, res) => {
    const { id } = req.params;
@@ -77,7 +80,16 @@ router.post('/createtask', async (req, res) => {
    res.sendStatus(success ? HTTP_CREATED : HTTP_NOT_FOUND);
 });
 
-
+router.put('/updatetask/:id', async (req, res) => {
+   const { id } = req.params;
+   const data = req.body;
+   const result = await updateTask(id, data);
+   if (result) {
+       res.json(result);
+   } else {
+       res.status(HTTP_NOT_FOUND).send('Not found');
+   }
+});
 
 
 export default router;

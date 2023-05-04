@@ -52,8 +52,9 @@ router.delete('/:id', async (req, res) => {
 
 
 router.post('/add', async (req, res) => {
+    console.log(req.body)
     const success = await addPatient(req.body);
-    res.sendStatus(success ? HTTP_CREATED : HTTP_NOT_FOUND);
+    res.sendStatus(success ? HTTP_NO_CONTENT : HTTP_NOT_FOUND);
 })
 
 router.get('/supervisors/:id', async (req, res) => {
