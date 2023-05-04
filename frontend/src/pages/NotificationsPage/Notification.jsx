@@ -22,9 +22,9 @@ export default function Notifications() {
 
 
     const { notification, deleteNotification, readNotification } = useContext(AppContext);
-
-    // console.log(notification);
-
+    
+    console.log(notification);
+   
     const [sortNotification, setSortNotification] = useState([]);
     useEffect(() => {
         setSortNotification(notification);
@@ -62,9 +62,18 @@ export default function Notifications() {
         }
 
     }
-
-
-    return (
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const offset = date.getTimezoneOffset() / 60;
+        const nzOffset = 12; // New Zealand time zone offset is UTC+12
+        const hours = (date.getHours() + offset + nzOffset).toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      
+        return `${day}-${month} ${hours}:${minutes}`;
+      }
+      return (
         <Container className={styles.container}>
 
             <Box className={styles.cardContainer}>
@@ -93,14 +102,14 @@ export default function Notifications() {
                         <CardContent className={item.isRead ? styles.cardContentRead : styles.cardContent} id={`${item.id}`}>
                             <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} >New {item.type} Message</Typography>
 
-                            <Typography sx={{ textAlign: 'left', fontSize: 18, paddingBottom: '10px', color: 'white' }}>Time: {item.created_at}</Typography>
+                            <Typography sx={{ textAlign: 'left', fontSize: 18, paddingBottom: '10px', color: 'white' }}>Time: {formatDate(item.created_at)}</Typography>
 
                             <Typography sx={{ textAlign: 'left', bgcolor: item.isRead ? 'grey' : '#9ED0F9', padding: '30px' }}>{item.entity} {item.patient.fname} {item.patient.lname}</Typography>
 
 
                         </CardContent>
                         <CardActions>
-                            <Link to='/patientdetails' className={styles.link}>
+                            <Link to={`/patientdetails/${item.patient._id}`} className={styles.link}>
                                 <Button size='small' variant='outlined' onClick={() => readNotification(item._id)}>
                                     View
                                 </Button>

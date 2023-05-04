@@ -11,7 +11,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { AppContext } from '../utils/AppContextProvider';
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useResolvedPath } from 'react-router-dom';
+
 import styles from '.././layout/Appbar.module.css'
 
 
@@ -45,8 +47,17 @@ export default function DrawerMenu() {
             link: 'notification',
             text: 'Notifications'
         }
-        
+
     ]
+
+    // let activeTab;
+    // for (let tab of tabs) {
+    //     // eslint-disable-next-line react-hooks/rules-of-hooks
+    //     const isActiveTab = useIsActive(tab.to);
+    //     if (!activeTab && isActiveTab) {
+    //         activeTab = tab.to;
+    //     }
+    // }
     return (
         <Drawer
             sx={{
@@ -68,14 +79,15 @@ export default function DrawerMenu() {
             <List >
                 {drawerData.map((data) => (
                     <ListItem key={data.text} sx={{ mt: 2 }}>
-                        <ListItemButton sx={{ borderColor: '#2196F3', borderWidth: '2px', borderStyle: 'solid', borderRadius: 5 }}>
-                            
-                            <Link to={`${data.link}`} className={styles.link}>
-                            <ListItemText sx={{ color: '#2196F3', p: '10px' }}>
-                                {data.text}
-                            </ListItemText>
-                            </Link>
-                        </ListItemButton>
+                        {/* <Link to={`${data.link}`} className={styles.link}> */}
+                        <NavLink to={`${data.link}`} className={({ isActive }) => isActive ? styles.isActive: styles.inActive}>
+
+                            <ListItemButton sx={{ borderColor: '#2196F3', borderWidth: '2px', borderStyle: 'solid', borderRadius: 5 }}>
+                                <ListItemText sx={{ color: '#2196F3', p: '10px' }}>
+                                    {data.text}
+                                </ListItemText>
+                            </ListItemButton>
+                        </NavLink>
                     </ListItem>
                 ))}
             </List>
@@ -84,4 +96,3 @@ export default function DrawerMenu() {
     )
 
 }
-

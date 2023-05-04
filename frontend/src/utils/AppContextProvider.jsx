@@ -40,12 +40,17 @@ export function AppContextProvider({ children }) {
     }
   }, []);
 
+  // add check login status
+  const options = loggedIn ? { withCredentials: true } : {};
 
   const {
     data: notification,
     isLoading: notificationsLoading,
     refresh: refreshNotifications,
-  } = useGet(`${API_BASE_URL}/api/notification`, []);
+  } = useGetUser(clinicianId ? `${API_BASE_URL}/api/notification/${clinicianId}` : null,
+    [],
+    [loggedIn],
+    options);
 
   const {
     data: tasks,
@@ -57,7 +62,10 @@ export function AppContextProvider({ children }) {
     data: unreadNotification,
     isLoading: unreadNotificationLoading,
     refresh: refreshUnreadNotifications,
-  } = useGet(`${API_BASE_URL}/api/notification/unread`, []);
+  } = useGetUser(clinicianId ? `${API_BASE_URL}/api/notification/unread/${clinicianId}` : null,
+    [],
+    [loggedIn],
+    options);
 
   const {
     data: teamPatients,
@@ -89,8 +97,7 @@ export function AppContextProvider({ children }) {
     refreshTasks()
   }
 
-  // add check login status
-  const options = loggedIn ? { withCredentials: true } : {};
+  
 
   const {
     data: userProfile,
@@ -237,6 +244,14 @@ export function AppContextProvider({ children }) {
     refreshNotifications();
   }
 
+  async function addPatientProvider(data){
+    const postResponse= await axios.post(`${API_BASE_URL}/api/patient/add`, data);
+    console.log(postResponse);
+    
+    refreshNotifications();
+    refreshUnreadNotifications();
+  }
+
   async function updateUserProfile(id, data) {
     const updateResponse = await axios.put(
       `${API_BASE_URL}/api/user_profile/${id}`,
@@ -288,6 +303,7 @@ export function AppContextProvider({ children }) {
     claimTask,
     loggedInUser,
     setLoggedInUser,
+    addPatientProvider
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
