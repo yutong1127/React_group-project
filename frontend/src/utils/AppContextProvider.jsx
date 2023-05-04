@@ -13,6 +13,7 @@ export const AppContext = React.createContext({
   patientList: [],
   clinicianList: [],
   team: {},
+  allTeams: [],
   userProfile: {},
   unreadNotification: [],
 });
@@ -37,6 +38,7 @@ export function AppContextProvider({ children }) {
     if (savedUser) {
       setLoggedInUser(JSON.parse(savedUser));
       setLoggedIn(true);
+      console.log(`saved user:${savedUser}`)
     }
   }, []);
 
@@ -56,7 +58,10 @@ export function AppContextProvider({ children }) {
     data: tasks,
     isLoading: tasksLoading,
     refresh: refreshTasks,
-  } = useGet(`${API_BASE_URL}/api/task`, []);
+  } = useGetUser(clinicianId ? `${API_BASE_URL}/api/task` : null,
+    [],
+    [loggedInUser],
+    options);
 
   const {
     data: unreadNotification,
@@ -71,7 +76,10 @@ export function AppContextProvider({ children }) {
     data: teamPatients,
     isLoading: teamPatientsLoading,
     refresh: refreshTeamPatients
-  } = useGet(`${API_BASE_URL}/api/patient`, []);
+  } = useGetUser(clinicianId && `${API_BASE_URL}/api/patient`,
+    [],
+    [loggedIn],
+    options);
 
   async function createTask(task) {
     await axios.post(`${API_BASE_URL}/api/task/createtask`, {
@@ -155,7 +163,7 @@ export function AppContextProvider({ children }) {
   async function completeTask(tasksSelected) {
     for (let i = 0; i < tasksSelected.length; i++) {
       await axios.put(`${API_BASE_URL}/api/task/updatetask/${tasksSelected[i]}`, {
-        status: 2, 
+        status: 2,
         finished_at: Date.now()
       });
     }
@@ -163,7 +171,7 @@ export function AppContextProvider({ children }) {
 
 
   async function deleteNotification(id) {
-    const deleteResponse = await axios.delete(clinicianId ? `${API_BASE_URL}/api/notification/${id}`:null);
+    const deleteResponse = await axios.delete(clinicianId ? `${API_BASE_URL}/api/notification/${id}` : null);
 
     console.log(deleteResponse);
 
@@ -176,19 +184,31 @@ export function AppContextProvider({ children }) {
     data: patientList,
     isLoading: patientListLoading,
     refresh: refreshPatientList,
-  } = useGet(`${API_BASE_URL}/api/team/1/patient_list`, []);
+  } = useGetUser(loggedInUser && `${API_BASE_URL}/api/team/${loggedInUser.team}/patient_list`, []);
 
-  const {
-    data: clinicianList,
-    isLoading: clinicianListLoading,
-    refresh: refreshClinicianList,
-  } = useGet(`${API_BASE_URL}/api/team/1/clinician_list`, []);
+  // const {
+  //   data: clinicianList,
+  //   isLoading: clinicianListLoading,
+  //   refresh: refreshClinicianList,
+  // } = useGet(`${API_BASE_URL}/api/team/1/clinician_list`, []);
 
   const {
     data: team,
     isLoading: teamLoading,
     refresh: refreshTeam,
-  } = useGet(`${API_BASE_URL}/api/team/1`, []);
+  } = useGetUser(loggedInUser && `${API_BASE_URL}/api/team/${loggedInUser.team}`,
+    [],
+    [loggedIn],
+    options);
+
+  const {
+    data: allTeams,
+    isLoading: allTeamsLoading,
+    refresh: refreshAllTeams,
+  } = useGetUser(loggedInUser && `${API_BASE_URL}/api/team`,
+    [],
+    [loggedIn],
+    options);
 
 
   async function createContainer(id, container_id) {
@@ -208,10 +228,10 @@ export function AppContextProvider({ children }) {
     refreshNotifications();
   }
 
-  async function addPatientProvider(data){
-    const postResponse= await axios.post(`${API_BASE_URL}/api/patient/add`, data);
+  async function addPatientProvider(data) {
+    const postResponse = await axios.post(`${API_BASE_URL}/api/patient/add`, data);
     console.log(postResponse);
-    
+
     refreshNotifications();
     refreshUnreadNotifications();
   }
@@ -252,8 +272,8 @@ export function AppContextProvider({ children }) {
     tasksCompleted,
     patientList,
     patientListLoading,
-    clinicianList,
-    clinicianListLoading,
+    // clinicianList,
+    // clinicianListLoading,
     team,
     teamLoading,
     userProfile,
@@ -268,7 +288,10 @@ export function AppContextProvider({ children }) {
     loggedInUser,
     setLoggedInUser,
     addPatientProvider,
-    completeTask
+    completeTask,
+    allTeams,
+    allTeamsLoading,
+    options
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

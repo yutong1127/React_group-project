@@ -1,6 +1,7 @@
 import express from 'express';
 import {
     retrieveTeam,
+    retrieveAllTeams,
     retrievePatientList,
     retrieveClinicianList
 } from '../../dao/team-dao.js'
@@ -23,11 +24,19 @@ router.get('/:teamId', async (req, res) => {
 
 });
 
+// get all teams
+router.get('/', async (req, res) => {
+    const teams = await retrieveAllTeams();
+    if (teams) {
+        return res.json(teams);
+    }
+    return res.sendStatus(HTTP_NOT_FOUND);
+});
 
 router.get('/:teamId/patient_list', async (req, res) => {
     const { teamId } = req.params;
 
-    // console.log(`teamId: ${teamId}`);
+    console.log(`teamId: ${teamId}`);
     const patientList =await retrievePatientList(teamId);
     // console.log(`patientList: ${patientList}`);
     if(patientList) {

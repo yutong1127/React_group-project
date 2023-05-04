@@ -10,25 +10,45 @@ import {
     FormHelperText
 } from '@mui/material';
 import axios from 'axios';
+import useGetUser from '../../../hooks/useGetUser';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export default function Overview() {
+    // const { loggedInUser,loggedIn,options } = useContext(AppContext);
 
-    const [patients, setPatients] = useState([]);
+    const { team, allTeams, tasks, loggedInUser } = useContext(AppContext);
+    const [patients, setPatients] = useState(team.patients);
 
+    // console.log(`team patients: ${team.patients}`)
     useEffect(() => {
-        async function getPatients() {
-            const teamPatients = [];
-            // retrive all patients from team 1 for testing
-            const { data } = await axios.get(`${API_BASE_URL}/api/team/1/patient_list`);
-            for (const patient of data) {
-                teamPatients.push(patient)
-            }
-            setPatients(teamPatients);
-        }
-        getPatients();
-    }, []);
+
+            setPatients(team.patients);
+         
+
+        })
+
+    
+
+    // useEffect(() => {
+    //     async function getPatients() {
+    //         const teamPatients = [];
+    //         // retrive all patients from team 1 for testing
+    //         console.log(loggedInUser)
+    //         if(loggedInUser.team){
+    //             const { data } = await axios.get(`${API_BASE_URL}/api/team/${loggedInUser.team}/patient_list`);
+    //             for (const patient of data) {
+    //                 teamPatients.push(patient)
+    //             }
+    //             setPatients(teamPatients);
+
+    //         }
+    //         // const { data } = await axios.get(`${API_BASE_URL}/api/team/${loggedInUser.team}/patient_list`);
+            
+    //     }
+    //     getPatients();
+    // }, []);
+
 
     const SelectLabels = () => {
         const [name, setName] = useState('');

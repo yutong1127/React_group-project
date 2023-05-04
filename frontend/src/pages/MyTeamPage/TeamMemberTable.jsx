@@ -11,52 +11,54 @@ function createData(avatar, name, role, isSuperVisor) {
 
 
 
-export default function BasicTable() {
-  // console.log(users[0].isSupervisor);
-  const { clinicianList } = useContext(AppContext);
-
-
+export default function TeamMemgerTable({clinicianList}) {
+  
   // map users to rows
   let rows = [];
-  clinicianList.map((user) => {
-    rows.push(createData(user.avatar, "Dr. " + user.fname + " " + user.lname, user.role, user.isSupervisor.supervisor ? "Yes" : "No"));
-  });
+  if (clinicianList) {
+    clinicianList.map((user) => {
+      rows.push(createData(user.avatar, "Dr. " + user.fname + " " + user.lname, user.role, user.isSupervisor ? "Yes" : "No"));
+    });
+  }
 
 
 
-  return (
-    <Box>
+
+  if (clinicianList) {
+    return (
+      <Box>
 
 
-      <TableContainer component={Paper} >
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Photo </TableCell>
-              <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Role</TableCell>
-              <TableCell align="left">Is Supervisor</TableCell>
-
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.avatar}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <ImageAvatars id={row.avatar} />
-                </TableCell>
-                <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">{row.role}</TableCell>
-                <TableCell align="left">{row.isSuperVisor}</TableCell>
+        <TableContainer component={Paper} >
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Photo </TableCell>
+                <TableCell align="left">Name</TableCell>
+                <TableCell align="left">Role</TableCell>
+                <TableCell align="left">Is Supervisor</TableCell>
 
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
-  );
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow
+                  key={row.avatar}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <ImageAvatars id={row.avatar} />
+                  </TableCell>
+                  <TableCell align="left">{row.name}</TableCell>
+                  <TableCell align="left">{row.role}</TableCell>
+                  <TableCell align="left">{row.isSuperVisor}</TableCell>
+
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    );
+  }
 }

@@ -11,7 +11,7 @@ const style = {
 };
 
 
-export default function TeamPerformance() {
+export default function TeamPerformance({completedTasks}) {
     return (
         <div >
             <Card >
@@ -21,7 +21,7 @@ export default function TeamPerformance() {
                     </Typography>
                     <div className={styles.bar_chart} >
 
-                        <TeamPerformanceBarChart />
+                        <TeamPerformanceBarChart completedTasks={completedTasks} />
                     </div>
 
                 </CardContent>
