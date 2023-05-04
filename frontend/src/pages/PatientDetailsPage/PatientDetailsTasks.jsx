@@ -41,7 +41,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 export default function PateintDetailsTasks() {
     const { patientId } = useParams();
     const tasksArray = useGet(
-        `${API_BASE_URL}/api/task/patient/${patientId}`,
+        `${API_BASE_URL}/api/task/patienttasks/${patientId}`,
         []
     );
 

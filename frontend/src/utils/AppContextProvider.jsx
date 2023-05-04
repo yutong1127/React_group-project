@@ -128,7 +128,7 @@ export function AppContextProvider({ children }) {
   }
 
   async function readNotification(id) {
-    console.log(id);
+    // console.log(id);
     const updateResponse = await axios.put(
       `${API_BASE_URL}/api/notification/unread/${id}`
     );
@@ -163,7 +163,7 @@ export function AppContextProvider({ children }) {
 
 
   async function deleteNotification(id) {
-    const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
+    const deleteResponse = await axios.delete(clinicianId ? `${API_BASE_URL}/api/notification/${id}`:null);
 
     console.log(deleteResponse);
 

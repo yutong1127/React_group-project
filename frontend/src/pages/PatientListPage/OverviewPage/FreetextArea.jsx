@@ -1,13 +1,11 @@
-import { TextField } from '@mui/material'
-
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, memo } from "react";
 import { TinyliciousClient } from "@fluidframework/tinylicious-client";
 import { ConnectionState, SharedString } from "fluid-framework";
 import { CollaborativeTextArea } from '../../../CollaborativeTextArea/CollaborativeTextArea';
 import { SharedStringHelper } from "@fluid-experimental/react-inputs";
 import { AppContext } from '../../../utils/AppContextProvider';
 
-export default function FreetextArea(props) {
+const FreetextArea = memo((props) => {
   const sharedString = useSharedString(props.container, props.patient_id);
 
   if (sharedString) {
@@ -20,7 +18,7 @@ export default function FreetextArea(props) {
     return <div />;
   }
 
-}
+})
 
 function useSharedString(container_id, patient_id) {
   const [sharedString, setSharedString] = useState();
@@ -72,15 +70,4 @@ function useSharedString(container_id, patient_id) {
 
 }
 
-// export default function FreetextArea() {
-
-//     return (
-//         <TextField
-//         id="filled-multiline-static"
-//         label="Notes"
-//         multiline
-//         rows={5}
-//         variant="filled"
-//       />
-//     )
-// }
+export default FreetextArea;
