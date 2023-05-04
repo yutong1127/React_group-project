@@ -23,7 +23,7 @@ export default function Notifications() {
 
     const { notification, deleteNotification, readNotification } = useContext(AppContext);
     
-    console.log(notification);
+    // console.log(notification);
    
     const [sortNotification, setSortNotification] = useState([]);
     useEffect(() => {

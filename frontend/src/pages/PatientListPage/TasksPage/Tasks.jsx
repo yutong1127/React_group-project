@@ -48,7 +48,7 @@ export default function Tasks() {
     const [visibleRows, setVisibleRows] = useState(null);
     const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
     const [paddingHeight, setPaddingHeight] = useState(0);
-    const { deleteTask, claimTask, completeTask } = useContext(AppContext)
+    const { deleteTask, claimTask, completeTask, loggedInUser} = useContext(AppContext)
     const [isClicked, setIsClicked] = useState(false);
     const [tasks, setTasks] = useState([]);
 
@@ -60,7 +60,7 @@ export default function Tasks() {
             // const { data } = await axios.get(`${API_BASE_URL}/api/team/1/patient_list`);
 
             // Todo: replace hardcoded id with logged in user's team id
-            const { data } = await axios.get(`${API_BASE_URL}/api/team/1/patient_list`);
+            const { data } = await axios.get(`${API_BASE_URL}/api/team/${loggedInUser.team}/patient_list`);
 
             for (const patient of data) {
                 const { data } = await axios.get(`${API_BASE_URL}/api/task/incompletetasks/${patient._id}`);

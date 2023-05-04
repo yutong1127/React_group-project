@@ -1,8 +1,8 @@
 
 import Typography from '@mui/material/Typography';
 import { Box, Divider, ListItemText, ListItem, List } from '@mui/material';
-import { useContext } from 'react';
-import { AppContext } from '../../utils/AppContextProvider';
+import { useNavigate } from "react-router"
+
 
 const style = {
     width: '100%',
@@ -11,30 +11,33 @@ const style = {
 };
 
 
-export default function PatientList() {
-    const { patientList } = useContext(AppContext);
-    return (
-        <div >
-            <Box sx={{ mx: 'auto', px: 5 }}>
-                <Typography gutterBottom variant="h5" component="div">
-                    Patients
-                </Typography>
-                <Divider />
+export default function PatientList({ patientList }) {
+    const navigate = useNavigate();
 
-                <List sx={style} component="nav" aria-label="mailbox folders">
+    if (patientList) {
+        return (
+            <div >
+                <Box sx={{ mx: 'auto', px: 5 }}>
+                    <Typography gutterBottom variant="h5" component="div">
+                        Patients
+                    </Typography>
+                    <Divider />
 
-                    {patientList.map((patient, index) => (
-                        <ListItem button
-                            key={index}
-                        >
-                            <ListItemText
-                                primary={patient.fname + " " + patient.lname}
+                    <List sx={style} component="nav" aria-label="mailbox folders">
 
-                            />
-                        </ListItem>
-                    ))}
-                </List>
-            </Box>
-        </div>
-    );
+                        {patientList.map((patient, index) => (
+                            <ListItem button 
+                            key={index} 
+                            onClick={() => {navigate(`/patientdetails/${patient._id}`)}}
+                            >
+                                <ListItemText primary={patient.fname + " " + patient.lname} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </Box>
+            </div>
+        );
+    }
+
 }
+
