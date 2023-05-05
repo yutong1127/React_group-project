@@ -50,6 +50,7 @@ function RadiologyTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
     const handleUSS = async () => {
         const newTask = {
@@ -62,6 +63,7 @@ function RadiologyTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
     const handleCT = async () => {
         const newTask = {
@@ -74,6 +76,7 @@ function RadiologyTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
 
     return (
@@ -119,6 +122,7 @@ function BloodTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
     const handleUE = async () => {
         const newTask = {
@@ -131,6 +135,7 @@ function BloodTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
     const handleCOAG = async () => {
         const newTask = {
@@ -143,6 +148,7 @@ function BloodTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
 
     return (
@@ -190,7 +196,8 @@ function ReviewModal(props) {
             status: 0,
             result: ""
         }
-        await props.createTask(task)
+        await props.createTask(task);
+        location.reload();
     }
 
     return (
