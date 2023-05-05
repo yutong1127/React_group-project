@@ -234,6 +234,8 @@ export function AppContextProvider({ children }) {
 
     refreshNotifications();
     refreshUnreadNotifications();
+
+    location.reload();
   }
 
   async function updateUserProfile(id, data) {

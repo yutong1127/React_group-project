@@ -25,7 +25,6 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     const result = await retrievePatient(id);
-    // console.log(result);
     if (result) {
         res.json(result);
     } else {

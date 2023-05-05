@@ -50,6 +50,7 @@ function RadiologyTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
     const handleUSS = async () => {
         const newTask = {
@@ -62,6 +63,7 @@ function RadiologyTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
     const handleCT = async () => {
         const newTask = {
@@ -74,6 +76,7 @@ function RadiologyTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
 
     return (
@@ -119,6 +122,7 @@ function BloodTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
     const handleUE = async () => {
         const newTask = {
@@ -131,6 +135,7 @@ function BloodTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
     const handleCOAG = async () => {
         const newTask = {
@@ -143,6 +148,7 @@ function BloodTestModal(props) {
             result: ""
         };
         await props.createTask(newTask)
+        location.reload();
     };
 
     return (
@@ -172,6 +178,7 @@ function BloodTestModal(props) {
 function ReviewModal(props) {
 
     const [open, setOpen] = useState(false);
+    
     const handleOpen = () => {
         setOpen(true);
     };
@@ -189,7 +196,8 @@ function ReviewModal(props) {
             status: 0,
             result: ""
         }
-        await props.createTask(task)
+        await props.createTask(task);
+        location.reload();
     }
 
     return (
@@ -216,6 +224,7 @@ function ReviewModal(props) {
 export default function PatientCard(props) {
     const { createTask } = useContext(AppContext)
     const [open, setOpen] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
     const navigate = useNavigate();
     const handleOpen = () => {
         setOpen(true);
@@ -224,7 +233,11 @@ export default function PatientCard(props) {
         setOpen(false);
     };
 
+    const handleEdit = () => {
+        setIsEditing(!isEditing);
+    }
 
+    
     return (
         <Paper elevation={3} style={{
             padding: 8,
@@ -239,7 +252,7 @@ export default function PatientCard(props) {
                     </Grid>
                     <Grid item xs={4}>
                         <Box component="div" sx={{ overflowY: "scroll", maxHeight: 200 }}>
-                            <PatientProgress patient={props.patient} />
+                            <PatientProgress patient={props.patient} readOnly={isEditing}/>
                         </Box>
                     </Grid>
                     <Grid item xs={4}>
@@ -254,7 +267,7 @@ export default function PatientCard(props) {
 
                     </Grid>
                     <Grid item xs={4}>
-                        <Button variant="contained">Edit</Button>
+                        <Button variant="contained" onClick={handleEdit}>{isEditing ? "Add" : "Edit"}</Button>
 
                     </Grid>
                     <Grid item xs={4}>

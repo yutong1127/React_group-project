@@ -131,12 +131,11 @@ async function addTasks() {
     const teams = await Team.find();
     for (const data of task) {
         const randomTeam = teams[Math.floor(Math.random() * teams.length)];
-        // add all task to team 1 for testing
-        // const randomTeam = teams[0];
         const teamPatients = randomTeam.patients;
         const teamClinicians = randomTeam.clinicians;
         const randomPatient = Math.floor(Math.random() * teamPatients.length);
         const randomClinician = Math.floor(Math.random() * teamClinicians.length);
+        randomTeam.patients.slice(randomPatient);
         const newTask = {
             ...data,
             patient: teamPatients[randomPatient],

@@ -25,8 +25,7 @@ async function retrievePatientList(teamId) {
 // retrieve team member list from Team collection
 async function retrieveClinicianList(teamId) {
 
-
-    const result = await Team.findOne({ _id: teamId }, { clinicians: 1 })
+    const result = await Team.findOne({ id: teamId }, { clinicians: 1 })
         .populate('clinicians');
     return result.clinicians;
 }

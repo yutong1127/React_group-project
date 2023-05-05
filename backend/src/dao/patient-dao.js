@@ -17,8 +17,6 @@ async function deletePatient(id) {
     return await Patient.deleteOne({ _id: mongoose.Types.ObjectId(id) });
 }
 
-
-
 async function addPatient(data) {
     const patient = new Patient({
         fname: data.fname,
@@ -30,8 +28,8 @@ async function addPatient(data) {
         birth_date: data.birth_date,
         gender: data.gender,
     })
-
     await patient.save();
+    addPatientToTeam(patient._id, patient.responsibleClinicians);
 
     const team = await Team.findOne({supervisors:data.responsibleClinicians}).populate();
     // console.log(`recipient: ${team.clinicians}`)
@@ -55,6 +53,12 @@ async function addPatient(data) {
         await user.save();
     }
     return true;
+}
+
+async function addPatientToTeam(patientId, supervisorId) {
+    const team = await Team.findOne({supervisors: supervisorId});
+    team.patients.push(patientId);
+    await team.save();
 }
 
 async function getCliniciansByUserId(id) {
