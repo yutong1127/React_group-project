@@ -52,7 +52,7 @@ const taskSchema = new Schema({
     // finished_at: { type: Date, default: Date.now() - Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000 },
     // finished_at: { type: Date, default: Date.now  },
     status: { type: Number },
-    result:{ type: String },
+    result:{ type: String, default: '' },
 })
 
 const teamSchema = new Schema({
