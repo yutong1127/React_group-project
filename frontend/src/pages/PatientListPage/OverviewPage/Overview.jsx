@@ -22,11 +22,8 @@ export default function Overview() {
 
     // console.log(`team patients: ${team.patients}`)
     useEffect(() => {
-
             setPatients(team.patients);
-         
-
-        })
+        },[team])
 
     
 

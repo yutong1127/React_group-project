@@ -46,7 +46,8 @@ function RadiologyTestModal(props) {
             patient: props.patient._id,
             clinician: null,
             priority: 1,
-            status: 0
+            status: 0,
+            result: ""
         };
         await props.createTask(newTask)
     };
@@ -57,7 +58,8 @@ function RadiologyTestModal(props) {
             patient: props.patient._id,
             clinician: null,
             priority: 2,
-            status: 0
+            status: 0,
+            result: ""
         };
         await props.createTask(newTask)
     };
@@ -68,7 +70,8 @@ function RadiologyTestModal(props) {
             patient: props.patient._id,
             clinician: null,
             priority: 3,
-            status: 0
+            status: 0,
+            result: ""
         };
         await props.createTask(newTask)
     };
@@ -112,7 +115,8 @@ function BloodTestModal(props) {
             patient: props.patient._id,
             clinician: null,
             priority: 1,
-            status: 0
+            status: 0,
+            result: ""
         };
         await props.createTask(newTask)
     };
@@ -123,7 +127,8 @@ function BloodTestModal(props) {
             patient: props.patient._id,
             clinician: null,
             priority: 1,
-            status: 0
+            status: 0,
+            result: ""
         };
         await props.createTask(newTask)
     };
@@ -134,7 +139,8 @@ function BloodTestModal(props) {
             patient: props.patient._id,
             clinician: null,
             priority: 1,
-            status: 0
+            status: 0,
+            result: ""
         };
         await props.createTask(newTask)
     };
@@ -181,7 +187,8 @@ function ReviewModal(props) {
             patient: props.patient._id,
             clinician: '6441045875c54d273abff405',
             priority: 0,
-            status: 0
+            status: 0,
+            result: ""
         }
         await props.createTask(task)
     }
