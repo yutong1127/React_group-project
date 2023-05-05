@@ -1,4 +1,4 @@
-import { useState, React, useContext } from "react"
+import { useState, React, useContext, memo } from "react"
 import FreetextArea from "./FreetextArea"
 import PatientDetails from "./PatientDetails"
 import PatientProgress from "./PatientProgress"
@@ -13,6 +13,7 @@ import {
 } from '@mui/material/';
 import { AppContext } from "../../../utils/AppContextProvider"
 import { useNavigate } from "react-router"
+
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
@@ -30,13 +31,46 @@ const style = {
     pb: 3,
 };
 
-function RadiologyTestModal() {
+function RadiologyTestModal(props) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
+    };
+    const handleXR = async () => {
+        const newTask = {
+            name: "XR",
+            type: "Radiology",
+            patient: props.patient._id,
+            clinician: null,
+            priority: 1,
+            status: 0
+        };
+        await props.createTask(newTask)
+    };
+    const handleUSS = async () => {
+        const newTask = {
+            name: "USS",
+            type: "Radiology",
+            patient: props.patient._id,
+            clinician: null,
+            priority: 2,
+            status: 0
+        };
+        await props.createTask(newTask)
+    };
+    const handleCT = async () => {
+        const newTask = {
+            name: "CT",
+            type: "Radiology",
+            patient: props.patient._id,
+            clinician: null,
+            priority: 3,
+            status: 0
+        };
+        await props.createTask(newTask)
     };
 
     return (
@@ -53,20 +87,56 @@ function RadiologyTestModal() {
                     <p id="child-modal-description">
                         Select radiologic test
                     </p>
+                    <Button onClick={handleXR}>XR</Button>
+                    <Button onClick={handleUSS}>USS</Button>
+                    <Button onClick={handleCT}>CT</Button>
                     <Button onClick={handleClose}>Close</Button>
                 </Box>
             </Modal>
         </ >
     );
 }
-
-function BloodTestModal() {
+function BloodTestModal(props) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleFBC = async () => {
+        const newTask = {
+            name: "FBC",
+            type: "Blood-test",
+            patient: props.patient._id,
+            clinician: null,
+            priority: 1,
+            status: 0
+        };
+        await props.createTask(newTask)
+    };
+    const handleUE = async () => {
+        const newTask = {
+            name: "UE",
+            type: "Blood-test",
+            patient: props.patient._id,
+            clinician: null,
+            priority: 1,
+            status: 0
+        };
+        await props.createTask(newTask)
+    };
+    const handleCOAG = async () => {
+        const newTask = {
+            name: "COAG",
+            type: "Blood-test",
+            patient: props.patient._id,
+            clinician: null,
+            priority: 1,
+            status: 0
+        };
+        await props.createTask(newTask)
     };
 
     return (
@@ -83,6 +153,9 @@ function BloodTestModal() {
                     <p id="child-modal-description">
                         Select blood test
                     </p>
+                    <Button onClick={handleFBC}>FBC</Button>
+                    <Button onClick={handleUE}>UE</Button>
+                    <Button onClick={handleCOAG}>COAG</Button>
                     <Button onClick={handleClose}>Close</Button>
                 </Box>
             </Modal>
@@ -90,8 +163,8 @@ function BloodTestModal() {
     );
 }
 
-function ReviewModal() {
-    const { createTask } = useContext(AppContext)
+function ReviewModal(props) {
+
     const [open, setOpen] = useState(false);
     
     const handleOpen = () => {
@@ -105,12 +178,12 @@ function ReviewModal() {
         const task = {
             name: 'Review',
             type: 'Review',
-            patient: '6441045775c54d273abff3f9',
+            patient: props.patient._id,
             clinician: '6441045875c54d273abff405',
             priority: 0,
             status: 0
         }
-        await createTask(task)
+        await props.createTask(task)
     }
 
     return (
@@ -134,68 +207,8 @@ function ReviewModal() {
         </ >
     );
 }
-
-function DischargeModal() {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    return (
-        < >
-            <Button onClick={handleOpen}>Discharge</Button>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="child-modal-title"
-                aria-describedby="child-modal-description"
-            >
-                <Box sx={{ ...style, width: 200 }}>
-                    <h2 id="child-modal-title">Discharge</h2>
-                    <p id="child-modal-description">
-                        Discharge patient
-                    </p>
-                    <Button onClick={handleClose}>Close</Button>
-                </Box>
-            </Modal>
-        </ >
-    );
-}
-
-function OtherModal() {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    return (
-        < >
-            <Button onClick={handleOpen}>Other</Button>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="child-modal-title"
-                aria-describedby="child-modal-description"
-            >
-                <Box sx={{ ...style, width: 200 }}>
-                    <h2 id="child-modal-title">Other</h2>
-                    <p id="child-modal-description">
-                        Create custom task
-                    </p>
-                    <Button onClick={handleClose}>Close</Button>
-                </Box>
-            </Modal>
-        </ >
-    );
-}
-
 export default function PatientCard(props) {
+    const { createTask } = useContext(AppContext)
     const [open, setOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const navigate = useNavigate();
@@ -256,11 +269,9 @@ export default function PatientCard(props) {
                                 <p id="parent-modal-description">
                                     Select from options below
                                 </p>
-                                <BloodTestModal />
-                                <RadiologyTestModal />
-                                <ReviewModal />
-                                <DischargeModal />
-                                <OtherModal />
+                                <BloodTestModal patient={props.patient} createTask={createTask} />
+                                <RadiologyTestModal patient={props.patient} createTask={createTask} />
+                                <ReviewModal patient={props.patient} createTask={createTask} />
                             </Box>
                         </Modal>
                     </Grid>

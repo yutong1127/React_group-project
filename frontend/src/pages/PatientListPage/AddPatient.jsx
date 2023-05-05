@@ -17,6 +17,8 @@ export default function AddPatient(){
   const [dob, setDob] = useState('');
   const [clinicians, setClinicians] = useState([]);
 
+  const { addPatientProvider } = useContext(AppContext);
+
   useEffect(() => {
     async function getClinicians() {
       // should pass in userID instead
@@ -46,8 +48,9 @@ export default function AddPatient(){
       birth_date: dob,
       gender: gender,
     };
-    await axios.post(`${API_BASE_URL}/api/patient/add`, data)
-            .then(console.log(data));
+    // await axios.post(`${API_BASE_URL}/api/patient/add`, data)
+    //         .then(console.log(data));
+    addPatientProvider(data)
   }
   
   function onGenderChange(e) {

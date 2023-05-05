@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { styled, Box, Paper, Grid } from '@mui/material';
 import MyProfileMyDetails from './MyProfileMyDetails';
-import MyProfileAnalitics from './MyProfileAnalitics';
+import MyProfileAnalytics from './MyProfileAnalytics';
 import LoginDetails from './LoginDetails';
 
 
@@ -14,10 +14,10 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export default function MyPorfileGrid() {
+export default function MyProfileGrid() {
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={8}  mt={10}>
+            <Grid container spacing={8} mt={10}>
                 <Grid container item spacing={3} xs={12} md={4}>
 
                     <Grid item xs={12} md={12}>
@@ -31,7 +31,7 @@ export default function MyPorfileGrid() {
 
                 <Grid item xs={12} md={8}>
 
-                    <div ><MyProfileAnalitics /></div>
+                    <div ><MyProfileAnalytics /></div>
 
                 </Grid>
 

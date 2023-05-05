@@ -13,11 +13,13 @@ export const AppContext = React.createContext({
   patientList: [],
   clinicianList: [],
   team: {},
+  allTeams: [],
   userProfile: {},
   unreadNotification: [],
 });
 
 export function AppContextProvider({ children }) {
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
@@ -30,30 +32,54 @@ export function AppContextProvider({ children }) {
     }
   }, [loggedInUser]);
 
+  useEffect(() => {
+    const savedUser = sessionStorage.getItem('loggedInUser');
+
+    if (savedUser) {
+      setLoggedInUser(JSON.parse(savedUser));
+      setLoggedIn(true);
+      console.log(`saved user:${savedUser}`)
+    }
+  }, []);
+
+  // add check login status
+  const options = loggedIn ? { withCredentials: true } : {};
 
   const {
     data: notification,
     isLoading: notificationsLoading,
     refresh: refreshNotifications,
-  } = useGet(`${API_BASE_URL}/api/notification`, []);
+  } = useGetUser(clinicianId ? `${API_BASE_URL}/api/notification/${clinicianId}` : null,
+    [],
+    [loggedIn],
+    options);
 
   const {
     data: tasks,
     isLoading: tasksLoading,
     refresh: refreshTasks,
-  } = useGet(`${API_BASE_URL}/api/task`, []);
+  } = useGetUser(clinicianId ? `${API_BASE_URL}/api/task` : null,
+    [],
+    [loggedInUser],
+    options);
 
   const {
     data: unreadNotification,
     isLoading: unreadNotificationLoading,
     refresh: refreshUnreadNotifications,
-  } = useGet(`${API_BASE_URL}/api/notification/unread`, []);
+  } = useGetUser(clinicianId ? `${API_BASE_URL}/api/notification/unread/${clinicianId}` : null,
+    [],
+    [loggedIn],
+    options);
 
   const {
     data: teamPatients,
     isLoading: teamPatientsLoading,
     refresh: refreshTeamPatients
-  } = useGet(`${API_BASE_URL}/api/patient`, []);
+  } = useGetUser(clinicianId && `${API_BASE_URL}/api/patient`,
+    [],
+    [loggedIn],
+    options);
 
   async function createTask(task) {
     await axios.post(`${API_BASE_URL}/api/task/createtask`, {
@@ -69,18 +95,6 @@ export function AppContextProvider({ children }) {
       })
     refreshTasks()
   }
-
-  async function deleteTask(tasksSelected) {
-    for (let i = 0; i < tasksSelected.length; i++) {
-      const taskDeleteResponse = await axios.delete(`http://localhost:3000/api/task/${tasksSelected[i]}`);
-      console.log(taskDeleteResponse)
-
-    }
-    refreshTasks()
-  }
-
-  // add check login status
-  const options = loggedIn ? { withCredentials: true } : {};
 
   const {
     data: userProfile,
@@ -100,28 +114,6 @@ export function AppContextProvider({ children }) {
     [loggedIn],
     options);
 
-  async function deleteNotification(id) {
-    const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
-
-    console.log(deleteResponse);
-
-    refreshNotifications();
-    refreshUnreadNotifications();
-
-  }
-
-  async function readNotification(id) {
-    console.log(id);
-    const updateResponse = await axios.put(
-      `${API_BASE_URL}/api/notification/unread/${id}`
-    );
-
-    console.log(updateResponse);
-
-    refreshUnreadNotifications();
-    refreshNotifications();
-  }
-
   async function updateUserProfile(id, data) {
     const updateResponse = await axios.put(
       `${API_BASE_URL}/api/user_profile/${id}`,
@@ -133,54 +125,53 @@ export function AppContextProvider({ children }) {
     refreshUserProfile();
   }
 
-  const patients = [
-    {
-      name: "Kevin Zheng",
-      location: "Ward 9",
-      identifier: "ABC123",
-    },
-    {
-      name: "Mickey Mouse",
-      location: "Ward 1",
-      identifier: "XYZ123",
-    },
-    {
-      name: "Minnie Mouse",
-      location: "Ward 3",
-      identifier: "DEF456",
-    },
-    {
-      name: "Donald Duck",
-      location: "Ward 21",
-      identifier: "ZZZ888",
-    },
-  ];
+  async function deleteNotification(id) {
+    const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
+
+    console.log(deleteResponse);
+
+    refreshNotifications();
+    refreshUnreadNotifications();
+
+  }
+
+  async function readNotification(id) {
+    // console.log(id);
+    const updateResponse = await axios.put(
+      `${API_BASE_URL}/api/notification/unread/${id}`
+    );
+
+    console.log(updateResponse);
+
+    refreshUnreadNotifications();
+    refreshNotifications();
+  }
+
+  async function deleteTask(tasksSelected) {
+    for (let i = 0; i < tasksSelected.length; i++) {
+      await axios.delete(`${API_BASE_URL}/api/task/${tasksSelected[i]}`);
+    }
+  }
 
   async function claimTask(tasksSelected) {
     for (let i = 0; i < tasksSelected.length; i++) {
-      const response = await fetch(`http://localhost:3000/api/task/${tasksSelected[i]}`)
-      let taskToBeUpdated = await response.json()
-
-      taskToBeUpdated = {
-        ...taskToBeUpdated,
-        clinician: '6441045875c54d273abff40f'
-      }
-
-      const requestOptions = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(taskToBeUpdated)
-      };
-
       //Need user dao to retrieve the user object ID to updated the displayedtask object to send to server
-      await fetch(`http://localhost:3000/api/task/assignclinician/${taskToBeUpdated._id}`, requestOptions);
+      await axios.put(`${API_BASE_URL}/api/task/updatetask/${tasksSelected[i]}`, { clinician: clinicianId });
     }
-    refreshTasks()
+  }
+
+  async function completeTask(tasksSelected) {
+    for (let i = 0; i < tasksSelected.length; i++) {
+      await axios.put(`${API_BASE_URL}/api/task/updatetask/${tasksSelected[i]}`, {
+        status: 2,
+        finished_at: Date.now()
+      });
+    }
   }
 
 
   async function deleteNotification(id) {
-    const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
+    const deleteResponse = await axios.delete(clinicianId ? `${API_BASE_URL}/api/notification/${id}` : null);
 
     console.log(deleteResponse);
 
@@ -193,19 +184,31 @@ export function AppContextProvider({ children }) {
     data: patientList,
     isLoading: patientListLoading,
     refresh: refreshPatientList,
-  } = useGet(`${API_BASE_URL}/api/team/1/patient_list`, []);
+  } = useGetUser(loggedInUser && `${API_BASE_URL}/api/team/${loggedInUser.team}/patient_list`, []);
 
-  const {
-    data: clinicianList,
-    isLoading: clinicianListLoading,
-    refresh: refreshClinicianList,
-  } = useGet(`${API_BASE_URL}/api/team/1/clinician_list`, []);
+  // const {
+  //   data: clinicianList,
+  //   isLoading: clinicianListLoading,
+  //   refresh: refreshClinicianList,
+  // } = useGet(`${API_BASE_URL}/api/team/1/clinician_list`, []);
 
   const {
     data: team,
     isLoading: teamLoading,
     refresh: refreshTeam,
-  } = useGet(`${API_BASE_URL}/api/team/1`, []);
+  } = useGetUser(loggedInUser && `${API_BASE_URL}/api/team/${loggedInUser.team}`,
+    [],
+    [loggedIn],
+    options);
+
+  const {
+    data: allTeams,
+    isLoading: allTeamsLoading,
+    refresh: refreshAllTeams,
+  } = useGetUser(loggedInUser && `${API_BASE_URL}/api/team`,
+    [],
+    [loggedIn],
+    options);
 
 
   async function createContainer(id, container_id) {
@@ -223,6 +226,16 @@ export function AppContextProvider({ children }) {
 
     refreshUnreadNotifications();
     refreshNotifications();
+  }
+
+  async function addPatientProvider(data) {
+    const postResponse = await axios.post(`${API_BASE_URL}/api/patient/add`, data);
+    console.log(postResponse);
+
+    refreshNotifications();
+    refreshUnreadNotifications();
+
+    location.reload();
   }
 
   async function updateUserProfile(id, data) {
@@ -261,8 +274,8 @@ export function AppContextProvider({ children }) {
     tasksCompleted,
     patientList,
     patientListLoading,
-    clinicianList,
-    clinicianListLoading,
+    // clinicianList,
+    // clinicianListLoading,
     team,
     teamLoading,
     userProfile,
@@ -276,6 +289,11 @@ export function AppContextProvider({ children }) {
     claimTask,
     loggedInUser,
     setLoggedInUser,
+    addPatientProvider,
+    completeTask,
+    allTeams,
+    allTeamsLoading,
+    options
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

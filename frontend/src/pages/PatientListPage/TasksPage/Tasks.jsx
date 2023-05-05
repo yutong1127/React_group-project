@@ -2,23 +2,28 @@ import * as React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
+import {
+    Box,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
+    TableSortLabel,
+    Toolbar,
+    Typography,
+    Paper,
+    Checkbox,
+    IconButton,
+    Tooltip,
+    FormControlLabel,
+    Switch,
+    Menu,
+    MenuItem
+} from '@mui/material';
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import DoneIcon from '@mui/icons-material/Done';
@@ -43,26 +48,35 @@ export default function Tasks() {
     const [visibleRows, setVisibleRows] = useState(null);
     const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
     const [paddingHeight, setPaddingHeight] = useState(0);
-    const { tasks, deleteTask, claimTask } = useContext(AppContext)
-
-    const [taskz, setTaskz] = useState([]);
+    const { deleteTask, claimTask, completeTask, loggedInUser} = useContext(AppContext)
+    const [isClicked, setIsClicked] = useState(false);
+    const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
         async function getTeamsTasks() {
             const teamTasks = [];
-            // retrive all patients from team 1 for testing
-            const { data } = await axios.get(`${API_BASE_URL}/api/team/1/patient_list`);
+
+            // // retrive all patients from team 1 for testing
+            // const { data } = await axios.get(`${API_BASE_URL}/api/team/1/patient_list`);
+
+            // Todo: replace hardcoded id with logged in user's team id
+            const { data } = await axios.get(`${API_BASE_URL}/api/team/${loggedInUser.team}/patient_list`);
 
             for (const patient of data) {
-                const { data } = await axios.get(`${API_BASE_URL}/api/task/patient/${patient._id}`);
+                const { data } = await axios.get(`${API_BASE_URL}/api/task/incompletetasks/${patient._id}`);
                 for (const db_task of data) {
+
+                    let clinician;
+                    if (db_task.clinician) { clinician = db_task.clinician.fname + " " + db_task.clinician.lname } else {
+                        clinician = ""
+                    }
 
                     const task = {
                         _id: db_task._id,
                         name: db_task.name,
                         type: db_task.type,
                         patient: db_task.patient.fname + " " + db_task.patient.lname,
-                        clinician: db_task.clinician.fname + " " + db_task.clinician.lname,
+                        clinician: clinician,
                         priority: db_task.priority,
                         time: db_task.created_at
                     }
@@ -70,10 +84,10 @@ export default function Tasks() {
                 }
 
             }
-            setTaskz(teamTasks);
+            setTasks(teamTasks);
         }
         getTeamsTasks();
-    }, []);
+    }, [isClicked]);
 
     //Table headers,toolbars etc.
     function descendingComparator(a, b, orderBy) {
@@ -179,7 +193,6 @@ export default function Tasks() {
             </TableHead>
         );
     }
-
     EnhancedTableHead.propTypes = {
         numSelected: PropTypes.number.isRequired,
         onRequestSort: PropTypes.func.isRequired,
@@ -228,12 +241,17 @@ export default function Tasks() {
                             <IconButton onClick={() => {
                                 claimTask(tasksSelected)
                                 setSelected([])
+                                setIsClicked(bool => !bool)
                             }}>
                                 <DoneOutlineIcon />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Done">
-                            <IconButton>
+                            <IconButton onClick={() => {
+                                completeTask(tasksSelected)
+                                setSelected([])
+                                setIsClicked(bool => !bool)
+                            }}>
                                 <DoneIcon />
                             </IconButton>
                         </Tooltip>
@@ -241,41 +259,53 @@ export default function Tasks() {
                             <IconButton onClick={() => {
                                 deleteTask(tasksSelected)
                                 setSelected([])
+                                setIsClicked(bool => !bool)
                             }}>
                                 <DeleteIcon />
                             </IconButton>
                         </Tooltip>
                     </Box>
                 ) : (
-                    <Tooltip title="Filter list">
-                        <IconButton>
-                            <FilterListIcon />
-                        </IconButton>
-                    </Tooltip>
+                    <Box></Box>
                 )
                 }
             </Toolbar >
         );
     }
-
     EnhancedTableToolbar.propTypes = {
         numSelected: PropTypes.number.isRequired,
     };
     //Table cells.
     useEffect(() => {
+        let comparatorOrder;
+        let comparatorOrderBy;
+        if (visibleRows != null) {
+            comparatorOrder = order;
+            comparatorOrderBy = orderBy;
+        } else {
+            comparatorOrder = DEFAULT_ORDER;
+            comparatorOrderBy = DEFAULT_ORDER_BY;
+        }
+
         let rowsOnMount = stableSort(
-            //
-            taskz,
-            getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
+            tasks,
+            getComparator(comparatorOrder, comparatorOrderBy),
         );
 
-        rowsOnMount = rowsOnMount.slice(
-            0 * DEFAULT_ROWS_PER_PAGE,
-            0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE,
-        );
+        if (visibleRows != null) {
+            rowsOnMount = rowsOnMount.slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage,
+            );
+        } else {
+            rowsOnMount = rowsOnMount.slice(
+                0 * DEFAULT_ROWS_PER_PAGE,
+                0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE,
+            );
+        }
 
         setVisibleRows(rowsOnMount);
-    }, [taskz]);
+    }, [tasks]);
 
     const handleRequestSort = useCallback(
         (event, newOrderBy) => {
@@ -284,7 +314,7 @@ export default function Tasks() {
             setOrder(toggledOrder);
             setOrderBy(newOrderBy);
 
-            const sortedRows = stableSort(taskz, getComparator(toggledOrder, newOrderBy));
+            const sortedRows = stableSort(tasks, getComparator(toggledOrder, newOrderBy));
             const updatedRows = sortedRows.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
@@ -292,7 +322,7 @@ export default function Tasks() {
 
             setVisibleRows(updatedRows);
         },
-        [order, orderBy, page, rowsPerPage, taskz],
+        [order, orderBy, page, rowsPerPage, tasks],
     );
 
     const handleClick = (event, name) => {
@@ -319,7 +349,7 @@ export default function Tasks() {
         (event, newPage) => {
             setPage(newPage);
 
-            const sortedRows = stableSort(taskz, getComparator(order, orderBy));
+            const sortedRows = stableSort(tasks, getComparator(order, orderBy));
             const updatedRows = sortedRows.slice(
                 newPage * rowsPerPage,
                 newPage * rowsPerPage + rowsPerPage,
@@ -329,14 +359,13 @@ export default function Tasks() {
 
             // Avoid a layout jump when reaching the last page with empty rows.
             const numEmptyRows =
-                newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - taskz.length) : 0;
+                newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - tasks.length) : 0;
 
             const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
             setPaddingHeight(newPaddingHeight);
         },
-        [order, orderBy, dense, rowsPerPage, taskz],
+        [order, orderBy, dense, rowsPerPage, tasks],
     );
-
     const handleChangeRowsPerPage = useCallback(
         (event) => {
             const updatedRowsPerPage = parseInt(event.target.value, 10);
@@ -344,7 +373,7 @@ export default function Tasks() {
 
             setPage(0);
 
-            const sortedRows = stableSort(taskz, getComparator(order, orderBy));
+            const sortedRows = stableSort(tasks, getComparator(order, orderBy));
             const updatedRows = sortedRows.slice(
                 0 * updatedRowsPerPage,
                 0 * updatedRowsPerPage + updatedRowsPerPage,
@@ -355,7 +384,7 @@ export default function Tasks() {
             // There is no layout jump to handle on the first page.
             setPaddingHeight(0);
         },
-        [order, orderBy, taskz],
+        [order, orderBy, tasks],
     );
 
     const handleChangeDense = (event) => {
@@ -371,10 +400,9 @@ export default function Tasks() {
         const minutes = date.getMinutes().toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      
-        return `${day}-${month} ${hours}:${minutes}`;
-      }
 
+        return `${day}-${month} ${hours}:${minutes}`;
+    }
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
@@ -390,15 +418,13 @@ export default function Tasks() {
                             order={order}
                             orderBy={orderBy}
                             onRequestSort={handleRequestSort}
-                            rowCount={taskz.length}
+                            rowCount={tasks.length}
                         />
                         <TableBody>
                             {visibleRows
                                 ? visibleRows.map((row, index) => {
                                     const isItemSelected = isSelected(row._id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
-
-
                                     return (
                                         <TableRow
                                             hover
@@ -451,7 +477,7 @@ export default function Tasks() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={taskz.length}
+                    count={tasks.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

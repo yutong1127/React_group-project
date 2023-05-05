@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { Patient, User, Team } from "../patientlist-db/schema";
+import { Patient, User, Team, Notification } from "../patientlist-db/schema";
 import { getUserById } from "./user-dao";
 
 async function retrievePatient(id) {
@@ -30,7 +30,29 @@ async function addPatient(data) {
     })
     await patient.save();
     addPatientToTeam(patient._id, patient.responsibleClinicians);
-    return;
+
+    const team = await Team.findOne({supervisors:data.responsibleClinicians}).populate();
+    // console.log(`recipient: ${team.clinicians}`)
+
+    const clinicians = team.clinicians;
+    console.log(`clinicians: ${clinicians}`)
+     
+    const notification = new Notification({
+        type:'Admin',
+        patient:patient,
+        entity:'You have a new patient, ',
+        isRead:false
+    });
+
+    await notification.save();
+    for (const clinician of clinicians){
+        notification.recipient.push(clinician);
+        const user = await User.findOne({_id:clinician._id})
+        user.notification.push(notification);
+        await notification.save();
+        await user.save();
+    }
+    return true;
 }
 
 async function addPatientToTeam(patientId, supervisorId) {

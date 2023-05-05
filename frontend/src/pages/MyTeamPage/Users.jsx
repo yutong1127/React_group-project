@@ -5,7 +5,7 @@ import PieChart from './PieChart';
 import styles from './Users.module.css'
 
 
-export default function Users() {
+export default function Users({completedTasks, clinicianList}) {
     return (
         <div >
 
@@ -15,7 +15,7 @@ export default function Users() {
                         Users
                     </Typography>
                     <div className={styles.pie_chart} > 
-                    <PieChart />
+                    <PieChart completedTasks={completedTasks}  clinicianList={clinicianList} />
                     </div> 
                     
                 </CardContent>

@@ -1,12 +1,12 @@
 
 import { ResponsiveBar } from '@nivo/bar';
-import styles from "./MyProfileAnalitics.module.css";
+import styles from "./MyProfileAnalytics.module.css";
 import { useContext } from 'react';
 import { AppContext } from '../../../src/utils/AppContextProvider';
 
 
 
-export default function MyProfileAnaliticsBarChart() {
+export default function MyProfileAnalyticsBarChart() {
     const { tasksCompleted } = useContext(AppContext);
     const data = formatBarChartData(tasksCompleted);
 

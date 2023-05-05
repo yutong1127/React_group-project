@@ -103,6 +103,10 @@ function MyDetailsForm({ setEditOff }) {
         setEditOff();
     }
 
+    const handleCancelClick = () => {
+        setEditOff();
+    }
+
 
     return (
         <Container>
@@ -186,9 +190,14 @@ function MyDetailsForm({ setEditOff }) {
                     />
 
                 </Box>
-                <Button type="submit" variant="contained" color="primary" fullWidth>
-                    Save
-                </Button>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px', paddingTop: '5px' }}>
+                    <Button type='submit' variant='contained' color='primary' fullWidth>
+                        Save
+                    </Button>
+                    <Button variant='outlined' color='inherit' onClick={handleCancelClick} fullWidth sx={{ borderColor: 'primary.main', color: 'primary.main' }}>
+                        Cancel
+                    </Button>
+                </Box>
             </form>
         </Container>
     );
