@@ -19,7 +19,7 @@ export default function PatientTasks(props) {
         }
         getTasks();
 
-    }, []);
+    }, [props.trigger]);
 
     return (
         <Grid item container spacing={2} className={styles.patientTasks}>
