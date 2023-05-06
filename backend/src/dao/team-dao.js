@@ -1,4 +1,6 @@
-import { Team, User } from '../patientlist-db/schema';
+import { Team, User, Patient } from '../patientlist-db/schema';
+import mongoose from 'mongoose';
+import { updatePatient } from './patient-dao.js'
 
 // retrieve team 
 async function retrieveTeam(teamId) {
@@ -31,11 +33,51 @@ async function retrieveClinicianList(teamId) {
 }
 
 
+async function retrieveTeamByPatientId(id) {
+    return await Team.findOne({ patients: mongoose.Types.ObjectId(id) });
+}
+
+async function transferTeam(patientId, supervisorId) {
+    // get supervisor user
+    const supervisor = await User.findById(supervisorId);
+    const teamId = supervisor.team;
+
+    // get current team
+    const currentTeam = await Team.findOne({ patients: mongoose.Types.ObjectId(patientId) });
+    if (!currentTeam) {
+        return;
+    }
+
+    // get new team
+    const newTeam =  await Team.findById(teamId);
+    if (!newTeam) {
+        return;
+    }
+
+    // remove patient from old team
+    const currentTeamPatients = currentTeam.patients
+    const index = currentTeamPatients.indexOf(patientId);
+    currentTeamPatients.splice(index, 1);
+    await Team.findByIdAndUpdate(currentTeam._id, {patients: currentTeamPatients}, { new: false });
+
+    // add patient to new team
+    const newTeamPatients = newTeam.patients
+    await Team.findByIdAndUpdate(newTeam._id, {patients: [...newTeamPatients, patientId]}, { new: false });
+
+    // update stupid supervisor id in patient
+    await Patient.findByIdAndUpdate(patientId, {responsibleClinicians: mongoose.Types.ObjectId(supervisorId)}, { new: false });
+
+
+    // retrieveTeamByPatientId
+    return await Team.findOne({ patients: mongoose.Types.ObjectId(patientId) });
+}
 
 
 export {
     retrieveTeam,
     retrieveAllTeams,
     retrievePatientList,
-    retrieveClinicianList
+    retrieveClinicianList,
+    retrieveTeamByPatientId,
+    transferTeam
 };

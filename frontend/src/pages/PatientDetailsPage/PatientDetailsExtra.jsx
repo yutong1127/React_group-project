@@ -11,6 +11,7 @@ import {
     IconButton,
     Typography,
 } from '@mui/material';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import DoneIcon from '@mui/icons-material/Done';
@@ -20,6 +21,10 @@ import props from 'prop-types';
 const EditableTableCell = ({ value, onChange, onSubmit }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [inputText, setInputText] = useState(value);
+
+    useEffect(() => {
+        setInputText(value);
+    }, [isEditing]);
 
     const handleEditClick = () => {
         setIsEditing(true);

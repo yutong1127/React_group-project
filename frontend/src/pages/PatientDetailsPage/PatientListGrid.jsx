@@ -28,7 +28,10 @@ export default function PatientListGrid() {
                 <Grid container item spacing={3} xs={12} md={12}>
                     <Grid item xs={12} md={6}>
                         <div>
-                            <PatientDetailsInfo patientData={patientData} />
+                            <PatientDetailsInfo 
+                                patientData={patientData}
+                                API_BASE_URL={API_BASE_URL}
+                            />
                         </div>
                     </Grid>
 

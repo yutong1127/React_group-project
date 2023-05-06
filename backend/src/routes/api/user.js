@@ -1,5 +1,6 @@
 import express from "express";
 import passport from "../../middleware/passport.js";
+import { retrieveAllSupervisors } from "../../dao/user-dao";
 
 const router = express.Router();
 
@@ -51,6 +52,16 @@ router.get("/logout", async (req, res) => {
         .json({ message: "logout successful", redirect: "/login" });
     });
   });
+});
+
+router.get('/retrieveAllSupervisors', async (req, res) => {
+  const result = await retrieveAllSupervisors();
+
+  if (result) {
+      res.json(result);
+  } else {
+      res.status(404).send('Not found');
+  }
 });
 
 // router.get("/status", (req, res) => {
