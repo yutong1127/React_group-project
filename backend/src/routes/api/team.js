@@ -3,7 +3,9 @@ import {
     retrieveTeam,
     retrieveAllTeams,
     retrievePatientList,
-    retrieveClinicianList
+    retrieveClinicianList,
+    retrieveTeamByPatientId,
+    transferTeam
 } from '../../dao/team-dao.js'
 
 const HTTP_CREATED = 201;
@@ -60,6 +62,30 @@ router.get('/:teamId/clinician_list', async (req, res) => {
 
 });
 
+router.get('/retrieveTeamByPatientId/:id', async (req, res) => {
+    const { id } = req.params;
 
+    const result = await retrieveTeamByPatientId(id);
+
+    if (result) {
+        res.json(result);
+    } else {
+        res.status(404).send('Not found');
+    }
+});
+
+router.put('/transferTeam', async (req, res) => {
+    const data = req.body;
+    const patientId = data.patientId
+    const supervisorId = data.supervisorId
+
+    const result = await transferTeam(patientId, supervisorId);
+
+    if (result) {
+        res.json(result);
+    } else {
+        res.status(404).send('Not found');
+    }
+});
 
 export default router;

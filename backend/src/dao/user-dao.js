@@ -40,11 +40,16 @@ async function deleteUser(userId) {
   return await User.findByIdAndDelete(userId);
 }
 
+async function retrieveAllSupervisors() {
+  return await User.find({ "isSupervisor": true });
+}
+
 export { 
   createUser, 
   getUserByEmail, 
   getUserById, 
   updateUser, 
   updateUserProfile,
-  deleteUser 
+  deleteUser,
+  retrieveAllSupervisors
 };

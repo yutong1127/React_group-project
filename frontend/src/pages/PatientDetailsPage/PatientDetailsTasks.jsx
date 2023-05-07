@@ -89,7 +89,9 @@ export default function PateintDetailsTasks() {
                     <DialogTitle>{selectedTask && selectedTask.name}</DialogTitle>
                     <DialogContent>
                     {selectedTask && selectedTask.status === 0 ? (
-                        <DialogContentText>Result not available yet</DialogContentText>
+                        <DialogContentText>Task not started</DialogContentText>
+                    ) : selectedTask && selectedTask.status === 1 ? (
+                        <DialogContentText>Task in progress</DialogContentText>
                     ) : (
                         <DialogContentText>
                             {selectedTask && selectedTask.result}
