@@ -9,82 +9,64 @@ import DoctorAvatar3 from '../assets/DoctorAvatar3.jpg';
 import DoctorAvatar4 from '../assets/DoctorAvatar4.jpg';
 import DoctorAvatar5 from '../assets/DoctorAvatar5.jpg';
 
-
-export default function ImageAvatars(props) {
-
-  if (props.id === 'DoctorAvartar') {
-    return (
-
-      <Stack direction="row" spacing={2}>
-        <Avatar
-          alt="DoctorAvatar"
-          src={DoctorAvartar}
-          sx={{ width: 100, height: 100, mx: 'auto' }}
-        // sx={{ bgcolor: deepOrange[500] }}
-        />
-      </Stack>
-    )
-  } else if (props.id === 'DoctorAvatar1') {
-    return (
-      <Stack direction="row" spacing={2}>
-        <Avatar
-          alt="DoctorAvatar1"
-          src={DoctorAvatar1}
-          sx={{ mr: 1 }}
-        />
-      </Stack>
-    )
-  } else if (props.id === 'DoctorAvatar2') {
-    return (
-      <Stack direction="row" spacing={2}>
-        <Avatar
-          alt="DoctorAvatar2"
-          src={DoctorAvatar2}
-          sx={{ mr: 1 }} />
-      </Stack>
-    )
-  } else if (props.id === 'DoctorAvatar3') {
-    return (
-
-      <Stack direction="row" spacing={2}>
-        <Avatar
-          alt="DoctorAvatar3"
-          src={DoctorAvatar3}
-          sx={{ mr: 1 }} />
-      </Stack>
-    )
-  } else if (props.id === 'DoctorAvatar4') {
-    return (
-
-      <Stack direction="row" spacing={2}>
-        <Avatar
-          alt="DoctorAvatar4"
-          src={DoctorAvatar4}
-          sx={{ mr: 1 }} />
-      </Stack>
-    )
-  } else if (props.id === 'DoctorAvatar5') {
-    return (
-
-      <Stack direction="row" spacing={2}>
-        <Avatar
-          alt="DoctorAvatar5"
-          src={DoctorAvatar5}
-          sx={{ mr: 1 }} />
-      </Stack>
-    )
-  } else if (props.id === 'DoctorAvatar6') {
-    return (
-
-      <Stack direction="row" spacing={2}>
-        <Avatar
-          alt="DoctorAvatar6"
-          src={DoctorAvatar5}
-          sx={{ mr: 1 }} />
-      </Stack>
-    )
-  } else {
-    console.log('Error: No Avatar Found')
+const avatars = [
+  {
+    'name': 'DoctorAvatar1',
+    'src': DoctorAvatar1
+  },
+  {
+    'name': 'DoctorAvatar2',
+    'src': DoctorAvatar2
+  },
+  {
+    'name': 'DoctorAvatar3',
+    'src': DoctorAvatar3
+  },
+  {
+    'name': 'DoctorAvatar4',
+    'src': DoctorAvatar4
+  },
+  {
+    'name': 'DoctorAvatar5',
+    'src': DoctorAvatar5
+  },
+  {
+    'name': 'DoctorAvatar6',
+    'src': DoctorAvatar1
   }
+];
+
+export default function ImageAvatars({ id, size }) {
+
+  for (let i = 0; i < avatars.length; i++) {
+    if (id == avatars[i].name && size == 'big') {
+      return (
+        <Stack direction="row" spacing={2}>
+          <Avatar
+            alt='`${avatars[i].name}`'
+            src={avatars[i].src}
+            sx={{ width: 120, height: 120, mx: 'auto' }}
+          />
+        </Stack>
+      )
+    } else if (id == avatars[i].name) {
+      return (
+        <Stack direction="row" spacing={2}>
+          <Avatar
+            alt='`${avatars[i].name}`'
+            src={avatars[i].src}
+            sx={{ mr: 1 }} />
+        </Stack>
+      )
+    }
+  }
+  return (
+    <Stack direction="row" spacing={2}>
+      <Avatar
+        alt='`default avatar`'
+        src={DoctorAvartar}
+        sx={{ mr: 1 }} />
+    </Stack>
+  )
 
 }
