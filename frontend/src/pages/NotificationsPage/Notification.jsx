@@ -38,6 +38,12 @@ export default function Notifications() {
         }
         else if (event.target.value == 20) {
             const sortedTime = [...notification].sort((a, b) =>
+                a.created_at < b.created_at ? 1 : -1);
+            //    console.log(sortedTime);
+            setSortNotification(sortedTime)
+        }
+        else if (event.target.value == 60) {
+            const sortedTime = [...notification].sort((a, b) =>
                 a.created_at > b.created_at ? 1 : -1);
             //    console.log(sortedTime);
             setSortNotification(sortedTime)
@@ -88,9 +94,10 @@ export default function Notifications() {
                         onChange={handleSortNotifictaion}
                     >
                         <MenuItem value={10}>None</MenuItem>
-                        <MenuItem value={20}>Time</MenuItem>
-                        <MenuItem value={30}>Patient Name</MenuItem>
-                        <MenuItem value={40}>Type</MenuItem>
+                        <MenuItem value={20}>Time (Latest to Old)</MenuItem>
+                        <MenuItem value={60}>Time (Old to Latest)</MenuItem>
+                        <MenuItem value={30}>Patient Name (A-Z)</MenuItem>
+                        <MenuItem value={40}>Type (Admin Comes First)</MenuItem>
                         <MenuItem value={50}>Unread</MenuItem>
 
                     </Select>

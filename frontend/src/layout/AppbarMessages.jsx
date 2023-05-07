@@ -14,7 +14,7 @@ import styles from '.././layout/Appbar.module.css'
 
 export default function MessageMenu() {
 
-    const { notification, unreadNotification } = useContext(AppContext);
+    const { unreadNotification,loggedIn } = useContext(AppContext);
 
     const [anchorElNotification, setAnchorElNotification] = useState(null);
     
@@ -42,7 +42,7 @@ export default function MessageMenu() {
                 size='large'
                 color='inherit'
                 onClick={handleNotificationsOpen}>
-                <Badge badgeContent={unreadNotification.length} color="secondary">
+                <Badge badgeContent={loggedIn ? unreadNotification.length : 0} color="secondary">
                     <MailIcon />
                 </Badge>
             </IconButton>

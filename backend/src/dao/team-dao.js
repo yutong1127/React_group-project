@@ -98,10 +98,10 @@ async function transferTeam(patientId, supervisorId) {
     await notificationForNewTeam.save();
 
     for (const clinician of newTeamClinicians){
-        notificationForCurrentTeam.recipient.push(clinician);
+        notificationForNewTeam.recipient.push(clinician);
         const user = await User.findOne({_id:clinician._id})
-        user.notification.push(notificationForCurrentTeam);
-        await notificationForCurrentTeam.save();
+        user.notification.push(notificationForNewTeam);
+        await notificationForNewTeam.save();
         await user.save();
     }
 
