@@ -1,4 +1,4 @@
-import { Team, User, Patient } from '../patientlist-db/schema';
+import { Team, User, Patient, Notification } from '../patientlist-db/schema';
 import mongoose from 'mongoose';
 import { updatePatient } from './patient-dao.js'
 
@@ -66,6 +66,45 @@ async function transferTeam(patientId, supervisorId) {
 
     // update stupid supervisor id in patient
     await Patient.findByIdAndUpdate(patientId, {responsibleClinicians: mongoose.Types.ObjectId(supervisorId)}, { new: false });
+
+    // Notification update
+    const currentTeamClinicians = currentTeam.clinicians;
+    const patient = await Patient.findOne({_id:patientId});
+
+    const notificationForCurrentTeam = new Notification({
+        type:'Admin',
+        patient:patient,
+        entity:'You have a patient transfer to another team, ',
+        isRead:false
+    });
+
+    await notificationForCurrentTeam.save();
+
+    for (const clinician of currentTeamClinicians){
+        notificationForCurrentTeam.recipient.push(clinician);
+        const user = await User.findOne({_id:clinician._id})
+        user.notification.push(notificationForCurrentTeam);
+        await notificationForCurrentTeam.save();
+        await user.save();
+    }
+   
+    const newTeamClinicians = newTeam.clinicians;
+    const notificationForNewTeam = new Notification({
+        type:'Admin',
+        patient:patient,
+        entity:'You have a new patient, ',
+        isRead:false
+    });
+    await notificationForNewTeam.save();
+
+    for (const clinician of newTeamClinicians){
+        notificationForCurrentTeam.recipient.push(clinician);
+        const user = await User.findOne({_id:clinician._id})
+        user.notification.push(notificationForCurrentTeam);
+        await notificationForCurrentTeam.save();
+        await user.save();
+    }
+
 
 
     // retrieveTeamByPatientId
