@@ -117,9 +117,17 @@ async function addResponsibleClinicians() {
             supervisors.push(element);
         });
     }
+
     for (const patient of patients) {
         const randomNum = Math.floor(Math.random() * supervisors.length);
         patient.responsibleClinicians = supervisors[randomNum];
+
+        // add patient identifier
+        const UPIFirst = patient.fname.toUpperCase().slice(0, 1);
+        const UPILast = patient.lname.toUpperCase().slice(0, 2);
+        const UPINumeric = Math.floor(Math.random() * (10000 - 1000) + 1000);
+        const UPI = UPIFirst + UPILast + UPINumeric.toString()
+        patient.identifier = UPI;
         const team = await Team.findOne({ supervisors: supervisors[randomNum] });
         team.patients.push(patient)
         await team.save();

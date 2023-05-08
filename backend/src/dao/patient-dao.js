@@ -9,7 +9,7 @@ async function retrievePatient(id) {
 
 async function updatePatient(id, data) {
     const updatedPatient = await Patient.findByIdAndUpdate(id, data, { new: false });
-    
+
     return updatedPatient !== undefined;
 }
 
@@ -18,6 +18,12 @@ async function deletePatient(id) {
 }
 
 async function addPatient(data) {
+    // add patient identifier
+    const UPIFirst = data.fname.toUpperCase().slice(0, 1);
+    const UPILast = data.lname.toUpperCase().slice(0, 2);
+    const UPINumeric = Math.floor(Math.random() * (10000 - 1000) + 1000);
+    const UPI = UPIFirst + UPILast + UPINumeric.toString()
+
     const patient = new Patient({
         fname: data.fname,
         lname: data.lname,
@@ -27,27 +33,28 @@ async function addPatient(data) {
         quickAdd: data.quickAdd,
         birth_date: data.birth_date,
         gender: data.gender,
+        identifier: UPI
     })
     await patient.save();
     addPatientToTeam(patient._id, patient.responsibleClinicians);
 
-    const team = await Team.findOne({supervisors:data.responsibleClinicians}).populate();
+    const team = await Team.findOne({ supervisors: data.responsibleClinicians }).populate();
     // console.log(`recipient: ${team.clinicians}`)
 
     const clinicians = team.clinicians;
     console.log(`clinicians: ${clinicians}`)
-     
+
     const notification = new Notification({
-        type:'Admin',
-        patient:patient,
-        entity:'You have a new patient, ',
-        isRead:false
+        type: 'Admin',
+        patient: patient,
+        entity: 'You have a new patient, ',
+        isRead: false
     });
 
     await notification.save();
-    for (const clinician of clinicians){
+    for (const clinician of clinicians) {
         notification.recipient.push(clinician);
-        const user = await User.findOne({_id:clinician._id})
+        const user = await User.findOne({ _id: clinician._id })
         user.notification.push(notification);
         await notification.save();
         await user.save();
@@ -56,7 +63,7 @@ async function addPatient(data) {
 }
 
 async function addPatientToTeam(patientId, supervisorId) {
-    const team = await Team.findOne({supervisors: supervisorId});
+    const team = await Team.findOne({ supervisors: supervisorId });
     team.patients.push(patientId);
     await team.save();
 }

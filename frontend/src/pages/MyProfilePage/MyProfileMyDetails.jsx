@@ -45,7 +45,7 @@ function MyDetails({ setEditOn }) {
 
             <Box sx={{ mx: 'auto', px: 5 }}>
 
-                <ImageAvatars id="DoctorAvartar" sx={{ width: 56, height: 56 }} />
+                <ImageAvatars id={userProfile.avatar} size={'big'} sx={{ width: 56, height: 56 }} />
                 <List sx={style} component="nav" aria-label="mailbox folders">
 
                     <Typography gutterBottom variant="h5" component="div" textAlign="center">
