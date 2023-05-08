@@ -13,9 +13,10 @@ import {
     Button,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import props from 'prop-types';
 import TextField from '@mui/material/TextField';
+import { AppContext } from '../../utils/AppContextProvider'
 
 const style = {
     width: '100%',
@@ -32,6 +33,21 @@ const calculateAge = (patient) => {
     const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
     return age;
 };
+
+
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+
+export default function PatientDetailsInfo(props) {
+    const { patientId } = useParams();
+    const { patientData } = props;
+    const [patient, setPatient] = useState('');
+    const [openDialog, setOpenDialog] = useState(false);
+    const [team, setTeam] = useState('');
+    const [searchValue, setSearchValue] = useState('');
+    const [supervisorList, setSupervisorList] = useState('');
+    const {refreshNotifications, refreshUnreadNotifications } = useContext(AppContext);
+
 
 const transferPatientTeam = async (
     patientId,
@@ -52,6 +68,8 @@ const transferPatientTeam = async (
                 }),
             }
         );
+        refreshNotifications();
+        refreshUnreadNotifications();
         if (!response.ok) {
             throw new Error('Error updating patient data');
         }
@@ -60,16 +78,6 @@ const transferPatientTeam = async (
     }
 };
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
-
-export default function PatientDetailsInfo(props) {
-    const { patientId } = useParams();
-    const { patientData } = props;
-    const [patient, setPatient] = useState('');
-    const [openDialog, setOpenDialog] = useState(false);
-    const [team, setTeam] = useState('');
-    const [searchValue, setSearchValue] = useState('');
-    const [supervisorList, setSupervisorList] = useState('');
     
     useEffect(() => {
         const getPatientData = async () => {

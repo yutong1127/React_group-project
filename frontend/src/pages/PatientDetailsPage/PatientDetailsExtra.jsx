@@ -13,14 +13,18 @@ import {
 } from '@mui/material';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { useParams } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import DoneIcon from '@mui/icons-material/Done';
 import EditIcon from '@mui/icons-material/Edit';
 import props from 'prop-types';
+import { AppContext } from '../../utils/AppContextProvider';
+
+
 
 const EditableTableCell = ({ value, onChange, onSubmit }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [inputText, setInputText] = useState(value);
+    
 
     useEffect(() => {
         setInputText(value);
@@ -72,30 +76,7 @@ const EditableTableCell = ({ value, onChange, onSubmit }) => {
     );
 };
 
-const updatePatientData = async (
-    patientId,
-    API_BASE_URL,
-    patientDetailsExtra
-) => {
-    try {
-        const response = await fetch(
-            `${API_BASE_URL}/api/patient/${patientId}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(patientDetailsExtra),
-            }
-        );
 
-        if (!response.ok) {
-            throw new Error('Error updating patient data');
-        }
-    } catch (error) {
-        console.error('Error updating patient data:', error);
-    }
-};
 
 const style = {
     width: '100%',
@@ -113,6 +94,33 @@ export default function PateintDetailsExtra(props) {
     const [problems, setProblems] = useState('');
     const [plan, setPlan] = useState('');
     const [history, setHistory] = useState('');
+    const { refreshTeam } = useContext(AppContext);
+
+    const updatePatientData = async (
+        patientId,
+        API_BASE_URL,
+        patientDetailsExtra
+    ) => {
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/patient/${patientId}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(patientDetailsExtra),
+                }
+            );
+    
+            if (!response.ok) {
+                throw new Error('Error updating patient data');
+            }
+            refreshTeam();
+        } catch (error) {
+            console.error('Error updating patient data:', error);
+        }
+    };
 
     const handleDescriptionSubmit = async (value) => {
         setDescription(value);

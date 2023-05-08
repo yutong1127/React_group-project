@@ -12,9 +12,9 @@ const patientSchema = new Schema({
     notification: [{type: Schema.Types.ObjectId, ref:'Notification'}],
     created_at: { type: Date, default: Date.now},
     progress: {
-        problems: {type: String},
-        history:{type: String},
-        plan:{type: String},
+        problems: {type: String, default:''},
+        history:{type: String, default:''},
+        plan:{type: String, default:''},
     },
     birth_date: {type: Date},
     gender: {type: String},

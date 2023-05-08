@@ -1,4 +1,4 @@
-import { Task } from "../patientlist-db/schema.js";
+import { Task, User,Patient, Team, Notification } from "../patientlist-db/schema.js";
 import dayjs from 'dayjs';
 import mongoose from 'mongoose';
 
@@ -25,9 +25,31 @@ async function deleteTask(id) {
 }
 
 async function createTask(task) {
-
     const dbTask = new Task(task);
     await dbTask.save();
+
+    // Notification update
+    const patient = await Patient.findOne(dbTask.patient)
+
+    const responsibleClinician = await User.find(patient.responsibleClinicians)
+    const team = await Team.findOne({supervisors:responsibleClinician})
+    const clinicians = team.clinicians
+    const entity = dbTask.type + ' needed for, '
+    const notification = new Notification({
+        type:'Task',
+        patient:patient,
+        entity: entity,
+        isRead:false
+    });
+    await notification.save();
+    for (const clinician of clinicians){
+        notification.recipient.push(clinician);
+        const user = await User.findOne({_id:clinician._id})
+        user.notification.push(notification);
+        await notification.save();
+        await user.save();
+    }
+
     return dbTask !== undefined;
 }
 
