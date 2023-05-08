@@ -93,7 +93,8 @@ export function AppContextProvider({ children }) {
       .then(function (response) {
         console.log(response);
       })
-    refreshTasks()
+    refreshTasks(),
+    refreshUnreadNotifications()
   }
 
   const {
@@ -293,7 +294,10 @@ export function AppContextProvider({ children }) {
     completeTask,
     allTeams,
     allTeamsLoading,
-    options
+    options,
+    refreshNotifications,
+    refreshUnreadNotifications,
+    refreshTeam,
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
