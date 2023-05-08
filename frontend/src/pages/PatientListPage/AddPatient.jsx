@@ -16,7 +16,7 @@ export default function AddPatient(){
   const [location, setLocation] = useState('');
   const [dob, setDob] = useState('');
   const [clinicians, setClinicians] = useState([]);
-  const [defaultClinician, setDefaultClinician] = useState({});
+  
 
   const { addPatientProvider } = useContext(AppContext);
 
@@ -32,7 +32,7 @@ export default function AddPatient(){
         count ++;
       }
       setClinicians(renderClinicians);
-      setDefaultClinician(data[0]);
+    
     }
    getClinicians();
   }, [loggedInUser]);
