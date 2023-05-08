@@ -30,9 +30,9 @@ export default function Notifications() {
         setSortNotification(notification);
     }, [notification]);
 
-
+    
     const handleSortNotifictaion = (event) => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         if (event.target.value == 10) {
             setSortNotification(notification)
         }

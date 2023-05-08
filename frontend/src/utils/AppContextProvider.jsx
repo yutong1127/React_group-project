@@ -94,7 +94,6 @@ export function AppContextProvider({ children }) {
         console.log(response);
       })
     refreshTasks(),
-    readNotification(),
     refreshUnreadNotifications()
   }
 
@@ -297,7 +296,8 @@ export function AppContextProvider({ children }) {
     allTeamsLoading,
     options,
     refreshNotifications,
-    refreshUnreadNotifications
+    refreshUnreadNotifications,
+    refreshTeam,
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
