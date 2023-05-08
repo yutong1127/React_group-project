@@ -658,7 +658,7 @@ describe('Populate', () => {
 
 });
 
-describe('test patient-dap functions', () => {
+describe('test patient-dao functions', () => {
 
     /**
      * fn: retrievePatient(id)
@@ -691,3 +691,5 @@ describe('test patient-dap functions', () => {
     });
 
 });
+
+
