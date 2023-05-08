@@ -82,8 +82,8 @@ export default function DrawerMenu() {
                         {/* <Link to={`${data.link}`} className={styles.link}> */}
                         <NavLink to={`${data.link}`} className={({ isActive }) => isActive ? styles.isActive: styles.inActive}>
 
-                            <ListItemButton sx={{ borderColor: '#2196F3', borderWidth: '2px', borderStyle: 'solid', borderRadius: 5 }}>
-                                <ListItemText sx={{ color: '#2196F3', p: '10px' }}>
+                            <ListItemButton sx={{ borderColor: '#2196F3', borderWidth: '2px', borderStyle: 'solid', borderRadius: 5}}>
+                                <ListItemText sx={{ color: '#2196F3', p: '10px', width:100}}>
                                     {data.text}
                                 </ListItemText>
                             </ListItemButton>
