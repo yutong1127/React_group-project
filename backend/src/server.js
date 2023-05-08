@@ -73,18 +73,5 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// Serve up the frontend's "dist" directory, if we're running in production mode.
-if (process.env.NODE_ENV === 'production') {
-  console.log('Running in production!');
-
-  // Make all files in that folder public
-  app.use(express.static(path.join(dirname, '../../frontend/dist/')));
-
-  // If we get any GET request we can't process using one of the server routes, serve up index.html by default.
-  app.get('*', (req, res) => {
-      res.sendFile(path.join(dirname, '../../frontend/dist/index.html'));
-  });
-}
-
 
 app.listen(port, () => console.log(`App server listening on port ${port}!`));
