@@ -25,4 +25,8 @@ export function PageNotFound() {
     )
 }
 
-export default PageNotFound;
+export function PatientFound() {
+    return (
+        <p>Sorry, we couldn't find the patient you're looking for!</p>
+    )
+}

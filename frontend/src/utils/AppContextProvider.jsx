@@ -38,7 +38,7 @@ export function AppContextProvider({ children }) {
     if (savedUser) {
       setLoggedInUser(JSON.parse(savedUser));
       setLoggedIn(true);
-      console.log(`saved user:${savedUser}`)
+      // console.log(`saved user:${savedUser}`)
     }
   }, []);
 
