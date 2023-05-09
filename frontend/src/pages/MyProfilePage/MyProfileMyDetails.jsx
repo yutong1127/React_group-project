@@ -96,7 +96,6 @@ function MyDetails({ userProfile, setEditOn }) {
 }
 
 function MyDetailsForm({ userProfile, updateUserProfile, setEditOff }) {
-    // const { userProfile, updateUserProfile } = useContext(AppContext);
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
     const [showPassword, setShowPassword] = useState(false);
