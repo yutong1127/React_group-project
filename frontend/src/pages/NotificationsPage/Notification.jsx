@@ -17,20 +17,21 @@ import { AppContext } from '../../utils/AppContextProvider';
 import styles from './Notification.module.css';
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
+import Loading from '../../utils/Loading';
 
 export default function Notifications() {
 
 
-    const { notification, deleteNotification, readNotification } = useContext(AppContext);
-    
+    const { notification, deleteNotification, readNotification, notificationsLoading } = useContext(AppContext);
+
     // console.log(notification);
-   
+
     const [sortNotification, setSortNotification] = useState([]);
     useEffect(() => {
         setSortNotification(notification);
     }, [notification]);
 
-    
+
     const handleSortNotifictaion = (event) => {
         // console.log(event.target.value);
         if (event.target.value == 10) {
@@ -76,59 +77,66 @@ export default function Notifications() {
         const minutes = date.getMinutes().toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      
+
         return `${day}-${month} ${hours}:${minutes}`;
-      }
-      return (
-        <Container className={styles.container}>
+    }
 
-            <Box className={styles.cardContainer}>
-                <FormControl variant='standard' sx={{ minWidth: 120, maxWidth: 200, mt: 1, ml: 'auto' }}>
-                    <InputLabel id='notification-lable'>
-                        Sort By
-                    </InputLabel>
-                    <Select
-                        labelId='notification-lable'
-                        defaultValue={10}
-                        lable='Sort by'
-                        onChange={handleSortNotifictaion}
-                    >
-                        <MenuItem value={10}>None</MenuItem>
-                        <MenuItem value={20}>Time (Latest to Old)</MenuItem>
-                        <MenuItem value={60}>Time (Old to Latest)</MenuItem>
-                        <MenuItem value={30}>Patient Name (A-Z)</MenuItem>
-                        <MenuItem value={40}>Type (Admin Comes First)</MenuItem>
-                        <MenuItem value={50}>Unread</MenuItem>
+    if (notificationsLoading) {
+        return (
+            <Loading />
+        )
+    } else {
+        return (
+            <Container className={styles.container}>
 
-                    </Select>
-                </FormControl>
-                {sortNotification.map((item, index) => (
-                    <Card key={index}
-                        variant='outlined'
-                        sx={{ margin: '20px' }}>
-                        <CardContent className={item.isRead ? styles.cardContentRead : styles.cardContent} id={`${item.id}`}>
-                            <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} >New {item.type} Message</Typography>
+                <Box className={styles.cardContainer}>
+                    <FormControl variant='standard' sx={{ minWidth: 120, maxWidth: 200, mt: 1, ml: 'auto' }}>
+                        <InputLabel id='notification-lable'>
+                            Sort By
+                        </InputLabel>
+                        <Select
+                            labelId='notification-lable'
+                            defaultValue={10}
+                            lable='Sort by'
+                            onChange={handleSortNotifictaion}
+                        >
+                            <MenuItem value={10}>None</MenuItem>
+                            <MenuItem value={20}>Time (Latest to Old)</MenuItem>
+                            <MenuItem value={60}>Time (Old to Latest)</MenuItem>
+                            <MenuItem value={30}>Patient Name (A-Z)</MenuItem>
+                            <MenuItem value={40}>Type (Admin Comes First)</MenuItem>
+                            <MenuItem value={50}>Unread</MenuItem>
 
-                            <Typography sx={{ textAlign: 'left', fontSize: 18, paddingBottom: '10px', color: 'white' }}>Time: {formatDate(item.created_at)}</Typography>
+                        </Select>
+                    </FormControl>
+                    {sortNotification.map((item, index) => (
+                        <Card key={index}
+                            variant='outlined'
+                            sx={{ margin: '20px' }}>
+                            <CardContent className={item.isRead ? styles.cardContentRead : styles.cardContent} id={`${item.id}`}>
+                                <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} >New {item.type} Message</Typography>
 
-                            <Typography sx={{ textAlign: 'left', bgcolor: item.isRead ? 'grey' : '#9ED0F9', padding: '30px' }}>{item.entity} {item.patient.fname} {item.patient.lname}</Typography>
+                                <Typography sx={{ textAlign: 'left', fontSize: 18, paddingBottom: '10px', color: 'white' }}>Time: {formatDate(item.created_at)}</Typography>
+
+                                <Typography sx={{ textAlign: 'left', bgcolor: item.isRead ? 'grey' : '#9ED0F9', padding: '30px' }}>{item.entity} {item.patient.fname} {item.patient.lname}</Typography>
 
 
-                        </CardContent>
-                        <CardActions>
-                            <Link to={`/patientdetails/${item.patient._id}`} className={styles.link}>
-                                <Button size='small' variant='outlined' onClick={() => readNotification(item._id)}>
-                                    View
-                                </Button>
-                            </Link>
+                            </CardContent>
+                            <CardActions>
+                                <Link to={`/patientdetails/${item.patient._id}`} className={styles.link}>
+                                    <Button size='small' variant='outlined' onClick={() => readNotification(item._id)}>
+                                        View
+                                    </Button>
+                                </Link>
 
-                            <Button size='small' variant='outlined' onClick={() => deleteNotification(item._id)}>Delete</Button>
+                                <Button size='small' variant='outlined' onClick={() => deleteNotification(item._id)}>Delete</Button>
 
-                        </CardActions>
-                    </Card>
-                ))}
-            </Box>
-        </Container>
+                            </CardActions>
+                        </Card>
+                    ))}
+                </Box>
+            </Container>
 
-    );
+        );
+    }
 }

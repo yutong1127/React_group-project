@@ -1,17 +1,19 @@
 import { Notification, User, Patient } from "../patientlist-db/schema.js";
 
 async function retrieveNotificationList() {
-    return await Notification.find();
+
+    const notifications= await Notification.find();
+    return notifications;
 }
 
 //Find the notification associated with this particualr user
 async function retrieveUserOfNotification(id) {
 
     const user = await User.findOne({ _id:id });
-    console.log(`The user with id  '${id}' is ${user.fname} ${user.lname} ${user._id}`);
+    // console.log(`The user with id  '${id}' is ${user.fname} ${user.lname} ${user._id}`);
 
     const notificationsOfUser = await User.populate(user, 'notification');
-    console.log(`The notification of this user patients: ${notificationsOfUser}`);
+    // console.log(`The notification of this user patients: ${notificationsOfUser}`);
 
     const notifications = notificationsOfUser.notification;
 
