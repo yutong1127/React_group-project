@@ -2,9 +2,9 @@ import {
     retrievePatient,
     updatePatient,
     deletePatient,
-    addPatient, 
+    addPatient,
     getCliniciansByUserId,
-    
+
 } from '../../dao/patient-dao';
 import { retrievePatientList } from '../../dao/myTeam-dao'
 
@@ -15,8 +15,8 @@ const HTTP_CREATED = 201;
 const HTTP_NOT_FOUND = 404;
 const HTTP_NO_CONTENT = 204;
 
-router.get('/', async(req,res)=>{
-    
+router.get('/', async (req, res) => {
+
     res.json(await retrievePatientList(1));
 
 });
@@ -39,7 +39,7 @@ router.put('/:id', async (req, res) => {
     if (result) {
         res.json(result);
     } else {
-        res.status(404).send('Not found');
+        res.status(404).send(HTTP_NOT_FOUND);
     }
 });
 
@@ -52,8 +52,14 @@ router.delete('/:id', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     console.log(req.body)
-    const success = await addPatient(req.body);
-    res.sendStatus(success ? HTTP_NO_CONTENT : HTTP_NOT_FOUND);
+    const result = await addPatient(req.body);
+    if (result) {
+        res.json(result);
+    } else {
+        res.status(404).send(HTTP_NOT_FOUND);
+    }
+
+
 })
 
 router.get('/supervisors/:id', async (req, res) => {

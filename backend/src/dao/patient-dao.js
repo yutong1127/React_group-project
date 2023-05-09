@@ -59,7 +59,7 @@ async function addPatient(data) {
         await notification.save();
         await user.save();
     }
-    return true;
+    return patient;
 }
 
 async function addPatientToTeam(patientId, supervisorId) {

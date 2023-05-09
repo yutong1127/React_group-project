@@ -90,9 +90,6 @@ export function AppContextProvider({ children }) {
       priority: task.priority,
       status: task.status
     })
-      .then(function (response) {
-        console.log(response);
-      })
     refreshTasks(),
     refreshUnreadNotifications()
   }
@@ -156,7 +153,6 @@ export function AppContextProvider({ children }) {
 
   async function claimTask(tasksSelected) {
     for (let i = 0; i < tasksSelected.length; i++) {
-      //Need user dao to retrieve the user object ID to updated the displayedtask object to send to server
       await axios.put(`${API_BASE_URL}/api/task/updatetask/${tasksSelected[i]}`, { clinician: clinicianId });
     }
   }
@@ -165,7 +161,8 @@ export function AppContextProvider({ children }) {
     for (let i = 0; i < tasksSelected.length; i++) {
       await axios.put(`${API_BASE_URL}/api/task/updatetask/${tasksSelected[i]}`, {
         status: 2,
-        finished_at: Date.now()
+        finished_at: Date.now(),
+        clinician: clinicianId
       });
     }
   }
@@ -232,6 +229,43 @@ export function AppContextProvider({ children }) {
   async function addPatientProvider(data) {
     const postResponse = await axios.post(`${API_BASE_URL}/api/patient/add`, data);
     console.log(postResponse);
+
+    if (data.quickAdd === 'blood-test, radiology') {
+      const bTask = {
+        name: 'FBC',
+        type: 'blood-test',
+        patient: postResponse.data._id,
+        priority: 0,
+        status: 0
+      }
+      const rTask = {
+        name: 'XR',
+        type: 'radiology',
+        patient: postResponse.data._id,
+        priority: 0,
+        status: 0
+      }
+      await createTask(bTask)
+      await createTask(rTask)
+    } else if (data.quickAdd === 'blood-test') {
+      const bTask = {
+        name: 'FBC',
+        type: 'blood-test',
+        patient: postResponse.data._id,
+        priority: 0,
+        status: 0
+      }
+      await createTask(bTask)
+    } else if (data.quickAdd === 'radiology') {
+      const rTask = {
+        name: 'XR',
+        type: 'radiology',
+        patient: postResponse.data._id,
+        priority: 0,
+        status: 0
+      }
+      await createTask(rTask)
+    }
 
     refreshNotifications();
     refreshUnreadNotifications();

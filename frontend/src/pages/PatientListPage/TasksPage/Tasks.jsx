@@ -19,15 +19,11 @@ import {
     IconButton,
     Tooltip,
     FormControlLabel,
-    Switch,
-    Menu,
-    MenuItem
+    Switch
 } from '@mui/material';
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import DoneIcon from '@mui/icons-material/Done';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { useContext } from 'react';
 import { AppContext } from '../../../utils/AppContextProvider';
@@ -55,11 +51,6 @@ export default function Tasks() {
     useEffect(() => {
         async function getTeamsTasks() {
             const teamTasks = [];
-
-            // // retrive all patients from team 1 for testing
-            // const { data } = await axios.get(`${API_BASE_URL}/api/team/1/patient_list`);
-
-            // Todo: replace hardcoded id with logged in user's team id
             const { data } = await axios.get(`${API_BASE_URL}/api/team/${loggedInUser.team}/patient_list`);
 
             for (const patient of data) {
@@ -275,7 +266,8 @@ export default function Tasks() {
     EnhancedTableToolbar.propTypes = {
         numSelected: PropTypes.number.isRequired,
     };
-    //Table cells.
+
+    //Table cells
     useEffect(() => {
         let comparatorOrder;
         let comparatorOrderBy;
@@ -380,8 +372,6 @@ export default function Tasks() {
             );
 
             setVisibleRows(updatedRows);
-
-            // There is no layout jump to handle on the first page.
             setPaddingHeight(0);
         },
         [order, orderBy, tasks],
@@ -395,7 +385,7 @@ export default function Tasks() {
     function formatDate(dateString) {
         const date = new Date(dateString);
         const offset = date.getTimezoneOffset() / 60;
-        const nzOffset = 12; // New Zealand time zone offset is UTC+12
+        const nzOffset = 12; 
         const hours = (date.getHours() + offset + nzOffset).toString().padStart(2, '0');
         const minutes = date.getMinutes().toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');

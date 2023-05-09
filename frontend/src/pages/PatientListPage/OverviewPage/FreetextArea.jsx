@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext, memo } from "react";
 import { TinyliciousClient } from "@fluidframework/tinylicious-client";
 import { ConnectionState, SharedString } from "fluid-framework";
-import { CollaborativeTextArea } from '../../../CollaborativeTextArea/CollaborativeTextArea';
+import { CollaborativeTextArea } from './CollaborativeTextArea/CollaborativeTextArea';
 import { SharedStringHelper } from "@fluid-experimental/react-inputs";
 import { AppContext } from '../../../utils/AppContextProvider';
 
+// Main Fluid component, using memo() to reduce unnecessary and costly re-rendering of the component
 const FreetextArea = memo((props) => {
   const sharedString = useSharedString(props.container, props.patient_id);
 
@@ -17,7 +18,6 @@ const FreetextArea = memo((props) => {
   } else {
     return <div />;
   }
-
 })
 
 function useSharedString(container_id, patient_id) {
@@ -25,7 +25,7 @@ function useSharedString(container_id, patient_id) {
   const { createContainer } = useContext(AppContext)
 
   const getFluidData = async () => {
-    // TODO 1: Configure the container.
+    // Configuring fluid container.
     const client = new TinyliciousClient();
     const containerSchema = {
       initialObjects: {
@@ -33,19 +33,20 @@ function useSharedString(container_id, patient_id) {
       }
     };
 
-    // TODO 2: Get the container from the Fluid service.
+    // Retrieving container from Fluid service.
     let container;
     let containerId = container_id;
 
+    // Create new container if doesn't already exist
     if (container_id === "") {
       ({ container } = await client.createContainer(containerSchema));
       const id = await container.attach();
-      // Return the Fluid SharedString object.
+      // Store created container id on db
       await createContainer(patient_id, id)
       containerId = id
       return container.initialObjects.sharedString;
     }
-
+    // Retrieve container if already exists
     ({ container } = await client.getContainer(containerId, containerSchema));
     if (container.connectionState !== ConnectionState.Connected) {
       await new Promise((resolve) => {
@@ -54,20 +55,15 @@ function useSharedString(container_id, patient_id) {
         });
       });
     }
-    // TODO 3: Return the Fluid SharedString object.
-
     return container.initialObjects.sharedString;
-
   }
 
-  // TODO 4: Get the Fluid Data data on app startup and store in the state.
+  // Get Fluid Data on initial render and store in state.
   useEffect(() => {
     getFluidData()
       .then((data) => setSharedString(data));
   }, []);
-  // TODO 5: Return the SharedString Object
   return sharedString;
-
 }
 
 export default FreetextArea;

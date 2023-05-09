@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import {
     Checkbox,
     FormControlLabel,
@@ -31,8 +31,8 @@ const style = {
     pb: 3,
 };
 
-
 export default function Task(props) {
+    // Setting the current status of tasks from db
     const [checked, setChecked] = useState(() => {
         if (props.task.status === 2) {
             return true
@@ -48,12 +48,11 @@ export default function Task(props) {
     const [result, setResult] = useState(props.task.result);
     const [showModal, setShowModal] = useState(false);
 
+    // Handlers for tri-state checkbox
     const handleCheckboxClick = async () => {
-
         if (!checked && !indeterminate) {
             setIndeterminate(true);
             await axios.put(`${API_BASE_URL}/api/task/updatetask/${props.task._id}`, { status: 1, finished_at: null, clinician: '6450de1bd5da784ad07a77c3' });
-
         } else if (!checked && indeterminate) {
             setChecked(true);
             setIndeterminate(false);
@@ -76,7 +75,7 @@ export default function Task(props) {
     };
 
     return (
-        <Grid item xs={6}>
+        <Grid item lg={6} sm={3}>
             <FormGroup>
                 <FormControlLabel control={<Checkbox
                     onClick={handleCheckboxClick}
