@@ -4,7 +4,8 @@ import axios from 'axios';
 // a modified version of useGet that takes in a dependencies array (such as [loggedIn])
 export default function useGetUser(url, initialState = null, dependencies = [], options = {}) {
     const [data, setData] = useState(initialState);
-    const [isLoading, setLoading] = useState(false);
+    // const [isLoading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const [refreshToggle, setRefreshToggle] = useState(false);
 
     useEffect(() => {
@@ -17,7 +18,8 @@ export default function useGetUser(url, initialState = null, dependencies = [], 
             setData(response.data);
             setLoading(false);
         }
-        fetchData();
+        // fetchData();
+        setTimeout(() => fetchData(), 2000);
     }, [url, refreshToggle].concat(dependencies));
 
     function refresh() {

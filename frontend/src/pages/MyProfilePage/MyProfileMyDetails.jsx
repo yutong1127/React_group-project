@@ -18,6 +18,8 @@ export default function MyProfileMyDetails() {
 
     const [isEditing, setIsEditing] = useState(false);
     const { userProfile, userProfileLoading, updateUserProfile } = useContext(AppContext);
+
+
     // const { userProfile, updateUserProfile } = useContext(AppContext);
     return (
         <div>
