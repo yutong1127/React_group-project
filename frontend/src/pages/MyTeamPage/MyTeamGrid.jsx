@@ -26,17 +26,12 @@ export default function MyTeamGrid() {
     useEffect(() => {
 
         if (teamLoading || allTeamsLoading || tasksLoading) {
-            // console.log("loading");
-            // console.log("teamLoading:", teamLoading);
-            // console.log("allTeamsLoading:", allTeamsLoading);
-            // console.log("tasksLoading:", tasksLoading);
-
             setPageLoading(true);
         } else {
             setPageLoading(false);
         }
 
-    }, [pageLoading]);
+    }, [teamLoading, allTeamsLoading, tasksLoading]);
 
     //set team on display  
     if (tasks && team) {
