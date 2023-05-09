@@ -273,6 +273,7 @@ export function AppContextProvider({ children }) {
     tasks,
     tasksLoading,
     tasksCompleted,
+    tasksCompletedLoading,
     patientList,
     patientListLoading,
     // clinicianList,
