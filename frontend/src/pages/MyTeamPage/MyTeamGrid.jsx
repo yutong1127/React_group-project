@@ -6,32 +6,68 @@ import Users from './Users';
 import { useContext, useEffect } from 'react';
 import { AppContext } from '../../utils/AppContextProvider';
 import TeamMemgerTable from './TeamMemberTable.jsx';
+import Loading from '../../utils/Loading';
 
 
 
 export default function MyTeamGrid() {
 
-    const { team, allTeams, tasks, loggedInUser } = useContext(AppContext);
+    const { team, teamLoading, allTeams, allTeamsLoading, tasks, tasksLoading, loggedInUser } = useContext(AppContext);
+
+
+    const [pageLoading, setPageLoading] = React.useState(false);
     const [teamOnDisplay, setTeamOnDisplay] = React.useState(null);
     const [completedTasks, setCompletedTasks] = React.useState(null);
     const [clinicianList, setClinicianList] = React.useState(null);
     const [patientList, setPatientList] = React.useState(null);
 
+    //toggle page loading
+    useEffect(() => {
 
+        if (teamLoading || allTeamsLoading || tasksLoading) {
+            setPageLoading(true);
+        } else {
+            setPageLoading(false);
+        }
+
+    }, [teamLoading, allTeamsLoading, tasksLoading]);
+
+    //set team on display  
     if (tasks && team) {
-
         const tempTasks = tasks.filter(task => task.status === 2 && task.clinician.team === team._id);
-
         useEffect(() => {
             setClinicianList(team.clinicians);
-
             setPatientList(team.patients);
             setTeamOnDisplay(team);
             setCompletedTasks(tempTasks);
-
         }, [tasks, team])
 
     }
+
+    return (
+        <div>
+            {pageLoading ? <Loading /> :
+                <MyTeamPage
+                    teamOnDisplay={teamOnDisplay}
+                    setTeamOnDisplay={setTeamOnDisplay}
+                    allTeams={allTeams}
+                    clinicianList={clinicianList}
+                    setClinicianList={setClinicianList}
+                    patientList={patientList}
+                    setPatientList={setPatientList}
+                    completedTasks={completedTasks}
+                    setCompletedTasks={setCompletedTasks}
+                    tasks={tasks}
+                    loggedInUser={loggedInUser}
+                />
+            }
+        </div>
+    )
+}
+
+
+
+function MyTeamPage({ teamOnDisplay, setTeamOnDisplay, allTeams, clinicianList, setClinicianList, patientList, setPatientList, completedTasks, setCompletedTasks, tasks, loggedInUser }) {
 
 
     if (teamOnDisplay) {
@@ -98,8 +134,8 @@ function ShowAllTeams({ teamOnDisplay, setTeamOnDisplay, allTeams, setClinicianL
         <Grid item xs={12} md={12} mt={2} >
 
             {allTeams.map((team) => (
-                
-                <Button variant={teamOnDisplay._id == team._id ? "contained" : "outlined"} key={team._id} sx={{ m: 1 }} 
+
+                <Button variant={teamOnDisplay._id == team._id ? "contained" : "outlined"} key={team._id} sx={{ m: 1 }}
                     onClick={() => {
 
                         setTeamOnDisplay(team);

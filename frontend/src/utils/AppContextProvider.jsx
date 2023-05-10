@@ -38,7 +38,7 @@ export function AppContextProvider({ children }) {
     if (savedUser) {
       setLoggedInUser(JSON.parse(savedUser));
       setLoggedIn(true);
-      console.log(`saved user:${savedUser}`)
+      // console.log(`saved user:${savedUser}`)
     }
   }, []);
 
@@ -187,12 +187,6 @@ export function AppContextProvider({ children }) {
     refresh: refreshPatientList,
   } = useGetUser(loggedInUser && `${API_BASE_URL}/api/team/${loggedInUser.team}/patient_list`, []);
 
-  // const {
-  //   data: clinicianList,
-  //   isLoading: clinicianListLoading,
-  //   refresh: refreshClinicianList,
-  // } = useGet(`${API_BASE_URL}/api/team/1/clinician_list`, []);
-
   const {
     data: team,
     isLoading: teamLoading,
@@ -273,10 +267,9 @@ export function AppContextProvider({ children }) {
     tasks,
     tasksLoading,
     tasksCompleted,
+    tasksCompletedLoading,
     patientList,
     patientListLoading,
-    // clinicianList,
-    // clinicianListLoading,
     team,
     teamLoading,
     userProfile,

@@ -8,6 +8,7 @@ import PatientList from './pages/PatientListPage/PatientInfoTab';
 import Notifications from './pages/NotificationsPage/Notification';
 import PageWithNavbar from "./pages/PageWithNavBar";
 import PatientListGrid from "./pages/PatientDetailsPage/PatientListGrid";
+import { PageNotFound } from './ErrorPage.jsx';
 
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
           <Route path='myprofile' element={< MyProfile />}/>
           <Route path='patientlist' element={< PatientList />}/>
           <Route path='patientdetails/:patientId' element={<PatientListGrid />}/>
+
+          //if nothing matches, show error page
+          <Route path='*' element={<PageNotFound/>}/>
 
       </Route>
     </Routes>
