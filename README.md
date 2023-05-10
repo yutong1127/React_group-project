@@ -64,29 +64,29 @@ Patient List Manager is an online collaborative web application in the field of 
 | `dee.miles@aucklanduni.ac.nz` | `abc123` | User |
 | `robyn.young@aucklanduni.ac.nz` | `abc123` | User |
 
-- User: clinicians in the each team
+- User: clinicians in the different teams
 - Supervisor: resposible clinician for the team
 - Admin: Administrator for the system who is able to view all team information 
 
 
-# Features and Pages 
+# 3. Features and Pages 
 ## Login Page
 Users are able to log in to their account using their email address and password. 
 
 The successfully logged-in users will be redirected to the Patient List Page (Homepage). The plain password will be hashed to store in the database, there will be no plain password showing in the database.
 
-## Patient List 
+## Patient List Page
 After logging in, the users will have a page containing three views which are Overview, Outstanding Tasks, and Add Patient respectively.
 
-### Overview Page
+### Overview 
 The Overview Page contains every patient in the team with patient information, tasks with the progress associated with each patient, and a real-time collaborative text area for each patient card for sharing messages among users. The shared text area allows users to edit the text field while collaborating with other users in real-time which is a simple version of Google Docs.
 
 Users are able to add different tasks for different patients in the team and modify the progress for each showing task if needed. Once there is a new task added to the team that the users belong to, every member of the team will receive a message showing the task type and the patient that is needed for the task.
 
-### Outstanding Tasks View
+### Outstanding Tasks 
 The Outstanding Tasks Page lists all the outstanding tasks within the team in a table. Every member of the team is able to claim and delete the task(s), and also mark the task(s) as done.
 
-### Add Patient View
+### Add Patient 
 A view can add patients for users. Once there is a new patient added to the team that the users belong to, every member of the team will receive a message showing they have a new patient with the patient name and date/time added. 
 
 ## Patient Details Page
