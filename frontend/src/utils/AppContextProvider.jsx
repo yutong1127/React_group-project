@@ -63,6 +63,7 @@ export function AppContextProvider({ children }) {
     [loggedInUser],
     options);
 
+  // Unread Notification
   const {
     data: unreadNotification,
     isLoading: unreadNotificationLoading,
@@ -94,6 +95,7 @@ export function AppContextProvider({ children }) {
         console.log(response);
       })
     refreshTasks(),
+    refreshNotifications(),
     refreshUnreadNotifications()
   }
 
@@ -137,7 +139,7 @@ export function AppContextProvider({ children }) {
   }
 
   async function readNotification(id) {
-    // console.log(id);
+
     const updateResponse = await axios.put(
       `${API_BASE_URL}/api/notification/unread/${id}`
     );
@@ -216,8 +218,6 @@ export function AppContextProvider({ children }) {
     const updateResponse = await axios.put(
       `${API_BASE_URL}/api/notification/unread/${id}`
     );
-
-    console.log(updateResponse);
 
     refreshUnreadNotifications();
     refreshNotifications();

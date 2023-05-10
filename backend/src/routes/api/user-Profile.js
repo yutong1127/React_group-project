@@ -27,8 +27,11 @@ router.get('/:clinicianId', authenticate, async (req, res) => {
 // router.put('/:userId', authenticate, async (req, res) => {
 router.put('/:userId', async (req, res) => {
     const { userId } = req.params;
+    console.log(userId)
 
     const userProfile = req.body;
+    console.log('user profile')
+    console.log(userProfile)
 
     userProfile._id = userId;
 
@@ -39,6 +42,7 @@ router.put('/:userId', async (req, res) => {
             if (!res.headersSent) {
                 req.session.user = updatedUser;
                 req.session.save();
+                console.log('success')
                 return res.json(updatedUser);
             }
         } else {

@@ -7,6 +7,7 @@ import {
     updateNotificationSatus
 } from '../../dao/notification-dao';
 import { authenticate } from '../../middleware/authMiddleware';
+import { Notification } from '../../patientlist-db/schema';
 
 const HTTP_CREATED = 201;
 const HTTP_NOT_FOUND = 404;
@@ -19,7 +20,6 @@ router.get('/:clinicianId',authenticate, async(req,res)=>{
 
     const { clinicianId } = req.params;
 
-    // console.log(`Notification ln21: ${clinicianId}`)
     const notifications = await retrieveUserOfNotification(clinicianId);
 
     if (notifications){
@@ -27,7 +27,6 @@ router.get('/:clinicianId',authenticate, async(req,res)=>{
     } else{
         return sendStatus(HTTP_NOT_FOUND)
     }
-    // res.json(await retrieveUserOfNotification('Jant'));
 });
 
 router.get('/unread/:clinicianId',authenticate,async(req,res)=>{
@@ -48,7 +47,7 @@ router.get('/unread/:clinicianId',authenticate,async(req,res)=>{
 });
 
 
-router.delete('/:id',authenticate, async(req, res) => {
+router.delete('/:id', async(req, res) => {
 
     const { id } = req.params;
     deleteNotification(id);
@@ -64,5 +63,10 @@ router.put('/unread/:id', async (req, res) => {
     
 });
 
+router.get('/', async (req, res)=> {
+
+    const notifications = await Notification.find();
+    res.json(notifications);
+})
 
 export default router;
