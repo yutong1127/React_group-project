@@ -24,7 +24,6 @@ Patient List Manager is an online collaborative web application in the field of 
 ```
 
 ### **Start the server**
-
 ***Option A. Development Environment***
 - Open terminal from backend
 ```bash
