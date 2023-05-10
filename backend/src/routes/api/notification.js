@@ -65,8 +65,8 @@ router.put('/unread/:id', async (req, res) => {
 
 router.get('/', async (req, res)=> {
 
-    const notifications = retrieveNotificationList();
-    return res.json(notifications);
+    const notifications = await Notification.find();
+    res.json(notifications);
 })
 
 export default router;

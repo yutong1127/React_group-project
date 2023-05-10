@@ -209,6 +209,7 @@ it('gets all notification from API', (done) => {
             if (err) return done(err);
 
             const notificationDB = res.body;
+            console.log(notificationDB)
             expect(notificationDB.length).toBe(2)
             expect(notificationDB[0]._id).toBe('000000000000000000000041')
             expect(notificationDB[1]._id).toBe('000000000000000000000042')
@@ -228,7 +229,7 @@ it('gets all notification from API', (done) => {
 })
 
 it('gets notification from API without authentication', (done) => {
-    console.log('hello')
+    // console.log('hello')
 
     request(app)
         .get(`/api/notification/000000000000000000000041`)
