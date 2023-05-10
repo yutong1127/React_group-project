@@ -28,7 +28,6 @@ export default function DocAppBar() {
     <Box className={styles.appBarContainer}>
       <AppBar
         position="static"
-      // open={drawerOpen}
       >
         <Toolbar className={styles.toolbar}>
           <IconButton
@@ -44,7 +43,6 @@ export default function DocAppBar() {
 
           <NotificationHeading />
 
-          {/* <SortForm /> */}
 
           <MessageMenu />
 

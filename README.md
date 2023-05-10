@@ -74,34 +74,37 @@ Patient List Manager is an online collaborative web application in the field of 
 ## Login Page
 Users are able to log in to their account using their email address and password. 
 
-The successfully logged in users will be redircted to the Patieng List Page (Homepage). The plain password will be hashed to store in the database, there will be no plain password showing in the database.
+The successfully logged-in users will be redirected to the Patient List Page (Homepage). The plain password will be hashed to store in the database, there will be no plain password showing in the database.
 
 ## Patient List 
-After logging in, the users will have a page contains three views which are Overview, Outstanding Tasks, and Add Patient respectively.
-### Overview Page
-The Overview Page contains of every patient in the team with patient information, tasks with the progress associated with each pateint and a real-time collaborative text area for each patient card for sharing message among users. The shared text area allows users to edit the text field while collaborating with other users in the real time which is a simple version of Google Doc.
+After logging in, the users will have a page containing three views which are Overview, Outstanding Tasks, and Add Patient respectively.
 
-Users are able to add different tasks for different patients in the team and modify the progress for each showing task if needed. Once there is a new task added in the team that the users belong to, every member in the team will recieve a the message showing the task type and the patient that needed for the task.
+### Overview Page
+The Overview Page contains every patient in the team with patient information, tasks with the progress associated with each patient, and a real-time collaborative text area for each patient card for sharing messages among users. The shared text area allows users to edit the text field while collaborating with other users in real-time which is a simple version of Google Docs.
+
+Users are able to add different tasks for different patients in the team and modify the progress for each showing task if needed. Once there is a new task added to the team that the users belong to, every member of the team will receive a message showing the task type and the patient that is needed for the task.
 
 ### Outstanding Tasks View
-The Outstanding Tasks Page lists out all the outstanding tasks within the team in a table. Every member in the team is able to claim and delete the task(s), and also mark the task(s) as done.
+The Outstanding Tasks Page lists all the outstanding tasks within the team in a table. Every member of the team is able to claim and delete the task(s), and also mark the task(s) as done.
 
 ### Add Patient View
-A view for adding patient for user. Once there is a new patient added in the team that the users belong to, every member in the team will recieve a the message showing they have a new patient with the patient name and date/time added. 
+A view can add patients for users. Once there is a new patient added to the team that the users belong to, every member of the team will receive a message showing they have a new patient with the patient name and date/time added. 
 
 ## Patient Details Page
 The page contains the particular patient information and tasks associated with the patient.
-User could be navigated to this page from either patient list, patient section in the team page, or notification center.
+Users could be navigated to this page from either the patient list, the patient section on the team page, or the notification center.
 The users can transfer the patient from their current team to a new team by selecting the supervisor of the team.
 
+Once the patient has been transferred to another team, the current team members will receive the message showing the patient has been transferred, and the new team to which the patient has been transferred to will get the message showing the new patient's name with the name and date added.
+
 ## User Profile Page
-Users are able to browse their own personal information and the tasks done in the past 7 days diplaying in the bar chart with the task types specified. If needed, the user can also edit the personal information including name, phone number, and email address and change the password.
+Users are able to browse their own personal information and the tasks done in the past 7 days displayed in the bar chart with the task types specified. If needed, the user can also edit the personal information including name, phone number, and email address, and change the password.
 
 ## Team Page
 If the logged-in users are ordinary users, they will be able to browse their own team patients, team details which contain every member of their team, team performance in the last 7 days, and user contribution in the number of completed tasks.  Or, if the logged-in user is an admin, all team information will be provided and the admin can switch between the team's page using tabs. 
 
 ## Notification Page
-The message center of the user listing out all the notifications recieved in the past for the logged in user. The list can be sorted by time created, patient name, message type, and unread first. The user will be navigated to the patient detail page after clicking the view button for message. The user is able to delete the notification. 
+If users click the notification page tab or check the unread message from the top side bar, they will be navigated to this page.
+The message center of the user lists all the notifications received in the past for the logged-in user. The list can be sorted by time created, patient name, message type, and unread first. The user will be navigated to the patient detail page after clicking the view button for the message. The user is able to delete the notification. 
 
-And if the patient has been transferred to another team, the current team members will recieve the message showing the patient has been transferred, and the new team which the patient has been transferred to will get the message showing the new patient name with the name and date added.
 

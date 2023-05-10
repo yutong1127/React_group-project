@@ -39,11 +39,8 @@ async function addPatient(data) {
     addPatientToTeam(patient._id, patient.responsibleClinicians);
 
     const team = await Team.findOne({ supervisors: data.responsibleClinicians }).populate();
-    // console.log(`recipient: ${team.clinicians}`)
 
     const clinicians = team.clinicians;
-    console.log(`clinicians: ${clinicians}`)
-
     const notification = new Notification({
         type: 'Admin',
         patient: patient,
