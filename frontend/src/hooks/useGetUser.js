@@ -18,8 +18,10 @@ export default function useGetUser(url, initialState = null, dependencies = [], 
             setData(response.data);
             setLoading(false);
         }
-        // fetchData();
-        setTimeout(() => fetchData(), 2000);
+        fetchData();
+
+        //test isLoading page
+        // setTimeout(() => fetchData(), 2000);
     }, [url, refreshToggle].concat(dependencies));
 
     function refresh() {

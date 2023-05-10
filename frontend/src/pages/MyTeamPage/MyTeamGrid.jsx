@@ -15,7 +15,6 @@ export default function MyTeamGrid() {
     const { team, teamLoading, allTeams, allTeamsLoading, tasks, tasksLoading, loggedInUser } = useContext(AppContext);
 
 
-    // const [pageLoading, setPageLoading] = React.useState(true);
     const [pageLoading, setPageLoading] = React.useState(false);
     const [teamOnDisplay, setTeamOnDisplay] = React.useState(null);
     const [completedTasks, setCompletedTasks] = React.useState(null);

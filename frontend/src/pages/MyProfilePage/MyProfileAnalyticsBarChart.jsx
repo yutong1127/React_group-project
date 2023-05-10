@@ -24,7 +24,7 @@ export default function MyProfileAnalyticsBarChart() {
     )
 }
 
-function BarChart({data, tasksCompleted}){
+function BarChart({data}){
 
     return(
         <div className={styles.bar_chart} >
@@ -118,7 +118,6 @@ function BarChart({data, tasksCompleted}){
 };
 
 // formatBarChartData
-
 function formatBarChartData(tasksCompleted) {
 
     const today = new Date().toLocaleDateString();

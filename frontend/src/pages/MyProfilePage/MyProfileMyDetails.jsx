@@ -20,7 +20,6 @@ export default function MyProfileMyDetails() {
     const { userProfile, userProfileLoading, updateUserProfile } = useContext(AppContext);
 
 
-    // const { userProfile, updateUserProfile } = useContext(AppContext);
     return (
         <div>
             {userProfileLoading ? <Loading /> :
@@ -45,8 +44,6 @@ function MyDetails({ userProfile, setEditOn }) {
 
     function hancleEditClick() {
         setEditOn();
-
-
     }
 
     return (
@@ -59,7 +56,6 @@ function MyDetails({ userProfile, setEditOn }) {
 
                     <Typography gutterBottom variant="h5" component="div" textAlign="center">
                         Dr. {userProfile.fname} {userProfile.lname}
-                        {/* {tasksCompleted[0].finished_at} */}
 
                     </Typography>
                     <Divider />
@@ -100,7 +96,6 @@ function MyDetails({ userProfile, setEditOn }) {
 function MyDetailsForm({ userProfile, updateUserProfile, setEditOff }) {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
-    const [showPassword, setShowPassword] = useState(false);
 
     function onSubmit(data) {
         console.log("105:")

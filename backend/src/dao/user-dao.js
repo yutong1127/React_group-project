@@ -28,7 +28,6 @@ async function updateUser(userId, data) {
 async function updateUserProfile(userProfile) {
   if (userProfile.password) {
     const password = await bcrypt.hash(userProfile.password, 10);
-
     userProfile.password = password;
   }
 
