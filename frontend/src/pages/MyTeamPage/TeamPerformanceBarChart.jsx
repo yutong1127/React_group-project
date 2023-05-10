@@ -15,7 +15,7 @@ export default function TeamPerformanceBarChart({ completedTasks }) {
 
     }
 
-    console.log('data:', data.length);
+    
 
 
 

@@ -1,18 +1,11 @@
 import * as React from 'react';
-import { styled, Box, Paper, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import MyProfileMyDetails from './MyProfileMyDetails';
 import MyProfileAnalytics from './MyProfileAnalytics';
 import LoginDetails from './LoginDetails';
 
 
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
 
 export default function MyProfileGrid() {
     return (

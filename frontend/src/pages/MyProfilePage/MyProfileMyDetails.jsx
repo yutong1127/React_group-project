@@ -5,7 +5,7 @@ import ImageAvatars from '../../utils/Avatar.jsx';
 import { useForm } from "react-hook-form";
 import { useContext } from 'react';
 import { AppContext } from '../../utils/AppContextProvider';
-
+import Loading from '../../utils/Loading.jsx'
 
 const style = {
     width: '100%',
@@ -17,27 +17,33 @@ const style = {
 export default function MyProfileMyDetails() {
 
     const [isEditing, setIsEditing] = useState(false);
+    const { userProfile, userProfileLoading, updateUserProfile } = useContext(AppContext);
+
 
     return (
-        isEditing ?
-            <MyDetailsForm setEditOff={() => setIsEditing(false)} />
-            : <MyDetails setEditOn={() => setIsEditing(true)} />
-
+        <div>
+            {userProfileLoading ? <Loading /> :
+                isEditing ?
+                    <MyDetailsForm
+                        userProfile={userProfile}
+                        updateUserProfile={updateUserProfile}
+                        setEditOff={() => setIsEditing(false)} />
+                    : <MyDetails
+                        userProfile={userProfile}
+                        setEditOn={() => setIsEditing(true)} />
+            }
+        </div>
     );
 }
 
 
 
-function MyDetails({ setEditOn }) {
-    const { userProfile, tasksCompleted } = useContext(AppContext);
-
+function MyDetails({ userProfile, setEditOn }) {
 
 
 
     function hancleEditClick() {
         setEditOn();
-
-
     }
 
     return (
@@ -49,9 +55,8 @@ function MyDetails({ setEditOn }) {
                 <List sx={style} component="nav" aria-label="mailbox folders">
 
                     <Typography gutterBottom variant="h5" component="div" textAlign="center">
-                        Dr. {userProfile.fname} {userProfile.lname} 
-                        {/* {tasksCompleted[0].finished_at} */}
-            
+                        Dr. {userProfile.fname} {userProfile.lname}
+
                     </Typography>
                     <Divider />
 
@@ -88,14 +93,13 @@ function MyDetails({ setEditOn }) {
 
 }
 
-function MyDetailsForm({ setEditOff }) {
-    const { userProfile, updateUserProfile } = useContext(AppContext);
+function MyDetailsForm({ userProfile, updateUserProfile, setEditOff }) {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
-    const [showPassword, setShowPassword] = useState(false);
 
     function onSubmit(data) {
-
+        console.log("105:")
+        console.log(data);
 
         updateUserProfile(userProfile._id, data);
 
