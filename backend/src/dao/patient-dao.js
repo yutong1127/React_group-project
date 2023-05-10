@@ -36,13 +36,13 @@ async function addPatient(data) {
         identifier: UPI
     })
     await patient.save();
+
     addPatientToTeam(patient._id, patient.responsibleClinicians);
 
+    // notify supervisor new patient has been added
     const team = await Team.findOne({ supervisors: data.responsibleClinicians }).populate();
-    // console.log(`recipient: ${team.clinicians}`)
 
     const clinicians = team.clinicians;
-    console.log(`clinicians: ${clinicians}`)
 
     const notification = new Notification({
         type: 'Admin',
@@ -62,12 +62,14 @@ async function addPatient(data) {
     return true;
 }
 
+// add new patient to team
 async function addPatientToTeam(patientId, supervisorId) {
     const team = await Team.findOne({ supervisors: supervisorId });
     team.patients.push(patientId);
     await team.save();
 }
 
+// get supervisor(responsible clinicians) based on userId
 async function getCliniciansByUserId(id) {
     let data = [];
     const team = await Team.findOne({ clinicians: id });
