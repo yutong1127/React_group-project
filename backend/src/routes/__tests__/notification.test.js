@@ -179,21 +179,9 @@ beforeEach(async () => {
 
     // Clear database and data
     await mongoose.connection.db.dropDatabase();
- 
-
-    // Insert dummydata
-    // const notificationCollection = await mongoose.connection.db.createCollection('notificationCollection');
-    // const patientCollection = await mongoose.connection.db.createCollection('patientCollection');
-    // const userCollection = await mongoose.connection.db.createCollection('userCollection');
-
-
-
     await Patient.insertMany(patients);
     await User.insertMany(users);
-    // await Task.insertMany(tasks);
-    // await Team.insertMany(teams);
     await Notification.insertMany(notifications);
-    console.log('insert done');
 
     
 });

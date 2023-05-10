@@ -143,7 +143,7 @@ const transferPatientTeam = async (
 
     return (
         <Card>
-            <CardContent>
+            <CardContent sx={{ }}>
                 <Typography gutterBottom variant='h5' component='div'>
                     Basic Information
                 </Typography>

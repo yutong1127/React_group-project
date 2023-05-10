@@ -58,13 +58,13 @@ export default function PateintDetailsTasks() {
     };
 
     return (
-        <Card>
+        <Card >
             <CardContent>
                 <Typography gutterBottom variant='h5' component='div'>
                     Tasks
                 </Typography>
 
-                <List component="nav" aria-label="mailbox folders">
+                <List component="nav" aria-label="mailbox folders" sx={{overflowY:'scroll', component:'div', maxHeight: 500}}>
                 {tasksArray.data.map((task, index) => (
                     <React.Fragment key={index}>
                     <ListItem button onClick={() => handleTaskClick(task)}>

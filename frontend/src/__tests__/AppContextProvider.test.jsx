@@ -7,7 +7,6 @@ import { AppContextProvider, AppContext } from '../../src/utils/AppContextProvid
 import Notifications from '../pages/NotificationsPage/Notification';
 
 const axiosMock = new MockAdapter(axios);
-// console.log(axiosMock)
 
 afterEach(() => {
     axiosMock.reset();

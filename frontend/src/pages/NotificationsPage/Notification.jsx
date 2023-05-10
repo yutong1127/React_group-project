@@ -24,8 +24,6 @@ export default function Notifications() {
 
     const { notification, deleteNotification, readNotification, notificationsLoading } = useContext(AppContext);
 
-    // console.log(notification);
-
     const [sortNotification, setSortNotification] = useState([]);
     useEffect(() => {
         setSortNotification(notification);
@@ -33,38 +31,32 @@ export default function Notifications() {
 
 
     const handleSortNotifictaion = (event) => {
-        // console.log(event.target.value);
         if (event.target.value == 10) {
             setSortNotification(notification)
         }
         else if (event.target.value == 20) {
             const sortedTime = [...notification].sort((a, b) =>
                 a.created_at < b.created_at ? 1 : -1);
-            //    console.log(sortedTime);
             setSortNotification(sortedTime)
         }
         else if (event.target.value == 60) {
             const sortedTime = [...notification].sort((a, b) =>
                 a.created_at > b.created_at ? 1 : -1);
-            //    console.log(sortedTime);
             setSortNotification(sortedTime)
         }
         else if (event.target.value == 30) {
             const sortedName = [...notification].sort((a, b) =>
                 a.patient.lname > b.patient.lname ? 1 : -1);
-            //    console.log(sortedName);
             setSortNotification(sortedName)
         }
         else if (event.target.value == 40) {
             const sortedType = [...notification].sort((a, b) =>
                 a.type > b.type ? 1 : -1);
-            //    console.log(sortedType);
             setSortNotification(sortedType)
         }
         else if (event.target.value == 50) {
             const sortedRead = [...notification].sort((a, b) =>
                 a.isRead > b.isRead ? 1 : -1);
-            //    console.log(sortedRead);
             setSortNotification(sortedRead)
         }
 
@@ -109,29 +101,29 @@ export default function Notifications() {
 
                         </Select>
                     </FormControl>
+                    
                     {sortNotification.map((item, index) => (
                         <Card key={index}
                             variant='outlined'
                             sx={{
                                 margin: '20px',
                                 ':hover': {
-                                    boxShadow:12
+                                    boxShadow: 12
                                 },
-                                borderRadius:4
+                                borderRadius: 4
                             }}>
                             <CardContent className={item.isRead ? styles.cardContentRead : styles.cardContent} id={`${item.id}`}>
                                 {item.isRead ? (
-                                    <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} > 
+                                    <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} >
                                         {item.type} Message
                                     </Typography>
 
                                 ) : (
                                     <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} >
-                                         New {item.type} Message
+                                        New {item.type} Message
                                     </Typography>
 
                                 )}
-                                {/* <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} > Message</Typography> */}
 
                                 <Typography sx={{ textAlign: 'left', fontSize: 18, paddingBottom: '10px', color: 'white' }}>Time: {formatDate(item.created_at)}</Typography>
 
@@ -139,7 +131,7 @@ export default function Notifications() {
 
 
                             </CardContent>
-                            <CardActions sx={{mt:1, ml:1,paddingBottom:3}}>
+                            <CardActions sx={{ mt: 1, ml: 1, paddingBottom: 3 }}>
                                 <Link to={`/patientdetails/${item.patient._id}`} className={styles.link}>
                                     <Button size='small' variant='outlined' onClick={() => readNotification(item._id)}>
                                         View
