@@ -7,6 +7,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import axios from 'axios';
 import { AppContext } from "../../utils/AppContextProvider"
+import dayjs from 'dayjs';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
@@ -14,15 +15,15 @@ export default function AddPatient(){
   const { loggedInUser } = useContext(AppContext);
   const [gender, setGender] = useState('');
   const [location, setLocation] = useState('');
-  const [dob, setDob] = useState('');
+  const [dob, setDob] = useState(dayjs());
   const [clinicians, setClinicians] = useState([]);
   
 
   const { addPatientProvider } = useContext(AppContext);
 
+  // retrieve supervisors when page first loaded
   useEffect(() => {
     async function getClinicians() {
-      // should pass in userID instead
       const { data } = await axios.get(`${API_BASE_URL}/api/patient/supervisors/${loggedInUser._id}`);
       let renderClinicians = [];
       let count = 0;
@@ -37,7 +38,7 @@ export default function AddPatient(){
    getClinicians();
   }, [loggedInUser]);
 
-
+  // submit new patient
   async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -52,8 +53,6 @@ export default function AddPatient(){
       birth_date: dob,
       gender: gender,
     };
-    // await axios.post(`${API_BASE_URL}/api/patient/add`, data)
-    //         .then(console.log(data));
     addPatientProvider(data)
   }
   
@@ -107,7 +106,7 @@ export default function AddPatient(){
           <FormGroup>
             <FormControlLabel control={<Switch defaultChecked />} label="Notification" name="notification" />
          </FormGroup>
-         <Button style={{display: 'flex'}} variant="contained" type="submit">Add</Button>
+         <Button style={{display: 'flex'}} variant="contained" type="submit" role="Add">Add</Button>
          </form>
       </Box>
     )

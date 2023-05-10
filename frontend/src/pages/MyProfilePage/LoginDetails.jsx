@@ -4,12 +4,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from 'react';
 import { AppContext } from '../../utils/AppContextProvider';
 
-//hide or reveal the password.
-// import OutlinedInput from '@mui/material/OutlinedInput';
-// import InputLabel from '@mui/material/InputLabel';
-// import InputAdornment from '@mui/material/InputAdornment';
-// import Visibility from '@mui/icons-material/Visibility';
-// import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 
 const style = {
     width: '100%',
@@ -47,11 +42,6 @@ function LoginDetailsList({ setEditOn }) {
 
 
                 <List sx={style} component="nav" aria-label="mailbox folders">
-                    {/* <ListItem button>
-                        <ListItemText
-                            primary="Username"
-                            secondary={userProfile.fname} />
-                    </ListItem> */}
 
                     <ListItem button>
                         <ListItemText
@@ -90,11 +80,7 @@ function LoginDetailsForm({ setEditOff }) {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    //hide or reveal the password.
-    // const handleClickShowPassword = () => setShowPassword((show) => !show);
-    // const handleMouseDownPassword = (event) => {
-    //   event.preventDefault();
-    // };
+
 
     return (
         <Container>
@@ -111,22 +97,6 @@ function LoginDetailsForm({ setEditOff }) {
                         label="Password"
                         fullWidth
                         type={showPassword ? "text" : "password"}
-
-
-                        //hide or reveal the password.
-
-                        // endAdornment={
-                        //     <InputAdornment position="end">
-                        //       <IconButton
-                        //         aria-label="toggle password visibility"
-                        //         onClick={handleClickShowPassword}
-                        //         onMouseDown={handleMouseDownPassword}
-                        //         edge="end"
-                        //       >
-                        //         {showPassword ? <VisibilityOff /> : <Visibility />}
-                        //       </IconButton>
-                        //     </InputAdornment>
-                        //   }
 
 
 
