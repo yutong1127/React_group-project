@@ -42,12 +42,20 @@ Patient List Manager is an online collaborative web application in the field of 
 ***Option B. Production Environment***
 - Open terminal from frontend
 ```bash
+  npm run init-db
   npm run build
 ```
-- Open terminal from backend
+- Open terminal from frontend
+```bash
+  npx tinylicious
+```
+- Open another terminal from backend
 ```bash
   npm run production
 ```
+
+**Note: If you restart the tinylicious, you have to re-initialize the database again by running npm run init-db**
+
 # 2. Login Information: User email, password and User Type
 
 | Email     | Password | User Type               |
