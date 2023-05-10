@@ -94,6 +94,7 @@ export function AppContextProvider({ children }) {
         console.log(response);
       })
     refreshTasks(),
+    refreshNotifications(),
     refreshUnreadNotifications()
   }
 

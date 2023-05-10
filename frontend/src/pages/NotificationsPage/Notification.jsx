@@ -112,17 +112,34 @@ export default function Notifications() {
                     {sortNotification.map((item, index) => (
                         <Card key={index}
                             variant='outlined'
-                            sx={{ margin: '20px' }}>
+                            sx={{
+                                margin: '20px',
+                                ':hover': {
+                                    boxShadow:12
+                                },
+                                borderRadius:4
+                            }}>
                             <CardContent className={item.isRead ? styles.cardContentRead : styles.cardContent} id={`${item.id}`}>
-                                <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} >New {item.type} Message</Typography>
+                                {item.isRead ? (
+                                    <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} > 
+                                        {item.type} Message
+                                    </Typography>
+
+                                ) : (
+                                    <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} >
+                                         New {item.type} Message
+                                    </Typography>
+
+                                )}
+                                {/* <Typography sx={{ textAlign: 'left', fontSize: 22, paddingBottom: '5px', color: 'white', fontWeight: 'bold' }} > Message</Typography> */}
 
                                 <Typography sx={{ textAlign: 'left', fontSize: 18, paddingBottom: '10px', color: 'white' }}>Time: {formatDate(item.created_at)}</Typography>
 
-                                <Typography sx={{ textAlign: 'left', bgcolor: item.isRead ? 'grey' : '#9ED0F9', padding: '30px' }}>{item.entity} {item.patient.fname} {item.patient.lname}</Typography>
+                                <Typography sx={{ textAlign: 'left', bgcolor: item.isRead ? 'grey' : '#9ED0F9', padding: '30px', fontSize: 20 }}>{item.entity} {item.patient.fname} {item.patient.lname}</Typography>
 
 
                             </CardContent>
-                            <CardActions>
+                            <CardActions sx={{mt:1, ml:1,paddingBottom:3}}>
                                 <Link to={`/patientdetails/${item.patient._id}`} className={styles.link}>
                                     <Button size='small' variant='outlined' onClick={() => readNotification(item._id)}>
                                         View

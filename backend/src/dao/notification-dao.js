@@ -23,9 +23,9 @@ async function retrieveUserOfNotification(id) {
 }
 
 async function retrieveUnreadNotification(id) {
+    
     const user = await User.findOne({ _id: id });
     const unReadNotification = await Notification.find({ isRead: false, recipient: user._id }).populate('patient').populate('entity');
-
     return unReadNotification;
 
 }
