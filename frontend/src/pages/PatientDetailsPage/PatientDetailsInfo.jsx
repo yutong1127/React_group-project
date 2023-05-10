@@ -12,7 +12,7 @@ import {
     DialogActions,
     Button,
 } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useContext } from 'react';
 import props from 'prop-types';
 import TextField from '@mui/material/TextField';
@@ -39,6 +39,7 @@ const calculateAge = (patient) => {
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export default function PatientDetailsInfo(props) {
+    const navigate = useNavigate();
     const { patientId } = useParams();
     const { patientData } = props;
     const [patient, setPatient] = useState('');
@@ -46,7 +47,8 @@ export default function PatientDetailsInfo(props) {
     const [team, setTeam] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const [supervisorList, setSupervisorList] = useState('');
-    const {refreshNotifications, refreshUnreadNotifications } = useContext(AppContext);
+    const [openRemovePatientDialog, setOpenRemovePatientDialog] = useState(false);
+    const {refreshTeam,refreshNotifications, refreshUnreadNotifications } = useContext(AppContext);
 
 
 const transferPatientTeam = async (
@@ -111,6 +113,30 @@ const transferPatientTeam = async (
     const handletransferPatientTeam = async (value) => {
         await transferPatientTeam(patientId, value, API_BASE_URL);
         setOpenDialog(false);
+    };
+
+    const handleRemovePatient = async (value) => {
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/patient/${patientId}`,
+                {
+                    method: 'DELETE',
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Error delete patient');
+            }
+        } catch (error) {
+            console.error('Error delete patient:', error);
+        }
+        
+        setOpenRemovePatientDialog(false);
+        refreshTeam();
+        refreshNotifications();
+        refreshUnreadNotifications();
+        navigate('/patientlist');
+
     };
 
     const getSupervisorList = async () => {
@@ -181,6 +207,11 @@ const transferPatientTeam = async (
                             primary={'Team: ' + `${team.name}`} 
                         />
                     </ListItem>
+                    <ListItem>
+                        <Button onClick={() => setOpenRemovePatientDialog(true)} variant="contained" color="error" style={{margin: 'auto'}}>
+                            remove patient
+                        </Button>
+                    </ListItem>
                 </List>
             </CardContent>
             <Dialog open={openDialog} 
@@ -222,6 +253,27 @@ const transferPatientTeam = async (
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setOpenDialog(false)}>Close</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog open={openRemovePatientDialog} 
+                    onClose={() => setOpenRemovePatientDialog(false)}                     
+                    sx={{
+                        "& .MuiDialog-container": {
+                            "& .MuiPaper-root": {
+                            width: "100%",
+                            maxWidth: "500px",  
+                            },
+                        },
+                    }}>
+                <DialogTitle>Remove Current Patient</DialogTitle>
+                    <DialogContent>
+                        <Typography variant="body1">
+                            Are you sure you want to remove this patient?
+                        </Typography>
+                    </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleRemovePatient} variant="contained" color="error">Yes</Button>
+                    <Button onClick={() => setOpenRemovePatientDialog(false)} variant='contained' color="primary">No</Button>
                 </DialogActions>
             </Dialog>
         </Card>
