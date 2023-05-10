@@ -32,24 +32,46 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/logout", async (req, res) => {
-  // const sessionId = req.sessionID;
+// router.get("/logout", async (req, res) => {
+//   // const sessionId = req.sessionID;
 
-  console.log("Logout route called");
+//   console.log("Logout route called");
+
+//   req.logout(() => {
+//     req.session.destroy(async (err) => {
+//       if (err) {
+//         return res.status(500).json({ message: "Error destroying session" });
+//       }
+
+//       console.log("Session destroyed in MongoDB");
+
+//       // Clear the session cookie from the client-side
+//       res.clearCookie("connect.sid", { path: "/" });
+//       return res
+//         .status(200)
+//         .json({ message: "logout successful", redirect: "/login" });
+//     });
+//   });
+// });
+
+router.post('/logout', async (req, res) => {
+  console.log('Logout route called');
 
   req.logout(() => {
     req.session.destroy(async (err) => {
       if (err) {
-        return res.status(500).json({ message: "Error destroying session" });
+        return res.status(500).json({ message: 'Error destroying session' });
       }
 
-      console.log("Session destroyed in MongoDB");
+      // delete session from MongoDB
+      const sessionStore = req.sessionStore;
+      await sessionStore.destroy(req.sessionID);
+
+      console.log('Session destroyed in MongoDB');
 
       // Clear the session cookie from the client-side
-      res.clearCookie("connect.sid", { path: "/" });
-      return res
-        .status(200)
-        .json({ message: "logout successful", redirect: "/login" });
+      res.clearCookie('connect.sid', { path: '/' });
+      return res.status(200).json({ message: 'logout successful', redirect: '/login' });
     });
   });
 });
@@ -64,12 +86,5 @@ router.get('/retrieveAllSupervisors', async (req, res) => {
   }
 });
 
-// router.get("/status", (req, res) => {
-//   if (req.session.loggedIn) {
-//     res.json({ loggedIn: true });
-//   } else {
-//     res.json({ loggedIn: false });
-//   }
-// });
 
 export default router;

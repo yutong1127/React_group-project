@@ -1,7 +1,8 @@
 import express from 'express';
 import {
     getUserById,
-    updateUserProfile
+    updateUserProfile,
+    updateUserPassword
 } from '../../dao/user-dao'
 import { authenticate } from '../../middleware/authMiddleware';
 
@@ -24,8 +25,7 @@ router.get('/:clinicianId', authenticate, async (req, res) => {
 
 });
 
-// router.put('/:userId', authenticate, async (req, res) => {
-router.put('/:userId', async (req, res) => {
+router.put('/:userId', authenticate, async (req, res) => {
     const { userId } = req.params;
 
     const userProfile = req.body;
@@ -53,5 +53,25 @@ router.put('/:userId', async (req, res) => {
         }
     }
 });
+
+router.put("/password/:userId", authenticate, async (req, res) => {
+    const { userId } = req.params;
+    const { newPassword } = req.body;
+  
+    try {
+      const success = await updateUserPassword(userId, newPassword);
+      if (success) {
+        return res.sendStatus(HTTP_NO_CONTENT);
+      } else {
+        return res.sendStatus(HTTP_NOT_FOUND);
+      }
+    } catch (err) {
+      console.error(err);
+      if (!res.headersSent) {
+        return res.sendStatus(500);
+      }
+    }
+  });
+  
 
 export default router;
