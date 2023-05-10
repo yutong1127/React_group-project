@@ -3,7 +3,6 @@ import * as React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from ".././layout/Appbar.module.css";
 import NotificationHeading from "./AppbarHeading";
-import SortForm from "./AppbarSort";
 import MessageMenu from "./AppbarMessages";
 import DrawerMenu from "./AppbarDrawer";
 import { AppContext } from "../utils/AppContextProvider";
@@ -29,7 +28,6 @@ export default function DocAppBar() {
     <Box className={styles.appBarContainer}>
       <AppBar
         position="static"
-      // open={drawerOpen}
       >
         <Toolbar className={styles.toolbar}>
           <IconButton
@@ -45,7 +43,6 @@ export default function DocAppBar() {
 
           <NotificationHeading />
 
-          {/* <SortForm /> */}
 
           <MessageMenu />
 

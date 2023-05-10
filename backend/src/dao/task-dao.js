@@ -34,7 +34,7 @@ async function createTask(task) {
     const responsibleClinician = await User.find(patient.responsibleClinicians)
     const team = await Team.findOne({supervisors:responsibleClinician})
     const clinicians = team.clinicians
-    const entity = dbTask.type + ' needed for, '
+    const entity = dbTask.type + ' needed for '
     const notification = new Notification({
         type:'Task',
         patient:patient,

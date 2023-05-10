@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { Patient, User, Team, Notification } from "../patientlist-db/schema";
+import { Patient, User, Team, Task, Notification } from "../patientlist-db/schema";
 import { getUserById } from "./user-dao";
 
 async function retrievePatient(id) {
@@ -14,6 +14,22 @@ async function updatePatient(id, data) {
 }
 
 async function deletePatient(id) {
+
+    // Remove patient from team
+    const team = await Team.findOne({ patients: mongoose.Types.ObjectId(id) });
+    if (team) {
+        console.log(team);
+        const update = { $pull: { patients: id } }; 
+        await Team.findByIdAndUpdate(team._id, update, { new: false });
+    }
+
+    // Remove patient tasks
+    await Task.deleteMany({patient: mongoose.Types.ObjectId(id)});
+
+    // Remove patient notifications
+    await Notification.deleteMany({patient: mongoose.Types.ObjectId(id)});
+
+    // Remove patient
     return await Patient.deleteOne({ _id: mongoose.Types.ObjectId(id) });
 }
 

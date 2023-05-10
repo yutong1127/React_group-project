@@ -7,6 +7,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import axios from 'axios';
 import { AppContext } from "../../utils/AppContextProvider"
+import dayjs from 'dayjs';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
@@ -14,7 +15,7 @@ export default function AddPatient(){
   const { loggedInUser } = useContext(AppContext);
   const [gender, setGender] = useState('');
   const [location, setLocation] = useState('');
-  const [dob, setDob] = useState('');
+  const [dob, setDob] = useState(dayjs());
   const [clinicians, setClinicians] = useState([]);
   
 
