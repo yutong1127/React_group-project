@@ -38,13 +38,13 @@ it('renders notification from API correctly', async () => {
 
     // Render component under test (AppContextProvider), with a TestComponent we can use to
     // see its output.
-    const { queryByText, getByRole, getByText } = render(
+    const { queryByText, getByRole, getByText, queryByRole } = render(
         <AppContextProvider>
             <Notifications />
         </AppContextProvider>
     )
 
-    const button = getByRole('button');
+    const button = queryByRole('Notification');
 
     // Make sure each notification is rendered
     for (let notification of notifications) {

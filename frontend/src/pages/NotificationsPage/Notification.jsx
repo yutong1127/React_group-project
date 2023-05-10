@@ -138,7 +138,7 @@ export default function Notifications() {
                                     </Button>
                                 </Link>
 
-                                <Button size='small' variant='outlined' onClick={() => deleteNotification(item._id)}>Delete</Button>
+                                <Button size='small' variant='outlined' onClick={() => deleteNotification(item._id)} role="Notification">Delete</Button>
 
                             </CardActions>
                         </Card>
