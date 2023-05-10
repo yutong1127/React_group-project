@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useGet from "../hooks/useGet";
 import useGetUser from "../hooks/useGetUser";
+import usePut from "../hooks/usePut";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
@@ -117,15 +118,34 @@ export function AppContextProvider({ children }) {
     [loggedIn],
     options);
 
+  const { put: updateUserProfileRequest, isLoading: userProfileUpdateLoading } = usePut(
+    loggedInUser ? `${API_BASE_URL}/api/user_profile/${loggedInUser._id}` : null,
+    options
+  );
+
+  const { put: updateUserPasswordRequest, isLoading: userPasswordLoading } = usePut(
+    loggedInUser ? `${API_BASE_URL}/api/user_profile/password/${loggedInUser._id}` : null,
+    options
+  );
+
   async function updateUserProfile(id, data) {
-    const updateResponse = await axios.put(
-      `${API_BASE_URL}/api/user_profile/${id}`,
-      data
-    );
+    try {
+      const updateResponse = await updateUserProfileRequest(data);
+      console.log(updateResponse && "you have updated profile for" + data.fname);
+      refreshUserProfile();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-    console.log(updateResponse && "you have updated profile for" + data.fname);
-
-    refreshUserProfile();
+  async function updateUserPassword(id, newPassword) {
+    try {
+      const updateResponse = await updateUserPasswordRequest({ newPassword });
+      console.log(updateResponse && "you have updated password for user" + id);
+      refreshUserProfile();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async function deleteNotification(id) {
@@ -233,17 +253,6 @@ export function AppContextProvider({ children }) {
     location.reload();
   }
 
-  async function updateUserProfile(id, data) {
-    const updateResponse = await axios.put(
-      `${API_BASE_URL}/api/user_profile/${id}`,
-      data
-    );
-
-    console.log(updateResponse && "you have updated profile for" + data.fname);
-
-    refreshUserProfile();
-  }
-
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -291,6 +300,7 @@ export function AppContextProvider({ children }) {
     refreshNotifications,
     refreshUnreadNotifications,
     refreshTeam,
+    updateUserPassword
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

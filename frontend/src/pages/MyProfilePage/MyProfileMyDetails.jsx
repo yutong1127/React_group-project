@@ -67,7 +67,7 @@ function MyDetails({ userProfile, setEditOn }) {
                     </ListItem>
                     <ListItem button>
                         <ListItemText primary="Team"
-                            secondary="Pink Panda" />
+                            secondary={userProfile.team.name} />
                     </ListItem>
                     <ListItem button>
                         <ListItemText
@@ -188,7 +188,7 @@ function MyDetailsForm({ userProfile, updateUserProfile, setEditOff }) {
                         varient="outlined"
                         label="Team"
                         fullWidth
-                        defaultValue={userProfile.team}
+                        defaultValue={userProfile.team.name}
                         disabled
 
                     />
