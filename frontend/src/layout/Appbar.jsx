@@ -52,7 +52,6 @@ export default function DocAppBar() {
             <LoginButton />
           )}
 
-          {/* <UserIcon /> */}
         </Toolbar>
       </AppBar>
 
@@ -61,19 +60,3 @@ export default function DocAppBar() {
   );
 }
 
-// const AppBarM = styled(AppBar, {
-//     shouldForwardProp: (prop) => prop !== 'open',
-// })(({ theme, drawerOpen }) => ({
-//     transition: theme.transitions.create(['margin', 'width'], {
-//         easing: theme.transitions.easing.sharp,
-//         duration: theme.transitions.duration.leavingScreen,
-//     }),
-//     ...(drawerOpen && {
-//         width: `calc(100% - 240px)`,
-//         marginLeft: `240px`,
-//         transition: theme.transitions.create(['margin', 'width'], {
-//             easing: theme.transitions.easing.easeOut,
-//             duration: theme.transitions.duration.enteringScreen,
-//         }),
-//     }),
-// }));

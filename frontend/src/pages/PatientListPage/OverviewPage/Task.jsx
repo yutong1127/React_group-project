@@ -48,7 +48,6 @@ export default function Task(props) {
 
     const [result, setResult] = useState(props.task.result);
     const [showModal, setShowModal] = useState(false);
-    const {refreshTeam} = useContext(AppContext)
 
     // Handlers for tri-state checkbox
     const handleCheckboxClick = async () => {
