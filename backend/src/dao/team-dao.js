@@ -65,10 +65,11 @@ async function transferTeam(patientId, supervisorId) {
     // update stupid supervisor id in patient
     await Patient.findByIdAndUpdate(patientId, {responsibleClinicians: mongoose.Types.ObjectId(supervisorId)}, { new: false });
 
-    // Notification update
+    // notification update when patient team change
     const currentTeamClinicians = currentTeam.clinicians;
     const patient = await Patient.findOne({_id:patientId});
 
+     // For current team
     const notificationForCurrentTeam = new Notification({
         type:'Admin',
         patient:patient,
@@ -86,6 +87,7 @@ async function transferTeam(patientId, supervisorId) {
         await user.save();
     }
    
+    // For new team
     const newTeamClinicians = newTeam.clinicians;
     const notificationForNewTeam = new Notification({
         type:'Admin',
@@ -102,8 +104,6 @@ async function transferTeam(patientId, supervisorId) {
         await notificationForNewTeam.save();
         await user.save();
     }
-
-
 
     // retrieveTeamByPatientId
     return await Team.findOne({ patients: mongoose.Types.ObjectId(patientId) });
