@@ -37,7 +37,7 @@ export default function MessageMenu() {
     }
     return (
         <>
-            <IconButton
+            { loggedIn ? <IconButton
                 aria-label={notificationsLabel(unreadNotification.length)}
                 size='large'
                 color='inherit'
@@ -45,7 +45,9 @@ export default function MessageMenu() {
                 <Badge badgeContent={loggedIn ? unreadNotification.length : 0} color="secondary">
                     <MailIcon />
                 </Badge>
-            </IconButton>
+            </IconButton> : null
+            }
+            
             <Menu sx={{ mt: '45px' }}
 
                 anchorEl={anchorElNotification}

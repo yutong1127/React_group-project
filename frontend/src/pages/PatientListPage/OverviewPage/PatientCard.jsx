@@ -3,7 +3,6 @@ import FreetextArea from "./FreetextArea"
 import PatientDetails from "./PatientDetails"
 import PatientProgress from "./PatientProgress"
 import PatientTasks from "./PatientTasks"
-import UploadArea from "./UploadArea"
 import {
     Grid,
     Box,
@@ -32,7 +31,7 @@ const style = {
 
 
 export default function PatientCard(props) {
-    const { createTask } = useContext(AppContext)
+    const { createTask, loggedInUser } = useContext(AppContext)
     const [open, setOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [trigger, setTrigger] = useState(0);
@@ -63,7 +62,7 @@ export default function PatientCard(props) {
                 name: "XR",
                 type: "Radiology",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 1,
                 status: 0,
                 result: ""
@@ -76,7 +75,7 @@ export default function PatientCard(props) {
                 name: "USS",
                 type: "Radiology",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 2,
                 status: 0,
                 result: ""
@@ -89,7 +88,7 @@ export default function PatientCard(props) {
                 name: "CT",
                 type: "Radiology",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 3,
                 status: 0,
                 result: ""
@@ -134,7 +133,7 @@ export default function PatientCard(props) {
                 name: "FBC",
                 type: "Blood-test",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 1,
                 status: 0,
                 result: ""
@@ -147,7 +146,7 @@ export default function PatientCard(props) {
                 name: "UE",
                 type: "Blood-test",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 1,
                 status: 0,
                 result: ""
@@ -160,7 +159,7 @@ export default function PatientCard(props) {
                 name: "COAG",
                 type: "Blood-test",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 1,
                 status: 0,
                 result: ""
@@ -205,7 +204,7 @@ export default function PatientCard(props) {
                 name: 'Review',
                 type: 'Review',
                 patient: props.patient._id,
-                clinician: '6441045875c54d273abff405',
+                clinician: loggedInUser._id,
                 priority: 0,
                 status: 0,
                 result: ""
@@ -268,7 +267,7 @@ export default function PatientCard(props) {
                         <Button variant="contained" role='Edit' onClick={handleEdit}>{isEditing ? "Add" : "Edit"}</Button>
 
                     </Grid>
-                    <Grid item lg={4} sm={6} xs={6} order={{ xs: 7, sm: 7, lg: 7 }}>
+                    <Grid item lg={4} sm={12} xs={6} order={{ xs: 7, sm: 7, lg: 7 }}>
                         <Button variant="contained" role='Add' onClick={handleOpen}>Add</Button>
                         <Modal
                             open={open}
@@ -288,7 +287,7 @@ export default function PatientCard(props) {
                         </Modal>
                     </Grid>
                     <Grid item lg={3} sm={6} xs={6} order={{ xs: 8, sm: 8, lg: 8 }}>
-                        <UploadArea />
+                        
                     </Grid>
                 </Grid>
             </Box>

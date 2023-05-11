@@ -3,7 +3,6 @@ import {
   TextField,
   Box,
   Grid,
-  Link,
   useTheme,
   InputAdornment,
   Typography,
@@ -114,9 +113,6 @@ function LoginBox() {
                   pl: "5px",
                 }}
               >
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
               </Box>
             </Grid>
             <Grid item xs={12}>

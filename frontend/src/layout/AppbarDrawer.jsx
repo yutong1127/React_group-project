@@ -50,14 +50,7 @@ export default function DrawerMenu() {
 
     ]
 
-    // let activeTab;
-    // for (let tab of tabs) {
-    //     // eslint-disable-next-line react-hooks/rules-of-hooks
-    //     const isActiveTab = useIsActive(tab.to);
-    //     if (!activeTab && isActiveTab) {
-    //         activeTab = tab.to;
-    //     }
-    // }
+
     return (
         <Drawer
             sx={{

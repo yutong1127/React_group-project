@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
     Checkbox,
     FormControlLabel,
@@ -14,6 +14,7 @@ import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import axios from 'axios';
 import ImageAvatars from '../../../utils/Avatar';
+import { AppContext } from '../../../utils/AppContextProvider';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
@@ -52,7 +53,7 @@ export default function Task(props) {
     const handleCheckboxClick = async () => {
         if (!checked && !indeterminate) {
             setIndeterminate(true);
-            await axios.put(`${API_BASE_URL}/api/task/updatetask/${props.task._id}`, { status: 1, finished_at: null, clinician: '6450de1bd5da784ad07a77c3' });
+            await axios.put(`${API_BASE_URL}/api/task/updatetask/${props.task._id}`, { status: 1, finished_at: null});
         } else if (!checked && indeterminate) {
             setChecked(true);
             setIndeterminate(false);

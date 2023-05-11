@@ -30,9 +30,18 @@ function LeftBox() {
         />
       </Box>
       <Typography
-        variant="h5"
+        variant="h4"
         sx={{
-          padding: 10,
+          mt: 1,
+          textAlign: "center",
+          color: theme.palette.info.dark,
+        }}
+      >
+        Patient List Manager
+      </Typography>
+      <Typography
+        variant="h6"
+        sx={{
           mt: 1,
           textAlign: "center",
           color: theme.palette.info.dark,

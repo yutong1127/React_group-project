@@ -45,7 +45,6 @@ async function deleteNotification(id) {
 
 // Unread notification update to isRead
 async function updateNotificationSatus(id) {
-    console.log(id)
 
     const notification = await Notification.findOne({ _id: id });
 

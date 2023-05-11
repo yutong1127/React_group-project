@@ -24,56 +24,42 @@ export default function DocAppBar() {
     }
   };
 
-  return (
-    <Box className={styles.appBarContainer}>
-      <AppBar
-        position="static"
-      >
-        <Toolbar className={styles.toolbar}>
-          <IconButton
-            size="large"
-            edge="start"
-            color="primary"
-            aria-label="menu"
-            onClick={handleDrawerOpen}
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon sx={{ color: "#9ED0F9" }} />
-          </IconButton>
+  if (loggedIn) {
+    return (
+      <Box className={styles.appBarContainer}>
+        <AppBar
+          position="static"
+        >
+          <Toolbar className={styles.toolbar}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="primary"
+              aria-label="menu"
+              onClick={handleDrawerOpen}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon sx={{ color: "#9ED0F9" }} />
+            </IconButton>
 
-          <NotificationHeading />
+            <NotificationHeading />
 
 
-          <MessageMenu />
+            <MessageMenu />
 
-          {loggedIn ? (
-            <UserMenu handleLogout={handleLogout} />
-          ) : (
-            <LoginButton />
-          )}
+            {loggedIn ? (
+              <UserMenu handleLogout={handleLogout} />
+            ) : (
+              <LoginButton />
+            )}
 
-          {/* <UserIcon /> */}
-        </Toolbar>
-      </AppBar>
+          </Toolbar>
+        </AppBar>
 
-      <DrawerMenu />
-    </Box>
-  );
+        {loggedIn ? <DrawerMenu /> : null}
+
+      </Box>
+    );
+  }
 }
 
-// const AppBarM = styled(AppBar, {
-//     shouldForwardProp: (prop) => prop !== 'open',
-// })(({ theme, drawerOpen }) => ({
-//     transition: theme.transitions.create(['margin', 'width'], {
-//         easing: theme.transitions.easing.sharp,
-//         duration: theme.transitions.duration.leavingScreen,
-//     }),
-//     ...(drawerOpen && {
-//         width: `calc(100% - 240px)`,
-//         marginLeft: `240px`,
-//         transition: theme.transitions.create(['margin', 'width'], {
-//             easing: theme.transitions.easing.easeOut,
-//             duration: theme.transitions.duration.enteringScreen,
-//         }),
-//     }),
-// }));

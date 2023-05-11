@@ -51,7 +51,6 @@ router.delete('/:id', async (req, res) => {
 
 // add patient
 router.post('/add', async (req, res) => {
-    console.log(req.body)
     const result = await addPatient(req.body);
     if (result) {
         res.json(result);

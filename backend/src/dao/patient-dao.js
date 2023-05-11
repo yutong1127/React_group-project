@@ -18,15 +18,15 @@ async function deletePatient(id) {
     // Remove patient from team
     const team = await Team.findOne({ patients: mongoose.Types.ObjectId(id) });
     if (team) {
-        const update = { $pull: { patients: id } }; 
+        const update = { $pull: { patients: id } };
         await Team.findByIdAndUpdate(team._id, update, { new: false });
     }
 
     // Remove patient tasks
-    await Task.deleteMany({patient: mongoose.Types.ObjectId(id)});
+    await Task.deleteMany({ patient: mongoose.Types.ObjectId(id) });
 
     // Remove patient notifications
-    await Notification.deleteMany({patient: mongoose.Types.ObjectId(id)});
+    await Notification.deleteMany({ patient: mongoose.Types.ObjectId(id) });
 
     // Remove patient
     return await Patient.deleteOne({ _id: mongoose.Types.ObjectId(id) });
@@ -54,26 +54,29 @@ async function addPatient(data) {
 
     addPatientToTeam(patient._id, patient.responsibleClinicians);
 
-    // notify supervisor new patient has been added
-    const team = await Team.findOne({ supervisors: data.responsibleClinicians }).populate();
+    // notify supervisor & team members new patient has been added
+    if (data.notification == 'on') {
+        const team = await Team.findOne({ supervisors: data.responsibleClinicians }).populate();
 
-    const clinicians = team.clinicians;
+        const clinicians = team.clinicians;
 
-    const notification = new Notification({
-        type: 'Admin',
-        patient: patient,
-        entity: 'You have a new patient, ',
-        isRead: false
-    });
+        const notification = new Notification({
+            type: 'Admin',
+            patient: patient,
+            entity: 'You have a new patient, ',
+            isRead: false
+        });
 
-    await notification.save();
-    for (const clinician of clinicians) {
-        notification.recipient.push(clinician);
-        const user = await User.findOne({ _id: clinician._id })
-        user.notification.push(notification);
         await notification.save();
-        await user.save();
+        for (const clinician of clinicians) {
+            notification.recipient.push(clinician);
+            const user = await User.findOne({ _id: clinician._id })
+            user.notification.push(notification);
+            await notification.save();
+            await user.save();
+        }
     }
+
     return patient;
 }
 
