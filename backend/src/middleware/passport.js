@@ -3,13 +3,14 @@ import LocalStrategy from "passport-local";
 import { getUserByEmail, getUserById } from "../dao/user-dao.js";
 import bcrypt from "bcrypt";
 
-// Passport configuration
+// check if password is valid
 async function isPasswordValid(user, password) {
   return user.isPlainTextPassword
-    ? password == user.password
+    ? password === user.password
     : await bcrypt.compare(password, user.password);
 }
 
+// Use local strategy to configure passport
 passport.use(
   new LocalStrategy(
     { usernameField: "email" },
@@ -33,10 +34,12 @@ passport.use(
   )
 );
 
+// store user id in session
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
+// retrieve user from session
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await getUserById(id);

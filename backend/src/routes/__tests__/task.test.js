@@ -82,9 +82,7 @@ beforeEach(async () => {
 
     // Drop existing db
     await mongoose.connection.db.dropDatabase();
-    await mongoose.connection.db.dropCollection('tasks');
-    const coll = await mongoose.connection.db.createCollection('tasks');
-    await coll.insertMany(tasks);
+    await Task.insertMany(tasks);
 
 });
 

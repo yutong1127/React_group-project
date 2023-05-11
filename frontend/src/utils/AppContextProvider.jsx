@@ -115,11 +115,13 @@ export function AppContextProvider({ children }) {
 
   const { put: updateUserProfileRequest, isLoading: userProfileUpdateLoading } = usePut(
     loggedInUser ? `${API_BASE_URL}/api/user_profile/${loggedInUser._id}` : null,
+    [loggedIn],
     options
   );
 
   const { put: updateUserPasswordRequest, isLoading: userPasswordLoading } = usePut(
     loggedInUser ? `${API_BASE_URL}/api/user_profile/password/${loggedInUser._id}` : null,
+    [loggedIn],
     options
   );
 

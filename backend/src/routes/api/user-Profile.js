@@ -51,19 +51,25 @@ router.put('/:userId', authenticate, async (req, res) => {
     }
 });
 
-router.put("/password/:userId", authenticate, async (req, res) => {
+router.put('/password/:userId', authenticate, async (req, res) => {
     const { userId } = req.params;
     const { newPassword } = req.body;
+
+    console.log('userId:', userId); // Add this line to log the userId.
+    console.log('newPassword:', newPassword); // Add this line to log the newPassword.
   
     try {
       const success = await updateUserPassword(userId, newPassword);
+      console.log('Update success:', success);
       if (success) {
+        console.log('Password updated successfully');
         return res.sendStatus(HTTP_NO_CONTENT);
       } else {
+        console.log('User not found or password update failed');
         return res.sendStatus(HTTP_NOT_FOUND);
       }
     } catch (err) {
-      console.error(err);
+      console.error('Error while updating password:', err);
       if (!res.headersSent) {
         return res.sendStatus(500);
       }

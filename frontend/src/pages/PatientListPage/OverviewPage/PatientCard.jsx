@@ -3,7 +3,6 @@ import FreetextArea from "./FreetextArea"
 import PatientDetails from "./PatientDetails"
 import PatientProgress from "./PatientProgress"
 import PatientTasks from "./PatientTasks"
-import UploadArea from "./UploadArea"
 import {
     Grid,
     Box,
@@ -268,7 +267,7 @@ export default function PatientCard(props) {
                         <Button variant="contained" role='Edit' onClick={handleEdit}>{isEditing ? "Add" : "Edit"}</Button>
 
                     </Grid>
-                    <Grid item lg={4} sm={6} xs={6} order={{ xs: 7, sm: 7, lg: 7 }}>
+                    <Grid item lg={4} sm={12} xs={6} order={{ xs: 7, sm: 7, lg: 7 }}>
                         <Button variant="contained" role='Add' onClick={handleOpen}>Add</Button>
                         <Modal
                             open={open}
@@ -288,7 +287,7 @@ export default function PatientCard(props) {
                         </Modal>
                     </Grid>
                     <Grid item lg={3} sm={6} xs={6} order={{ xs: 8, sm: 8, lg: 8 }}>
-                        <UploadArea />
+                        
                     </Grid>
                 </Grid>
             </Box>

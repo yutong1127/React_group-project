@@ -2,15 +2,15 @@ const patient = [
   {
     fname: "Laureen",
     lname: "Lance",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id ipsum lectus. Donec commodo mollis suscipit. Donec ut purus nec nibh pharetra finibus. Nunc vitae suscipit urna. Vivamus efficitur turpis nibh, nec tristique purus tempus eu. Sed finibus sagittis tortor hendrerit suscipit. Vestibulum porta ex quis dui volutpat, ac mollis arcu ornare. Fusce sit amet efficitur odio, eu pharetra augue. Suspendisse ut ullamcorper lorem. Aenean at odio in dui tempor eleifend. Nullam a viverra enim. Aenean nec felis mattis, pharetra magna in, molestie lacus.",
+    description: "Age: 45yrs Sex: Female CC: Shortness of Breath HR: 95 regular BP: 123/87 Temp: 36.1C/97.0F RR: 12 O2 Sat: 88% on RA History 1: Lives Alone History 2: Alcoholic",
     location: "Ward 1",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
     progress: {
       problems:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-      history: 'Curabitur id ipsum lectus.',
-      plan: 'Donec commodo mollis suscipit.',
+          'Shortness of Breath',
+      history: 'Sudden onset, progressive over 3 days, chest pain',
+      plan: 'Resp consult. ECG. CTPA' ,
   },
     birth_date: "1967-11-30T12:00:00.000+00:00",
     gender: "Female",
@@ -18,15 +18,15 @@ const patient = [
   {
     fname: "Bram",
     lname: "Gene",
-    description: "Aenean ac lorem facilisis, dignissim urna nec, malesuada erat. In consectetur libero at mauris vehicula venenatis. Nam pulvinar mattis posuere. Aenean ligula magna, ultrices nec vestibulum ut, rutrum vehicula nisl. Phasellus egestas placerat sapien eget malesuada. Proin nibh nisi, fermentum id tincidunt eu, iaculis eget erat. Ut sit amet odio sit amet felis tincidunt placerat. Vestibulum ac aliquet mauris. Pellentesque tincidunt vulputate magna et tristique.",
+    description: "Age: 71yrs Sex: Male CC: Abdominal Pain HR: 79 regular BP: 171/113 Temp: 35.2C/95.4F RR: 19 O2 Sat: 88% on RA History 1: Previous DVT History 2: Manic Depressive",
     location: "Ward 2",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
       problems:
-          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-      history: 'In consectetur libero at mauris vehicula venenatis.',
-      plan: ' Nam pulvinar mattis posuere.',
+          'Gastroenteritis',
+      history: 'D + Vs for 2 days, barbeque on the weekend',
+      plan: 'Stool spec, CT',
   },
     birth_date: "1965-04-22T12:00:00.000+00:00",
     gender: "Male",
@@ -34,15 +34,15 @@ const patient = [
   {
     fname: "Cearra",
     lname: "Buffy",
-    description: "Vestibulum commodo interdum molestie. Quisque aliquet, tellus ac iaculis dictum, lectus ante euismod velit, volutpat luctus augue magna sit amet purus. Donec euismod aliquam nisi sit amet volutpat. Sed ut ullamcorper augue, sed interdum lacus. Cras sodales tincidunt lectus, ut suscipit metus cursus non. Etiam ipsum nibh, porta blandit vestibulum sit amet, suscipit ut lorem. Suspendisse potenti. Vestibulum fringilla lorem libero, sed ultricies elit porttitor eu. Quisque non nulla sagittis, varius ex sed, ullamcorper eros. Aliquam dictum iaculis dolor. Proin semper vehicula turpis, id hendrerit ante fermentum id. Donec euismod efficitur ligula, vitae tristique velit egestas sed. Etiam eleifend mauris sed eros fringilla suscipit. Aliquam nunc tellus, efficitur mollis magna sed, tincidunt volutpat odio. Phasellus blandit, nisi in varius tempor, dolor ipsum pharetra est, in volutpat massa felis nec mauris.",
+    description: "Age: 46yrs Sex: Male CC: Headache HR: 79 regular BP: 145/85 Temp: 37.9C/100.2F RR: 15 O2 Sat: 96% on RA History 1: Lives Alone History 2: Works as a Nurse",
     location: "Ward 4",
     responsibleClinicians: null,
     quickAdd: null,
     progress: {
       problems:
-          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-      history: 'In consectetur libero at mauris vehicula venenatis.',
-      plan: ' Nam pulvinar mattis posuere.',
+          'Migrane',
+      history: '1 day, gradually worsening',
+      plan: 'Medicine consult. EEG',
   },
     birth_date: "1955-02-21T12:00:00.000+00:00",
     gender: "Male",
@@ -50,15 +50,15 @@ const patient = [
   {
     fname: "Linda",
     lname: "Lance",
-    description: "Quisque eros leo, venenatis eu interdum a, mattis quis turpis. Suspendisse potenti. Nulla ut consectetur urna. In lobortis finibus orci ac condimentum. Aenean ut sem et ex vestibulum scelerisque id eget augue. Cras vulputate feugiat magna quis tincidunt. Curabitur in ante semper, consequat nisl a, imperdiet velit. Etiam feugiat in sapien ut eleifend. Pellentesque dolor lectus, dictum ut pellentesque at, varius interdum mi. Nulla non nisi eget nunc rhoncus fringilla et sit amet dui. Nam lobortis dui eu rutrum aliquam.",
+    description: "Age: 83yrs Sex: Female CC: Difficulty Walking HR: 123 regular BP: 171/113 Temp: 36.7C/98.1F RR: 12 O2 Sat: 88% on RA History 1: Migraines History 2: Manic Depressive",
     location: "Ward 3",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
       problems:
-          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-      history: 'In consectetur libero at mauris vehicula venenatis.',
-      plan: ' Nam pulvinar mattis posuere.',
+          'Parkinsons',
+      history: 'Progressive over years, recently ran out of medications',
+      plan: 'Pharmacy Review',
   },
     birth_date: "1943-07-01T12:00:00.000+00:00",
     gender: "Female",
@@ -66,15 +66,15 @@ const patient = [
   {
     fname: "Ross",
     lname: "Carlisle",
-    description: "Integer in viverra eros. Integer imperdiet placerat ligula quis aliquam. Sed non accumsan libero. Curabitur ac quam nulla. Vivamus et est nec leo semper ornare in et purus. Phasellus arcu tortor, ullamcorper quis ultrices quis, gravida sit amet magna. Curabitur enim turpis, tincidunt vel tortor tincidunt, bibendum venenatis elit. Nulla et nibh urna.",
+    description: "Age: 16yrs Sex: Female CC: Headache HR: 95 regular BP: 113/75 Temp: 37.3C/99.1F RR: 32 O2 Sat: 92% on RA History 1: Family History of Bowel Cancer History 2: Speaks Little English",
     location: "Ward 2",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
       problems:
-          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-      history: 'In consectetur libero at mauris vehicula venenatis.',
-      plan: ' Nam pulvinar mattis posuere.',
+          'Migrane',
+      history: 'Head injury 4 days ago, nausea',
+      plan: 'CT, concussion monitoring',
   },
     birth_date: "1967-05-29T12:00:00.000+00:00",
     gender: "Female",
@@ -82,15 +82,15 @@ const patient = [
   {
     fname: "Ferdie",
     lname: "Kurt",
-    description: "Pellentesque vel aliquet mi, vel gravida tortor. Aenean sit amet velit lacinia, convallis erat vestibulum, ullamcorper elit. Fusce ullamcorper porta blandit. Nulla facilisi. Etiam porttitor justo vitae eros pretium aliquam. Donec sed libero vestibulum, laoreet ligula ac, consectetur felis. Vivamus et facilisis odio, quis faucibus purus. Nam eget neque vel massa pulvinar scelerisque ut id urna. In hac habitasse platea dictumst. Donec vitae turpis et risus condimentum luctus eu a arcu. Duis dignissim mattis ultrices.",
+    description: "Age: 25yrs Sex: Male CC: Difficulty Walking HR: 50 irregular BP: 106/67 Temp: 35.9C/96.6F RR: 29 O2 Sat: 92% on RA History 1: Drunk History 2: Related to the Medical Directorvel aliquet mi, vel gravida tortor. Aenean sit amet velit lacinia, convallis erat vestibulum, ullamcorper elit. Fusce ullamcorper porta blandit. Nulla facilisi. Etiam porttitor justo vitae eros pretium aliquam. Donec sed libero vestibulum, laoreet ligula ac, consectetur felis. Vivamus et facilisis odio, quis faucibus purus. Nam eget neque vel massa pulvinar scelerisque ut id urna. In hac habitasse platea dictumst. Donec vitae turpis et risus condimentum luctus eu a arcu. Duis dignissim mattis ultrices.",
     location: "Ward 1",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
     progress: {
       problems:
-          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-      history: 'In consectetur libero at mauris vehicula venenatis.',
-      plan: ' Nam pulvinar mattis posuere.',
+          'Leg injury',
+      history: 'Rugby injury 1 week ago, not able to full weight bear since',
+      plan: 'CT, physiotherapy',
   },
     birth_date: "1947-09-11T12:00:00.000+00:00",
     gender: "Male",
@@ -98,25 +98,31 @@ const patient = [
   {
     fname: "Ruby",
     lname: "Davis",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id ipsum lectus. Donec commodo mollis suscipit. Donec ut purus nec nibh pharetra finibus. Nunc vitae suscipit urna. Vivamus efficitur turpis nibh, nec tristique purus tempus eu. Sed finibus sagittis tortor hendrerit suscipit. Vestibulum porta ex quis dui volutpat, ac mollis arcu ornare. Fusce sit amet efficitur odio, eu pharetra augue. Suspendisse ut ullamcorper lorem. Aenean at odio in dui tempor eleifend. Nullam a viverra enim. Aenean nec felis mattis, pharetra magna in, molestie lacus.",
+    description: "Age: 46yrs Sex: Female CC: Assaulted HR: 56 regular P: 113/75 Temp: 36.1C/97.0F RR: 22 O2 Sat: 92% on RA History 1: Migraines History 2: Speaks Little English",
     location: "Ward 1",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
+    progress: {
+      problems:
+          'Trauma',
+      history: 'Blunt trauma, abdo chest',
+      plan: 'CT trauma',
+  },
     birth_date: "1967-11-30T12:00:00.000+00:00",
     gender: "Female",
   },
   {
     fname: "Natalie",
     lname: "Jackson",
-    description:"Aenean ac lorem facilisis, dignissim urna nec, malesuada erat. In consectetur libero at mauris vehicula venenatis. Nam pulvinar mattis posuere. Aenean ligula magna, ultrices nec vestibulum ut, rutrum vehicula nisl. Phasellus egestas placerat sapien eget malesuada. Proin nibh nisi, fermentum id tincidunt eu, iaculis eget erat. Ut sit amet odio sit amet felis tincidunt placerat. Vestibulum ac aliquet mauris. Pellentesque tincidunt vulputate magna et tristique.",
+    description:"Age: 45yrs Sex: Female CC: Chest Pain HR: 136 irregular BP: 100/57 Temp: 38.1C/100.6F RR: 15 O2 Sat: 92% on RA History 1: On Warfarin History 2: Diabetic",
     location: "Ward 2",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
       problems:
-          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-      history: 'In consectetur libero at mauris vehicula venenatis.',
-      plan: ' Nam pulvinar mattis posuere.',
+          'Chest pain, palpitations',
+      history: '4 hours, sudden onset during yoga',
+      plan: 'ECG, XR',
   },
     birth_date: "1965-04-22T12:00:00.000+00:00",
     gender: "Female",
@@ -124,15 +130,15 @@ const patient = [
   {
     fname: "Leah",
     lname: "Green",
-    description:"Vestibulum commodo interdum molestie. Quisque aliquet, tellus ac iaculis dictum, lectus ante euismod velit, volutpat luctus augue magna sit amet purus. Donec euismod aliquam nisi sit amet volutpat. Sed ut ullamcorper augue, sed interdum lacus. Cras sodales tincidunt lectus, ut suscipit metus cursus non. Etiam ipsum nibh, porta blandit vestibulum sit amet, suscipit ut lorem. Suspendisse potenti. Vestibulum fringilla lorem libero, sed ultricies elit porttitor eu. Quisque non nulla sagittis, varius ex sed, ullamcorper eros. Aliquam dictum iaculis dolor. Proin semper vehicula turpis, id hendrerit ante fermentum id. Donec euismod efficitur ligula, vitae tristique velit egestas sed. Etiam eleifend mauris sed eros fringilla suscipit. Aliquam nunc tellus, efficitur mollis magna sed, tincidunt volutpat odio. Phasellus blandit, nisi in varius tempor, dolor ipsum pharetra est, in volutpat massa felis nec mauris.",
+    description:"Age: 83yrs Sex: Female CC: Acute Confusion HR: 50 irregular BP: 113/75 Temp: 35.2C/95.4F RR: 19 O2 Sat: 99% on RA History 1: Family History of Bowel Cancer History 2: Pale and Sweating",
     location: "Ward 4",
     responsibleClinicians: null,
     quickAdd: null,
     progress: {
       problems:
-          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-      history: 'In consectetur libero at mauris vehicula venenatis.',
-      plan: ' Nam pulvinar mattis posuere.',
+          'Delirium',
+      history: 'Started this morning',
+      plan: 'CT, blood tests',
   },
     birth_date: "1955-02-21T12:00:00.000+00:00",
     gender: "Female",
@@ -140,15 +146,15 @@ const patient = [
   {
     fname: "Wyatt",
     lname: "Ramirez",
-    description:"Quisque eros leo, venenatis eu interdum a, mattis quis turpis. Suspendisse potenti. Nulla ut consectetur urna. In lobortis finibus orci ac condimentum. Aenean ut sem et ex vestibulum scelerisque id eget augue. Cras vulputate feugiat magna quis tincidunt. Curabitur in ante semper, consequat nisl a, imperdiet velit. Etiam feugiat in sapien ut eleifend. Pellentesque dolor lectus, dictum ut pellentesque at, varius interdum mi. Nulla non nisi eget nunc rhoncus fringilla et sit amet dui. Nam lobortis dui eu rutrum aliquam.",
+    description:"Age: 25yrs Sex: Female CC: Shortness of Breath HR: 95 regular BP: 171/113 Temp: 35.9C/96.6F RR: 15 O2 Sat: 96% on RA History 1: Lives Alone History 2: Previous Bowel Cancer",
     location: "Ward 3",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
       problems:
-          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-      history: 'In consectetur libero at mauris vehicula venenatis.',
-      plan: ' Nam pulvinar mattis posuere.',
+          'Shortness of breath',
+      history: 'After exercising at gym',
+      plan: 'Spirometry',
   },
     birth_date: "1943-07-01T12:00:00.000+00:00",
     gender: "Female",
@@ -156,15 +162,15 @@ const patient = [
   {
     fname: "Madison",
     lname: "Turner",
-    description:"Integer in viverra eros. Integer imperdiet placerat ligula quis aliquam. Sed non accumsan libero. Curabitur ac quam nulla. Vivamus et est nec leo semper ornare in et purus. Phasellus arcu tortor, ullamcorper quis ultrices quis, gravida sit amet magna. Curabitur enim turpis, tincidunt vel tortor tincidunt, bibendum venenatis elit. Nulla et nibh urna.",
+    description:"Age: 25yrs Sex: Female CC: Chest Pain HR: 104 regular BP: 171/113 Temp: 40.1C/104.2F RR: 32 O2 Sat: 88% on RA History 1: Drunk History 2: Works as a Nurse",
     location: "Ward 2",
     responsibleClinicians: null,
     quickAdd: 'radiology',
     progress: {
       problems:
-          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-      history: 'In consectetur libero at mauris vehicula venenatis.',
-      plan: ' Nam pulvinar mattis posuere.',
+          'Chest pain, shortness of breath',
+      history: 'Started 2 days ago after night out',
+      plan: 'Blood tests',
   },
     birth_date: "1967-05-29T12:00:00.000+00:00",
     gender: "Female",
@@ -172,15 +178,15 @@ const patient = [
   {
     fname: "Oscar",
     lname: "Lee",
-    description:"Pellentesque vel aliquet mi, vel gravida tortor. Aenean sit amet velit lacinia, convallis erat vestibulum, ullamcorper elit. Fusce ullamcorper porta blandit. Nulla facilisi. Etiam porttitor justo vitae eros pretium aliquam. Donec sed libero vestibulum, laoreet ligula ac, consectetur felis. Vivamus et facilisis odio, quis faucibus purus. Nam eget neque vel massa pulvinar scelerisque ut id urna. In hac habitasse platea dictumst. Donec vitae turpis et risus condimentum luctus eu a arcu. Duis dignissim mattis ultrices.",
+    description:"Age: 25yrs Sex: Male CC: Difficulty Walking HR: 143 regular BP: 113/75 Temp: 36.8C/98.2F RR: 9 O2 Sat: 88% on RA History 1: Migraines History 2: Alcoholic",
     location: "Ward 1",
     responsibleClinicians: null,
     quickAdd: 'blood-test',
     progress: {
       problems:
-          'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-      history: 'In consectetur libero at mauris vehicula venenatis.',
-      plan: ' Nam pulvinar mattis posuere.',
+          'Lower limb injury',
+      history: 'Playing basket ball this morning',
+      plan: 'XR Leg',
   },
     birth_date: "1947-09-11T12:00:00.000+00:00",
     gender: "Male",
@@ -188,15 +194,15 @@ const patient = [
     {
       fname: "Mary",
       lname: "Ng",
-      description: "Ut convallis velit ante, ut auctor velit bibendum vel. Nulla facilisi. Nulla at suscipit metus, vitae suscipit turpis. Sed id interdum leo. Nam auctor mollis lorem quis ornare. Donec sed arcu vitae leo gravida tempor quis eu dolor. Sed vulputate laoreet bibendum. Suspendisse euismod quam nec ex tincidunt, sed feugiat purus lacinia. ",
+      description: "Age: 46yrs Sex: Male CC: Blanching Rash HR: 123 regular BP: 145/85 Temp: 37.7C/99.9F RR: 18 O2 Sat: 85% on 24% O2 History 1: Previous DVT History 2: MI x 3",
       location: "Ward 1",
       responsibleClinicians: null,
       quickAdd: 'blood-test',
       progress: {
         problems:
-            'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-        history: 'In consectetur libero at mauris vehicula venenatis.',
-        plan: ' Nam pulvinar mattis posuere.',
+            'Rash',
+        history: 'After eating seafood',
+        plan: 'Antihistamine',
     },
       birth_date: "1992-05-17T12:00:00.000+00:00",
       gender: "Male",
@@ -204,15 +210,15 @@ const patient = [
     {
       fname: "Sarah",
       lname: "Wong",
-      description: "Phasellus vehicula commodo sem, in pellentesque ex tristique ac. Etiam commodo dignissim turpis nec hendrerit. Donec vel tincidunt lectus. Sed in maximus justo, ac dictum velit. Ut vitae tincidunt tellus. Nam luctus ipsum sit amet nunc euismod, eget ultrices arcu malesuada. Nulla facilisi. Aenean dignissim fringilla risus nec suscipit. ",
+      description: "Age: 45yrs Sex: Female CC: Shortness of Breath HR: 143 regular BP: 106/67 Temp: 37.3C/99.1F RR: 23 O2 Sat: 92% on RA History 1: Lives Alone History 2: Alcoholic",
       location: "Ward 4",
       responsibleClinicians: null,
       quickAdd: 'blood-test',
       progress: {
         problems:
-            'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-        history: 'In consectetur libero at mauris vehicula venenatis.',
-        plan: ' Nam pulvinar mattis posuere.',
+            'Shortness of breath, wheeze',
+        history: 'Asthma',
+        plan: 'CXR, nebulisers',
     },
       birth_date: "1987-11-30T12:00:00.000+00:00",
       gender: "Female",
@@ -220,15 +226,15 @@ const patient = [
     {
       fname: "Liam",
       lname: "Taylor",
-      description: "Nam vel semper felis. Sed rutrum sollicitudin elit, ut feugiat lorem bibendum eu. Nunc congue justo nisl, sit amet lobortis quam bibendum ac. Aenean dignissim imperdiet nisl, non eleifend dolor laoreet vel. Donec pharetra auctor velit, in sodales nibh eleifend at. Fusce gravida iaculis augue eu bibendum. Sed malesuada, metus vel vehicula finibus, est mi bibendum sem, non fringilla lacus lorem non lectus. ",
+      description: "Age: 45yrs Sex: Male CC: Difficulty Walking HR: 123 regular BP: 100/57 Temp: 35.2C/95.4F RR: 29 O2 Sat: 96% on RA History 1: Previous DVT History 2: Diabetic",
       location: "Ward 2",
       responsibleClinicians: null,
       quickAdd: 'radiology',
       progress: {
         problems:
-            'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-        history: 'In consectetur libero at mauris vehicula venenatis.',
-        plan: ' Nam pulvinar mattis posuere.',
+            'Ankle sprain',
+        history: 'Trampoline park accident',
+        plan: 'XR',
     },
       birth_date: "1995-02-22T12:00:00.000+00:00",
       gender: "Male",
@@ -236,83 +242,83 @@ const patient = [
     {
       fname: "Amelia",
       lname: "Wilson",
-      description: "Proin pellentesque nibh at elit euismod, sed ornare tellus feugiat. Maecenas eu augue et felis aliquet feugiat eget a nulla. Etiam eu neque eget sapien congue finibus nec vel ex. Suspendisse ullamcorper dolor sit amet lacinia pulvinar. Nulla eget enim sed nunc efficitur vestibulum. Sed suscipit vestibulum sem, eu auctor odio convallis ac. Donec volutpat augue ac purus fermentum convallis. ",
+      description: "Age: 68yrs Sex: Female CC: Acute Confusion HR: 95 regular BP: 180/125 Temp: 35.2C/95.4F RR: 29 O2 Sat: 93% on 80% O2 History 1: Regular Attender History 2: Works as a Nurse",
       location: "Ward 3",
       responsibleClinicians: null,
       quickAdd: 'blood-test',
       progress: {
         problems:
-            'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-        history: 'In consectetur libero at mauris vehicula venenatis.',
-        plan: ' Nam pulvinar mattis posuere.',
+            'Delirium',
+        history: 'Chest infection last week',
+        plan: 'CXR',
     },
       birth_date: "1990-08-11T12:00:00.000+00:00",
       gender: "Female",
     },
-      {
-        fname: "Oliver",
-        lname: "Ng",
-        description: "Ut convallis velit ante, ut auctor velit bibendum vel. Nulla facilisi. Nulla at suscipit metus, vitae suscipit turpis. Sed id interdum leo. Nam auctor mollis lorem quis ornare. Donec sed arcu vitae leo gravida tempor quis eu dolor. Sed vulputate laoreet bibendum. Suspendisse euismod quam nec ex tincidunt, sed feugiat purus lacinia. ",
-        location: "Ward 1",
-        responsibleClinicians: null,
-        quickAdd: 'blood-test',
-        progress: {
-          problems:
-              'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-          history: 'In consectetur libero at mauris vehicula venenatis.',
-          plan: ' Nam pulvinar mattis posuere.',
+    {
+      fname: "Oliver",
+      lname: "Ng",
+      description: "Age: 48yrs Sex: Male CC: Abdominal Pain HR: 50 irregular BP: 113/75 Temp: 36.7C/98.1F RR: 14 O2 Sat: 96% on RA History 1: Family History of Bowel Cancer History 2: Previous Bowel Cancer",
+      location: "Ward 1",
+      responsibleClinicians: null,
+      quickAdd: 'blood-test',
+      progress: {
+        problems:
+          'Abdo pain',
+        history: 'Previous bowel ca and surgery',
+        plan: 'CT',
       },
-        birth_date: "1992-05-17T12:00:00.000+00:00",
-        gender: "Male",
+      birth_date: "1992-05-17T12:00:00.000+00:00",
+      gender: "Male",
+    },
+    {
+      fname: "Sophie",
+      lname: "Wong",
+      description: "Age: 19yrs Sex: Female CC: Chest Pain HR: 143 regular BP: 70/35 Temp: 38.1C/100.6F RR: 15 O2 Sat: 99% on RA History 1: Previous DVT History 2: Pale and Sweating",
+      location: "Ward 4",
+      responsibleClinicians: null,
+      quickAdd: 'blood-test',
+      progress: {
+        problems:
+          'Chest pain',
+        history: 'Previous VTE',
+        plan: 'ECG',
       },
-      {
-        fname: "Sophie",
-        lname: "Wong",
-        description: "Phasellus vehicula commodo sem, in pellentesque ex tristique ac. Etiam commodo dignissim turpis nec hendrerit. Donec vel tincidunt lectus. Sed in maximus justo, ac dictum velit. Ut vitae tincidunt tellus. Nam luctus ipsum sit amet nunc euismod, eget ultrices arcu malesuada. Nulla facilisi. Aenean dignissim fringilla risus nec suscipit. ",
-        location: "Ward 4",
-        responsibleClinicians: null,
-        quickAdd: 'blood-test',
-        progress: {
-          problems:
-              'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-          history: 'In consectetur libero at mauris vehicula venenatis.',
-          plan: ' Nam pulvinar mattis posuere.',
+      birth_date: "1987-11-30T12:00:00.000+00:00",
+      gender: "Female",
+    },
+    {
+      fname: "Peter",
+      lname: "Taylor",
+      description: "Age: 71yrs Sex: Male CC: Blanching Rash HR: 79 regular BP: 145/85 Temp: 36.8C/98.2F RR: 19 O2 Sat: 92% on RA History 1: Previous DVT History 2: Manic Depressive",
+      location: "Ward 2",
+      responsibleClinicians: null,
+      quickAdd: 'radiology',
+      progress: {
+        problems:
+          'Rash, erythema',
+        history: 'Bee sting 2 days ago on hand',
+        plan: 'USS',
       },
-        birth_date: "1987-11-30T12:00:00.000+00:00",
-        gender: "Female",
+      birth_date: "1995-02-22T12:00:00.000+00:00",
+      gender: "Male",
+    },
+    {
+      fname: "Jacinda",
+      lname: "Wilson",
+      description: "Age: 68yrs Sex: Female CC: MVA HR: 79 regular BP: 171/113 Temp: 38.1C/100.6F RR: 32 O2 Sat: 100% on 35% O2 History 1: On Warfarin History 2: Works as a Nurse",
+      location: "Ward 3",
+      responsibleClinicians: null,
+      quickAdd: 'blood-test',
+      progress: {
+        problems:
+          'Trauma',
+        history: 'Car crash',
+        plan: 'CT trauma',
       },
-      {
-        fname: "Peter",
-        lname: "Taylor",
-        description: "Nam vel semper felis. Sed rutrum sollicitudin elit, ut feugiat lorem bibendum eu. Nunc congue justo nisl, sit amet lobortis quam bibendum ac. Aenean dignissim imperdiet nisl, non eleifend dolor laoreet vel. Donec pharetra auctor velit, in sodales nibh eleifend at. Fusce gravida iaculis augue eu bibendum. Sed malesuada, metus vel vehicula finibus, est mi bibendum sem, non fringilla lacus lorem non lectus. ",
-        location: "Ward 2",
-        responsibleClinicians: null,
-        quickAdd: 'radiology',
-        progress: {
-          problems:
-              'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-          history: 'In consectetur libero at mauris vehicula venenatis.',
-          plan: ' Nam pulvinar mattis posuere.',
-      },
-        birth_date: "1995-02-22T12:00:00.000+00:00",
-        gender: "Male",
-      },
-      {
-        fname: "Jacinda",
-        lname: "Wilson",
-        description: "Proin pellentesque nibh at elit euismod, sed ornare tellus feugiat. Maecenas eu augue et felis aliquet feugiat eget a nulla. Etiam eu neque eget sapien congue finibus nec vel ex. Suspendisse ullamcorper dolor sit amet lacinia pulvinar. Nulla eget enim sed nunc efficitur vestibulum. Sed suscipit vestibulum sem, eu auctor odio convallis ac. Donec volutpat augue ac purus fermentum convallis. ",
-        location: "Ward 3",
-        responsibleClinicians: null,
-        quickAdd: 'blood-test',
-        progress: {
-          problems:
-              'Aenean ac lorem facilisis, dignissim urna nec, malesuada erat ',
-          history: 'In consectetur libero at mauris vehicula venenatis.',
-          plan: ' Nam pulvinar mattis posuere.',
-      },
-        birth_date: "1990-08-11T12:00:00.000+00:00",
-        gender: "Female",
-      }
+      birth_date: "1990-08-11T12:00:00.000+00:00",
+      gender: "Female",
+    }
 ];
 
 const user = [

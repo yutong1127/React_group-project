@@ -135,7 +135,7 @@ function ShowAllTeams({ teamOnDisplay, setTeamOnDisplay, allTeams, setClinicianL
 
             {allTeams.map((team) => (
 
-                <Button variant={teamOnDisplay._id == team._id ? "contained" : "outlined"} key={team._id} sx={{ m: 2}}
+                <Button variant={teamOnDisplay._id == team._id ? "contained" : "outlined"} key={team._id} sx={{m: 2, mt: 3}}
                     onClick={() => {
 
                         setTeamOnDisplay(team);
