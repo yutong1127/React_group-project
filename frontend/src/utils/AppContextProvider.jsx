@@ -28,7 +28,6 @@ export function AppContextProvider({ children }) {
 
   useEffect(() => {
     if (loggedInUser) {
-      console.log("loggedInUser:", loggedInUser);
       setClinicianId(loggedInUser._id);
     }
   }, [loggedInUser]);
@@ -39,7 +38,6 @@ export function AppContextProvider({ children }) {
     if (savedUser) {
       setLoggedInUser(JSON.parse(savedUser));
       setLoggedIn(true);
-      // console.log(`saved user:${savedUser}`)
     }
   }, []);
 
@@ -93,8 +91,8 @@ export function AppContextProvider({ children }) {
       status: task.status
     })
     refreshTasks(),
-    refreshNotifications(),
-    refreshUnreadNotifications()
+      refreshNotifications(),
+      refreshUnreadNotifications()
   }
 
   const {
@@ -128,7 +126,6 @@ export function AppContextProvider({ children }) {
   async function updateUserProfile(id, data) {
     try {
       const updateResponse = await updateUserProfileRequest(data);
-      console.log(updateResponse && "you have updated profile for" + data.fname);
       refreshUserProfile();
     } catch (error) {
       console.error(error);
@@ -138,31 +135,20 @@ export function AppContextProvider({ children }) {
   async function updateUserPassword(id, newPassword) {
     try {
       const updateResponse = await updateUserPasswordRequest({ newPassword });
-      console.log(updateResponse && "you have updated password for user" + id);
       refreshUserProfile();
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function deleteNotification(id) {
-    const deleteResponse = await axios.delete(`${API_BASE_URL}/api/notification/${id}`);
-
-    console.log(deleteResponse);
-
-    refreshNotifications();
-    refreshUnreadNotifications();
-
-  }
-
   async function readNotification(id) {
-
-    const updateResponse = await axios.put(
-      `${API_BASE_URL}/api/notification/unread/${id}`
-    );
-
-    console.log(updateResponse);
-
+    try {
+      const updateResponse = await axios.put(
+        `${API_BASE_URL}/api/notification/unread/${id}`
+      );
+    } catch (error) {
+      console.error(error);
+    }
     refreshUnreadNotifications();
     refreshNotifications();
   }
@@ -189,15 +175,14 @@ export function AppContextProvider({ children }) {
     }
   }
 
-
   async function deleteNotification(id) {
-    const deleteResponse = await axios.delete(clinicianId ? `${API_BASE_URL}/api/notification/${id}` : null);
-
-    console.log(deleteResponse);
-
+    try {
+      const deleteResponse = await axios.delete(clinicianId ? `${API_BASE_URL}/api/notification/${id}` : null);
+    } catch (error) {
+      console.error(error);
+    }
     refreshNotifications();
     refreshUnreadNotifications();
-
   }
 
   const {
@@ -231,19 +216,15 @@ export function AppContextProvider({ children }) {
 
 
   async function readNotification(id) {
-    console.log(id);
     const updateResponse = await axios.put(
       `${API_BASE_URL}/api/notification/unread/${id}`
     );
-
     refreshUnreadNotifications();
     refreshNotifications();
   }
 
   async function addPatientProvider(data) {
     const postResponse = await axios.post(`${API_BASE_URL}/api/patient/add`, data);
-    console.log(postResponse);
-
     if (data.quickAdd === 'blood-test, radiology') {
       const bTask = {
         name: 'FBC',
@@ -280,10 +261,8 @@ export function AppContextProvider({ children }) {
       }
       await createTask(rTask)
     }
-
     refreshNotifications();
     refreshUnreadNotifications();
-
     location.reload();
   }
 

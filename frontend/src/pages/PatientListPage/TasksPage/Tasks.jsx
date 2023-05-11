@@ -27,6 +27,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { visuallyHidden } from '@mui/utils';
 import { useContext } from 'react';
 import { AppContext } from '../../../utils/AppContextProvider';
+import Loading from '../../../utils/Loading';
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
@@ -44,7 +45,7 @@ export default function Tasks() {
     const [visibleRows, setVisibleRows] = useState(null);
     const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
     const [paddingHeight, setPaddingHeight] = useState(0);
-    const { deleteTask, claimTask, completeTask, loggedInUser} = useContext(AppContext)
+    const { deleteTask, claimTask, completeTask, loggedInUser } = useContext(AppContext)
     const [isClicked, setIsClicked] = useState(false);
     const [tasks, setTasks] = useState([]);
 
@@ -385,7 +386,7 @@ export default function Tasks() {
     function formatDate(dateString) {
         const date = new Date(dateString);
         const offset = date.getTimezoneOffset() / 60;
-        const nzOffset = 12; 
+        const nzOffset = 12;
         const hours = (date.getHours() + offset + nzOffset).toString().padStart(2, '0');
         const minutes = date.getMinutes().toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
@@ -393,6 +394,7 @@ export default function Tasks() {
 
         return `${day}-${month} ${hours}:${minutes}`;
     }
+
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
@@ -480,4 +482,6 @@ export default function Tasks() {
             />
         </Box>
     );
+
+
 }

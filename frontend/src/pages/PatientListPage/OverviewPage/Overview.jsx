@@ -8,6 +8,7 @@ import {
     Select,
     MenuItem
 } from '@mui/material';
+import Loading from '../../../utils/Loading';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
@@ -123,6 +124,6 @@ export default function Overview() {
             </Box>
         )
     } else {
-        return (<Box>Loading...</Box>)
+        return (<Loading />)
     }
 };

@@ -243,7 +243,7 @@ export default function PatientCard(props) {
             <Box sx={{ flexGrow: 1, maxHeight: { xs: 900, sm: 600, lg: 300 } }}>
                 <Grid item container spacing={2}>
                     <Grid item lg={1} sm={3} xs={6} order={{ xs: 1, sm: 1, lg: 1 }}>
-                        <Button onClick={() => navigate(`/patientdetails/${props.patient._id}`)}>
+                        <Button  onClick={() => navigate(`/patientdetails/${props.patient._id}`)}>
                             <PatientDetails patient={props.patient} />
                         </Button>
                     </Grid>
@@ -265,11 +265,11 @@ export default function PatientCard(props) {
                     <Grid item lg={1} sm={3} xs={6} order={{ xs: 3, sm: 4, lg: 5 }}>
                     </Grid>
                     <Grid item lg={4} sm={5} xs={6} order={{ xs: 4, sm: 5, lg: 6 }}>
-                        <Button variant="contained" onClick={handleEdit}>{isEditing ? "Add" : "Edit"}</Button>
+                        <Button variant="contained" role='Edit' onClick={handleEdit}>{isEditing ? "Add" : "Edit"}</Button>
 
                     </Grid>
                     <Grid item lg={4} sm={6} xs={6} order={{ xs: 7, sm: 7, lg: 7 }}>
-                        <Button variant="contained" onClick={handleOpen}>Add</Button>
+                        <Button variant="contained" role='Add' onClick={handleOpen}>Add</Button>
                         <Modal
                             open={open}
                             onClose={handleClose}

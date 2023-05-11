@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server'
-import { Task } from '../../../patientlist-db/schema';
+import { Task } from '../../patientlist-db/schema';
 import express from 'express';
 import request from 'supertest';
-import router from '../task';
+import router from '../api/task';
 
 let mongod;
 
@@ -92,11 +92,6 @@ afterAll(async () => {
     await mongoose.disconnect();
     await mongod.stop();
 });
-
-// it('Getting all tasks is successful', async () => {
-//     const dbTasks = await Task.find()
-//     expect(dbTasks.length).toBe(4)
-// })
 
 it('Getting one task by id works', (done) => {
     request(app)

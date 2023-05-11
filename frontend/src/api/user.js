@@ -3,9 +3,6 @@ import axios from "axios";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function loginUser(email, password, setLoggedIn, setLoggedInUser, navigate) {
-  console.log("Email:", email);
-  console.log("Password:", password);
-  console.log("login getting called");
 
   try {
     const postResponse = await axios.post(
@@ -38,7 +35,7 @@ export async function loginUser(email, password, setLoggedIn, setLoggedInUser, n
 }
 
 export async function logoutUser(setLoggedIn, setLoggedInUser, navigate = null) {
-  console.log("logout getting called");
+
   try {
     const response = await axios.post(`${API_BASE_URL}/api/user/logout`, null, {
       withCredentials: true,

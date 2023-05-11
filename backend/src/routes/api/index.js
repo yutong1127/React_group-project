@@ -1,7 +1,3 @@
-// export default function dummyFunction (){
-//    console.log("Testing") 
-// }
-
 import express from 'express';
 
 const router = express.Router();
@@ -14,9 +10,6 @@ router.use('/team', team);
 
 import task from './task'
 router.use('/task', task);
-
-import analytics from './analytics.js'
-router.use('/analytics', analytics);
 
 import user_profile from './user-Profile'
 router.use('/user_profile', user_profile);

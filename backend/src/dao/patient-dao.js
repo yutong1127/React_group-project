@@ -18,7 +18,6 @@ async function deletePatient(id) {
     // Remove patient from team
     const team = await Team.findOne({ patients: mongoose.Types.ObjectId(id) });
     if (team) {
-        console.log(team);
         const update = { $pull: { patients: id } }; 
         await Team.findByIdAndUpdate(team._id, update, { new: false });
     }

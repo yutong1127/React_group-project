@@ -94,10 +94,8 @@ async function addTeam() {
             user.team = dbTeam._id;
             await user.save();
         }
-        
+
         await dbTeam.save();
-
-
     }
 
 }

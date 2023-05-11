@@ -198,8 +198,6 @@ afterAll(async ()=> {
 })
 
 it('gets all notification from API', (done) => {
-    console.log('hello')
-
     request(app)
         .get(`/api/notification`)
         .send()
@@ -209,8 +207,7 @@ it('gets all notification from API', (done) => {
             if (err) return done(err);
 
             const notificationDB = res.body;
-            console.log(notificationDB)
-            expect(notificationDB.length).toBe(2)
+               expect(notificationDB.length).toBe(2)
             expect(notificationDB[0]._id).toBe('000000000000000000000041')
             expect(notificationDB[1]._id).toBe('000000000000000000000042')
             expect(notificationDB[0].recipient.length).toBe(2)
@@ -229,9 +226,7 @@ it('gets all notification from API', (done) => {
 })
 
 it('gets notification from API without authentication', (done) => {
-    // console.log('hello')
-
-    request(app)
+     request(app)
         .get(`/api/notification/000000000000000000000041`)
         .send()
         .expect(500)
