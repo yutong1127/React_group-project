@@ -49,7 +49,7 @@ router.delete('/:id', async (req, res) => {
     res.json(result);
 });
 
-
+// add patient
 router.post('/add', async (req, res) => {
     console.log(req.body)
     const result = await addPatient(req.body);
@@ -62,6 +62,7 @@ router.post('/add', async (req, res) => {
 
 })
 
+// return supervisors(responsible clinicians) based on userId
 router.get('/supervisors/:id', async (req, res) => {
     try {
         const { id } = req.params;

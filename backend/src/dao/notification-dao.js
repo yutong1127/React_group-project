@@ -1,17 +1,18 @@
 import { Notification, User, Patient } from "../patientlist-db/schema.js";
 
+// Get all notifications
 async function retrieveNotificationList() {
-    return await Notification.find();
+
+    const notifications= await Notification.find();
+    return notifications;
 }
 
-//Find the notification associated with this particualr user
+// Get the notification for current login user
 async function retrieveUserOfNotification(id) {
 
     const user = await User.findOne({ _id:id });
-    console.log(`The user with id  '${id}' is ${user.fname} ${user.lname} ${user._id}`);
 
     const notificationsOfUser = await User.populate(user, 'notification');
-    console.log(`The notification of this user patients: ${notificationsOfUser}`);
 
     const notifications = notificationsOfUser.notification;
 
@@ -20,14 +21,16 @@ async function retrieveUserOfNotification(id) {
     return notificationsOfUser.notification;
 }
 
+// Get unread notification for curret login user
 async function retrieveUnreadNotification(id) {
+    
     const user = await User.findOne({ _id: id });
     const unReadNotification = await Notification.find({ isRead: false, recipient: user._id }).populate('patient').populate('entity');
-
     return unReadNotification;
 
 }
 
+// Delete the notification with the object ID
 async function deleteNotification(id) {
     await Notification.deleteOne({ _id: id })
     await User.updateOne(
@@ -39,6 +42,8 @@ async function deleteNotification(id) {
         { $pull: { notification: id } }
     )
 }
+
+// Unread notification update to isRead
 async function updateNotificationSatus(id) {
     console.log(id)
 
@@ -54,9 +59,6 @@ async function updateNotificationSatus(id) {
 
 }
 
-async function findPatientOfNotification(id) {
-    return await Patient.findOne({ _id: id });
-}
 
 export {
     retrieveNotificationList,

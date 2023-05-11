@@ -18,23 +18,34 @@ async function getUserByEmail(email) {
 }
 
 async function getUserById(userId) {
-  return await User.findById(userId);
+  return await User.findById(userId).populate("team");
+
 }
 
 async function updateUser(userId, data) {
   return await User.findByIdAndUpdate(userId, data, { new: true });
 }
 
+
 async function updateUserProfile(userProfile) {
-  const password = await bcrypt.hash(userProfile.password, 10);
+  const dbUserProfile = await User.findByIdAndUpdate({_id: userProfile._id}, userProfile);
+  // if (userProfile.password) {
+  //   const password = await bcrypt.hash(userProfile.password, 10);
+  //   userProfile.password = password;
+  // }
 
-  userProfile.password = password;
-
-  const dbUserProfile = await User.findByIdAndUpdate({_id: userProfile._id}, userProfile,)
+  // const dbUserProfile = await User.findByIdAndUpdate({ _id: userProfile._id }, userProfile,)
   return dbUserProfile !== undefined;
-
 }
 
+async function updateUserPassword(userId, newPassword) {
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  const result = await User.updateOne(
+    { _id: userId },
+    { $set: { password: hashedPassword } }
+  );
+  return result.nModified > 0;
+}
 
 async function deleteUser(userId) {
   return await User.findByIdAndDelete(userId);
@@ -44,12 +55,13 @@ async function retrieveAllSupervisors() {
   return await User.find({ "isSupervisor": true });
 }
 
-export { 
-  createUser, 
-  getUserByEmail, 
-  getUserById, 
-  updateUser, 
+export {
+  createUser,
+  getUserByEmail,
+  getUserById,
+  updateUser,
   updateUserProfile,
   deleteUser,
-  retrieveAllSupervisors
+  retrieveAllSupervisors,
+  updateUserPassword,
 };

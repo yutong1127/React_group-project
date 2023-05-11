@@ -26,7 +26,7 @@ const userSchema = new Schema({
     lname: {type: String},
     phone: {type: Number},
     email: {type: String},
-    password: {type: String}, //??
+    password: {type: String},
     isSupervisor: {type: Boolean, default: false},
     isAdmin: {type: Boolean, default: false},
     role: {type: String},
@@ -48,9 +48,6 @@ const taskSchema = new Schema({
     created_at: { type: Date, default: Date.now },
     // set default finished_at to a random day in past 7 days
     finished_at: { type: Date},
-
-    // finished_at: { type: Date, default: Date.now() - Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000 },
-    // finished_at: { type: Date, default: Date.now  },
     status: { type: Number },
     result:{ type: String, default: '' },
 })

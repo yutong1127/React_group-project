@@ -197,7 +197,6 @@ beforeEach(async () => {
     await Notification.insertMany(notifications);
     // await collPatients.insertMany(patients);
 
-
 })
 
 /**

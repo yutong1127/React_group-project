@@ -16,8 +16,12 @@ export async function loginUser(email, password, setLoggedIn, setLoggedInUser, n
 
     if (postResponse.status === 200) {
       const user = postResponse.data.user;
+      const minimalUser = {
+        _id: user._id,
+        team: user.team,
+      };
       setLoggedIn(true);
-      setLoggedInUser(user);
+      setLoggedInUser(minimalUser);
       sessionStorage.setItem('loggedInUser', JSON.stringify(user));
       navigate(postResponse.data.redirect);
     } else {
@@ -33,10 +37,10 @@ export async function loginUser(email, password, setLoggedIn, setLoggedInUser, n
   }
 }
 
-export async function logoutUser(setLoggedIn, setLoggedInUser, navigate) {
+export async function logoutUser(setLoggedIn, setLoggedInUser, navigate = null) {
   console.log("logout getting called");
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/user/logout`, {
+    const response = await axios.post(`${API_BASE_URL}/api/user/logout`, null, {
       withCredentials: true,
     });
 
