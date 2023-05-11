@@ -4,6 +4,7 @@ import { retrieveAllSupervisors } from "../../dao/user-dao";
 
 const router = express.Router();
 
+// Create a route for user login and authentication.
 router.post("/login", (req, res, next) => {
 
   passport.authenticate("local", (err, user, info) => {
@@ -31,6 +32,7 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
+// Create a route for user logout. When logout, destroys the session and clear session cookie.
 router.post('/logout', async (req, res) => {
 
   req.logout(() => {
@@ -43,7 +45,7 @@ router.post('/logout', async (req, res) => {
       const sessionStore = req.sessionStore;
       await sessionStore.destroy(req.sessionID);
 
-      // Clear the session cookie from the client-side
+      // Clear session cookie from the client-side
       res.clearCookie('connect.sid', { path: '/' });
       return res.status(200).json({ message: 'logout successful', redirect: '/login' });
     });

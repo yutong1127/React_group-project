@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Container, Typography, TextField, List, ListItem, ListItemText, Button, styled, Box, Paper, Grid } from '@mui/material';
+import { Container, Typography, TextField, List, ListItem, ListItemText, Button, styled, Box, Paper, Grid, IconButton, InputAdornment } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { useContext } from 'react';
 import { AppContext } from '../../utils/AppContextProvider';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
 
@@ -67,10 +69,12 @@ function LoginDetailsForm({ setEditOff }) {
         formState: { errors },
         watch } = useForm();
 
-    const { userProfile, updateUserProfile } = useContext(AppContext);
+    const { userProfile, updateUserPassword } = useContext(AppContext);
+
+    const [showPassword, setShowPassword] = useState(false);
 
     function onSubmit(data) {
-        updateUserProfile(userProfile._id, data);
+        updateUserPassword(userProfile._id, data.password);
         setEditOff();
     }
 
@@ -78,9 +82,9 @@ function LoginDetailsForm({ setEditOff }) {
         setEditOff();
     }
 
-    const [showPassword, setShowPassword] = useState(false);
-
-
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+      }
 
     return (
         <Container>
@@ -90,15 +94,12 @@ function LoginDetailsForm({ setEditOff }) {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box>
 
-
                     <TextField
                         margin='dense'
                         varient="outlined"
                         label="Password"
                         fullWidth
                         type={showPassword ? "text" : "password"}
-
-
 
                         {...register("password", {
                             required: "password is required",
@@ -114,6 +115,15 @@ function LoginDetailsForm({ setEditOff }) {
                         })}
                         error={!!errors?.password}
                         helperText={errors.password?.message}
+                        InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton onClick={togglePasswordVisibility} onMouseDown={(e) => e.preventDefault()}>
+                                  {showPassword ? <VisibilityOffIcon /> : <VisibilityOutlinedIcon />}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
                     />
 
                     <TextField
@@ -135,7 +145,6 @@ function LoginDetailsForm({ setEditOff }) {
                         error={!!errors?.confirm_password}
                         helperText={errors.confirm_password?.message}
                     />
-
 
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px', paddingTop: '5px' }}>
