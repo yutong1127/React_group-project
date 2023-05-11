@@ -17,8 +17,6 @@ async function retrievePatientList(teamId) {
 
     const result = await Team.findOne({ id: teamId }, { patients: 1 })
         .populate('patients');
-
-    // console.log(`result: ${await Team.findOne({ id: teamId })}`);
     return result.patients;
 }
 

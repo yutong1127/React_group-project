@@ -161,60 +161,35 @@ let mongod;
 /**
  * Before all tests, create an in-memory MongoDB instance
  */
-
 beforeAll(async () => {
     mongod = await MongoMemoryServer.create();
     const conncetionString = mongod.getUri();
     await mongoose.connect(conncetionString, { useNewUrlParser: true });
 })
 
-
 /**
  * Before each test, intialize the database with some data
  */
-
 beforeEach(async () => {
     //Drop existing collections
-
     await mongoose.connection.db.dropDatabase();
-
-
-    // create and save products
-    // let collPatients;
-    // try {
-    //     console.log(mongoose.connection);
-    //     console.log(mongoose.connection.db);
-    //     collPatients = await mongoose.connection.db.createCollection('patients');
-    // } catch (e) {
-    //     console.log('.....error dropping db');
-    //     console.log(e);
-    // }
 
     await Patient.insertMany(patients);
     await User.insertMany(users);
     await Task.insertMany(tasks);
     await Team.insertMany(teams);
     await Notification.insertMany(notifications);
-    // await collPatients.insertMany(patients);
-
 })
 
 /**
 * After all tests, gracefully terminate the in-memory MongoDB instance and mongoose connection.
  */
-
 afterAll(async () => {
     await mongoose.disconnect();
     await mongod.stop();
 });
 
-
-
-
-
 describe('Patient schema test', () => {
-
-
     /**
      * Ensure all patient data can be obtained
      */

@@ -8,10 +8,12 @@ const HTTP_NO_CONTENT = 204;
 
 const router = express.Router();
 
+//Retrieve all tasks
 router.get('/', async (req, res) => {
    res.json(await retrieveTasks())
 });
 
+//Retrieve task by task id
 router.get('/:id', async (req, res) => {
    const { id } = req.params;
    const task = await retrieveTask(id);
@@ -23,6 +25,7 @@ router.get('/:id', async (req, res) => {
    }
 });
 
+//Retrieve completed tasks by clinician id
 router.get('/completed/:clinicianId', authenticate, async (req, res) => {
    const { clinicianId } = req.params;
    const task = await retrieveCompletedTasks(clinicianId);
@@ -67,19 +70,21 @@ router.get('/incompletetasks/:id', async (req, res) => {
    }
 });
 
-
+//Delete task by task id
 router.delete('/:id', async (req, res) => {
    const { id } = req.params;
    await deleteTask(id);
    res.sendStatus(HTTP_NO_CONTENT);
 });
 
+//Create task
 router.post('/createtask', async (req, res) => {
    const task = req.body;
    const success = await createTask(task)
    res.sendStatus(success ? HTTP_CREATED : HTTP_NOT_FOUND);
 });
 
+//Update task
 router.put('/updatetask/:id', async (req, res) => {
    const { id } = req.params;
    const data = req.body;

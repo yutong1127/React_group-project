@@ -20,7 +20,7 @@ export default function useGetUser(url, initialState = null, dependencies = [], 
         }
         fetchData();
 
-        //test isLoading page
+        // test isLoading page with increased latency
         // setTimeout(() => fetchData(), 2000);
     }, [url, refreshToggle].concat(dependencies));
 

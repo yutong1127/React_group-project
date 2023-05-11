@@ -3,7 +3,7 @@ import { getAllByAltText, getAllByLabelText, getAllByRole, getByDisplayValue, ge
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useContext } from 'react';
-import { AppContextProvider, AppContext } from '../../src/utils/AppContextProvider'
+import { AppContextProvider, AppContext } from '../utils/AppContextProvider'
 import Notifications from '../pages/NotificationsPage/Notification';
 
 const axiosMock = new MockAdapter(axios);

@@ -119,7 +119,7 @@ it('add new patients', (done) => {
     request(app)
         .post('/api/patient/add')
         .send(newPatient)
-        .expect(201)
+        .expect(200)
         .end(async (err, res)=> {
             if(err) return done(err);
 

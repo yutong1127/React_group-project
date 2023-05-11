@@ -1,20 +1,12 @@
-
 import { cardContentClasses } from '@mui/material';
 import { ResponsivePie } from '@nivo/pie'
 
-
 export default function PieChart({ completedTasks, clinicianList }) {
-
-
-
 
     let data = [];
     if (completedTasks && clinicianList) {
         data = formatPieChartData(completedTasks, clinicianList);
     }
-
-    // console.log('data:', data);
-
 
     return (
         <ResponsivePie

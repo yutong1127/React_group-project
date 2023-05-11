@@ -1,5 +1,10 @@
 import styles from "./PatientDetails.module.css"
-import { List, ListItem, ListItemText, Divider } from '@mui/material'
+import {
+    List,
+    ListItem,
+    ListItemText,
+    Divider
+} from '@mui/material'
 
 export default function PatientDetails(props) {
 

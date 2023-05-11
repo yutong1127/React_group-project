@@ -9,8 +9,7 @@ export default function useGet(url, initialState = null) {
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
-            console.log(`url:${url}`)
-            const response = await axios.get(url);
+              const response = await axios.get(url);
             setData(response.data);
             setLoading(false);
         }

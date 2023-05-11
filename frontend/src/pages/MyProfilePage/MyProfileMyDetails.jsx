@@ -90,27 +90,19 @@ function MyDetails({ userProfile, setEditOn }) {
             </Box>
         </div>
     )
-
 }
 
 function MyDetailsForm({ userProfile, updateUserProfile, setEditOff }) {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
-
     function onSubmit(data) {
-        console.log("105:")
-        console.log(data);
-
         updateUserProfile(userProfile._id, data);
-
-
         setEditOff();
     }
 
     const handleCancelClick = () => {
         setEditOff();
     }
-
 
     return (
         <Container>

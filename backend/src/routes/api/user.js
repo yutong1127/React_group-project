@@ -5,7 +5,6 @@ import { retrieveAllSupervisors } from "../../dao/user-dao";
 const router = express.Router();
 
 router.post("/login", (req, res, next) => {
-  console.log("Login route called");
 
   passport.authenticate("local", (err, user, info) => {
     if (err) {
@@ -32,30 +31,7 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-// router.get("/logout", async (req, res) => {
-//   // const sessionId = req.sessionID;
-
-//   console.log("Logout route called");
-
-//   req.logout(() => {
-//     req.session.destroy(async (err) => {
-//       if (err) {
-//         return res.status(500).json({ message: "Error destroying session" });
-//       }
-
-//       console.log("Session destroyed in MongoDB");
-
-//       // Clear the session cookie from the client-side
-//       res.clearCookie("connect.sid", { path: "/" });
-//       return res
-//         .status(200)
-//         .json({ message: "logout successful", redirect: "/login" });
-//     });
-//   });
-// });
-
 router.post('/logout', async (req, res) => {
-  console.log('Logout route called');
 
   req.logout(() => {
     req.session.destroy(async (err) => {
@@ -66,8 +42,6 @@ router.post('/logout', async (req, res) => {
       // delete session from MongoDB
       const sessionStore = req.sessionStore;
       await sessionStore.destroy(req.sessionID);
-
-      console.log('Session destroyed in MongoDB');
 
       // Clear the session cookie from the client-side
       res.clearCookie('connect.sid', { path: '/' });

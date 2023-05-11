@@ -1,4 +1,4 @@
-import { useState, React, useContext, memo } from "react"
+import { useState, React, useContext } from "react"
 import FreetextArea from "./FreetextArea"
 import PatientDetails from "./PatientDetails"
 import PatientProgress from "./PatientProgress"
@@ -14,7 +14,6 @@ import {
 import { AppContext } from "../../../utils/AppContextProvider"
 import { useNavigate } from "react-router"
 
-
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 const style = {
@@ -25,7 +24,7 @@ const style = {
     width: 400,
     bgcolor: 'background.paper',
     border: '2px solid #000',
-    boxShadow: 24,
+    bolghadow: 24,
     pt: 2,
     px: 4,
     pb: 3,
@@ -38,6 +37,8 @@ export default function PatientCard(props) {
     const [isEditing, setIsEditing] = useState(false);
     const [trigger, setTrigger] = useState(0);
     const navigate = useNavigate();
+
+    // Handlers and Modals
     const handleOpen = () => {
         setOpen(true);
     };
@@ -96,7 +97,6 @@ export default function PatientCard(props) {
             await props.createTask(newTask)
             setTrigger((trigger) => trigger + 1);
         };
-    
         return (
             < >
                 <Button onClick={handleOpen}>Radiology</Button>
@@ -120,6 +120,7 @@ export default function PatientCard(props) {
             </ >
         );
     }
+
     function BloodTestModal(props) {
         const [open, setOpen] = useState(false);
         const handleOpen = () => {
@@ -128,7 +129,6 @@ export default function PatientCard(props) {
         const handleClose = () => {
             setOpen(false);
         };
-    
         const handleFBC = async () => {
             const newTask = {
                 name: "FBC",
@@ -168,7 +168,6 @@ export default function PatientCard(props) {
             await props.createTask(newTask)
             setTrigger((trigger) => trigger + 1);
         };
-    
         return (
             < >
                 <Button onClick={handleOpen}>Blood Test</Button>
@@ -192,18 +191,15 @@ export default function PatientCard(props) {
             </ >
         );
     }
-    
+
     function ReviewModal(props) {
-    
         const [open, setOpen] = useState(false);
-        
         const handleOpen = () => {
             setOpen(true);
         };
         const handleClose = () => {
             setOpen(false);
         };
-    
         const handleCreateTask = async () => {
             const task = {
                 name: 'Review',
@@ -217,7 +213,6 @@ export default function PatientCard(props) {
             await props.createTask(task);
             setTrigger((trigger) => trigger + 1);
         }
-    
         return (
             < >
                 <Button onClick={handleOpen}>Review</Button>
@@ -240,41 +235,41 @@ export default function PatientCard(props) {
         );
     }
 
-    
     return (
         <Paper elevation={3} style={{
             padding: 8,
             margin: 5
         }}>
-            <Box sx={{ flexGrow: 1, maxHeight: 300 }}>
+            <Box sx={{ flexGrow: 1, maxHeight: { xs: 900, sm: 600, lg: 300 } }}>
                 <Grid item container spacing={2}>
-                    <Grid item xs={1}>
-                        <Button onClick={() => navigate(`/patientdetails/${props.patient._id}`)}>
+                    <Grid item lg={1} sm={3} xs={6} order={{ xs: 1, sm: 1, lg: 1 }}>
+                        <Button  onClick={() => navigate(`/patientdetails/${props.patient._id}`)}>
                             <PatientDetails patient={props.patient} />
                         </Button>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} sm={5} xs={6} order={{ xs: 2, sm: 2, lg: 2 }}>
                         <Box component="div" sx={{ overflowY: "scroll", maxHeight: 200 }}>
-                            <PatientProgress patient={props.patient} readOnly={isEditing}/>
+                            <PatientProgress patient={props.patient} readOnly={isEditing} />
                         </Box>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} sm={12} xs={6} order={{ xs: 5, sm: 6, lg: 3 }}>
                         <Box component="div" sx={{ overflowY: "scroll", maxHeight: 200 }}>
-                            <PatientTasks patient={props.patient} trigger={trigger}/>
+                            <PatientTasks patient={props.patient} trigger={trigger} />
                         </Box>
                     </Grid>
-                    <Grid item xs={3}>
-                        <FreetextArea container={props.patient.container} patient_id={props.patient._id} />
+                    <Grid item lg={3} sm={4} xs={6} order={{ xs: 6, sm: 3, lg: 4 }}>
+                        <Box component="div" sx={{ overflowY: "scroll", maxHeight: 200 }}>
+                            <FreetextArea container={props.patient.container} patient_id={props.patient._id} />
+                        </Box>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item lg={1} sm={3} xs={6} order={{ xs: 3, sm: 4, lg: 5 }}>
+                    </Grid>
+                    <Grid item lg={4} sm={5} xs={6} order={{ xs: 4, sm: 5, lg: 6 }}>
+                        <Button variant="contained" role='Edit' onClick={handleEdit}>{isEditing ? "Add" : "Edit"}</Button>
 
                     </Grid>
-                    <Grid item xs={4}>
-                        <Button variant="contained" onClick={handleEdit}>{isEditing ? "Add" : "Edit"}</Button>
-
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Button variant="contained" onClick={handleOpen}>Add</Button>
+                    <Grid item lg={4} sm={6} xs={6} order={{ xs: 7, sm: 7, lg: 7 }}>
+                        <Button variant="contained" role='Add' onClick={handleOpen}>Add</Button>
                         <Modal
                             open={open}
                             onClose={handleClose}
@@ -292,13 +287,11 @@ export default function PatientCard(props) {
                             </Box>
                         </Modal>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} sm={6} xs={6} order={{ xs: 8, sm: 8, lg: 8 }}>
                         <UploadArea />
                     </Grid>
                 </Grid>
             </Box>
         </Paper>
-
     )
-
 };
