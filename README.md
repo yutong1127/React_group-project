@@ -42,7 +42,6 @@ Patient List Manager is an online collaborative web application in the field of 
 - Open terminal from frontend
 ```bash
   npm run init-db
-  npm run build
 ```
 - Open terminal from frontend
 ```bash
