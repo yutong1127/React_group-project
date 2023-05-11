@@ -10,6 +10,7 @@ const style = {
     width: '100%',
     maxWidth: 360,
     bgcolor: 'background.paper',
+    margin:'auto'
 };
 
 
@@ -53,7 +54,7 @@ function LoginDetailsList({ setEditOn }) {
                 <Button
                     variant="contained"
                     onClick={hancleEditClick}
-                    fullWidth
+                    // fullWidth
                 > Change Password</Button>
             </Box>
         </div>
@@ -139,10 +140,10 @@ function LoginDetailsForm({ setEditOff }) {
 
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px', paddingTop: '5px' }}>
-                    <Button type='submit' variant='contained' color='primary' fullWidth>
+                    <Button type='submit' variant='contained' color='primary' >
                         Save
                     </Button>
-                    <Button variant='outlined' color='inherit' onClick={handleCancelClick} fullWidth sx={{ borderColor: 'primary.main', color: 'primary.main' }}>
+                    <Button variant='outlined' color='inherit' onClick={handleCancelClick}  sx={{ borderColor: 'primary.main', color: 'primary.main' }}>
                         Cancel
                     </Button>
                 </Box>

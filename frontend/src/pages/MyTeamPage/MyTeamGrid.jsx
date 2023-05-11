@@ -135,7 +135,7 @@ function ShowAllTeams({ teamOnDisplay, setTeamOnDisplay, allTeams, setClinicianL
 
             {allTeams.map((team) => (
 
-                <Button variant={teamOnDisplay._id == team._id ? "contained" : "outlined"} key={team._id} sx={{ m: 1 }}
+                <Button variant={teamOnDisplay._id == team._id ? "contained" : "outlined"} key={team._id} sx={{ m: 2}}
                     onClick={() => {
 
                         setTeamOnDisplay(team);
@@ -144,8 +144,6 @@ function ShowAllTeams({ teamOnDisplay, setTeamOnDisplay, allTeams, setClinicianL
 
                         const tempTasks = tasks.filter(task => task.status === 2 && task.clinician.team === team._id);
                         setCompletedTasks(tempTasks);
-
-
 
                     }}
                 >

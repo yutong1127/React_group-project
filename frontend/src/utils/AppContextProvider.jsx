@@ -91,8 +91,8 @@ export function AppContextProvider({ children }) {
       status: task.status
     })
     refreshTasks(),
-      refreshNotifications(),
-      refreshUnreadNotifications()
+    refreshNotifications(),
+    refreshUnreadNotifications()
   }
 
   const {

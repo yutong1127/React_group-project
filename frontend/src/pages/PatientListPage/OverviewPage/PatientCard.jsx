@@ -32,7 +32,7 @@ const style = {
 
 
 export default function PatientCard(props) {
-    const { createTask } = useContext(AppContext)
+    const { createTask, loggedInUser } = useContext(AppContext)
     const [open, setOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [trigger, setTrigger] = useState(0);
@@ -63,7 +63,7 @@ export default function PatientCard(props) {
                 name: "XR",
                 type: "Radiology",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 1,
                 status: 0,
                 result: ""
@@ -76,7 +76,7 @@ export default function PatientCard(props) {
                 name: "USS",
                 type: "Radiology",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 2,
                 status: 0,
                 result: ""
@@ -89,7 +89,7 @@ export default function PatientCard(props) {
                 name: "CT",
                 type: "Radiology",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 3,
                 status: 0,
                 result: ""
@@ -134,7 +134,7 @@ export default function PatientCard(props) {
                 name: "FBC",
                 type: "Blood-test",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 1,
                 status: 0,
                 result: ""
@@ -147,7 +147,7 @@ export default function PatientCard(props) {
                 name: "UE",
                 type: "Blood-test",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 1,
                 status: 0,
                 result: ""
@@ -160,7 +160,7 @@ export default function PatientCard(props) {
                 name: "COAG",
                 type: "Blood-test",
                 patient: props.patient._id,
-                clinician: null,
+                clinician: loggedInUser._id,
                 priority: 1,
                 status: 0,
                 result: ""
@@ -205,7 +205,7 @@ export default function PatientCard(props) {
                 name: 'Review',
                 type: 'Review',
                 patient: props.patient._id,
-                clinician: '6441045875c54d273abff405',
+                clinician: loggedInUser._id,
                 priority: 0,
                 status: 0,
                 result: ""
