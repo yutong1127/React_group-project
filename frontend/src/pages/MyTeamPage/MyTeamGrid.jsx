@@ -76,17 +76,25 @@ function MyTeamPage({ teamOnDisplay, setTeamOnDisplay, allTeams, clinicianList, 
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={8}>
 
-                    {loggedInUser.isAdmin && allTeams ?
-                        < ShowAllTeams
-                            teamOnDisplay={teamOnDisplay}
-                            setTeamOnDisplay={setTeamOnDisplay}
-                            allTeams={allTeams}
-                            setClinicianList={setClinicianList}
-                            setPatientList={setPatientList}
-                            setCompletedTasks={setCompletedTasks}
-                            tasks={tasks}
-                        /> :
-                        null}
+
+                    <Grid container item xs={12} md={12} spacing={3} mt={0}>
+
+                        <Grid item xs={12} md={12} >
+                            {loggedInUser.isAdmin && allTeams ?
+                                < ShowAllTeams
+                                    teamOnDisplay={teamOnDisplay}
+                                    setTeamOnDisplay={setTeamOnDisplay}
+                                    allTeams={allTeams}
+                                    setClinicianList={setClinicianList}
+                                    setPatientList={setPatientList}
+                                    setCompletedTasks={setCompletedTasks}
+                                    tasks={tasks}
+                                /> :
+                                null}
+                        </Grid>
+
+                    </Grid>
+
 
 
                     <Grid container item xs={12} md={4} spacing={3} mt={0}>
@@ -100,7 +108,7 @@ function MyTeamPage({ teamOnDisplay, setTeamOnDisplay, allTeams, clinicianList, 
 
                         <Grid item xs={12} md={12}>
 
-                            <Typography gutterBottom variant="h5" component="div">
+                            <Typography gutterBottom variant='h5' component='div'>
                                 {teamOnDisplay.name} Team Details
                             </Typography>
                             <Divider />
@@ -129,13 +137,12 @@ function MyTeamPage({ teamOnDisplay, setTeamOnDisplay, allTeams, clinicianList, 
 
 function ShowAllTeams({ teamOnDisplay, setTeamOnDisplay, allTeams, setClinicianList, setPatientList, tasks, setCompletedTasks }) {
 
-
     return (
         <Grid item xs={12} md={12} mt={2} >
 
             {allTeams.map((team) => (
 
-                <Button variant={teamOnDisplay._id == team._id ? "contained" : "outlined"} key={team._id} sx={{m: 2, mt: 3}}
+                <Button variant={teamOnDisplay._id == team._id ? 'contained' : 'outlined'} key={team._id} sx={{ m: 2 }}
                     onClick={() => {
 
                         setTeamOnDisplay(team);
@@ -164,4 +171,3 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
-

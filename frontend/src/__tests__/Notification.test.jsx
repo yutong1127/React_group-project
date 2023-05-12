@@ -1,9 +1,8 @@
 import { it, expect, afterEach } from 'vitest';
-import { getAllByAltText, getAllByLabelText, getAllByRole, getByDisplayValue, getByTestId, render, waitFor } from '@testing-library/react';
+import {  render } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { useContext } from 'react';
-import { AppContextProvider, AppContext } from '../utils/AppContextProvider'
+import { AppContextProvider } from '../utils/AppContextProvider'
 import Notifications from '../pages/NotificationsPage/Notification';
 
 const axiosMock = new MockAdapter(axios);
@@ -38,13 +37,14 @@ it('renders notification from API correctly', async () => {
 
     // Render component under test (AppContextProvider), with a TestComponent we can use to
     // see its output.
-    const { queryByText, getByRole, getByText, queryByRole } = render(
+    const { queryByText, queryByRole } = render(
         <AppContextProvider>
             <Notifications />
         </AppContextProvider>
     )
 
     const button = queryByRole('Notification');
+    expect(button).toBeDefined();
 
     // Make sure each notification is rendered
     for (let notification of notifications) {

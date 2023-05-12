@@ -18,15 +18,3 @@ export function authenticate(req, res, next) {
   })(req, res, next);
 }
 
-
-// export function authenticate(req, res, next) {
-//   if (req.session && req.session.user) {
-//     req.loggedIn = true;
-//     req.user = req.session.user;
-
-//     next();
-//   } else {
-//     req.loggedIn = false;
-//     res.status(401).json({ message: 'Unauthorized access' });
-//   }
-// }

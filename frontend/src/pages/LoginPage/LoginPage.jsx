@@ -5,14 +5,19 @@ import LoginBox from './LoginBox';
 function LoginPage() {
   return (
     <Grid container component='main' sx={{ height: '100vh' }}>
-      <Grid item xs={12} md={8} 
-      sx={{ 
-        display: 'flex',
-        backgroundColor: '#F8FCFD'
+      <Grid item xs={12} md={8}
+        sx={{
+          display: 'flex',
+          backgroundColor: '#F8FCFD'
         }}>
         <LeftBox />
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={4}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
         <LoginBox />
       </Grid>
     </Grid>

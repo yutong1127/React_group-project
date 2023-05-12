@@ -65,9 +65,6 @@ async function deleteUser(userId) {
   return await User.findByIdAndDelete(userId);
 }
 
-// async function updateUser(userId, data) {
-//   return await User.findByIdAndUpdate(userId, data, { new: true });
-// }
 
 export {
   getUserByEmail,
@@ -77,5 +74,4 @@ export {
   retrieveAllSupervisors,
   createUser,
   deleteUser,
-  // updateUser,
 };

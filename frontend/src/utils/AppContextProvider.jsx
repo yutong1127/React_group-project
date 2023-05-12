@@ -59,7 +59,7 @@ export function AppContextProvider({ children }) {
     refresh: refreshTasks,
   } = useGetUser(clinicianId ? `${API_BASE_URL}/api/task` : null,
     [],
-    [loggedInUser],
+    [loggedIn],
     options);
 
   // Unread Notification
@@ -227,20 +227,25 @@ export function AppContextProvider({ children }) {
 
   async function addPatientProvider(data) {
     const postResponse = await axios.post(`${API_BASE_URL}/api/patient/add`, data);
+    console.log("here: " + postResponse);
     if (data.quickAdd === 'blood-test, radiology') {
       const bTask = {
         name: 'FBC',
         type: 'blood-test',
         patient: postResponse.data._id,
         priority: 0,
-        status: 0
+        status: 0,
+        clinician: loggedInUser._id,
+        result: ""
       }
       const rTask = {
         name: 'XR',
         type: 'radiology',
         patient: postResponse.data._id,
         priority: 0,
-        status: 0
+        status: 0,
+        clinician: loggedInUser._id,
+        result: ""
       }
       await createTask(bTask)
       await createTask(rTask)
@@ -250,7 +255,9 @@ export function AppContextProvider({ children }) {
         type: 'blood-test',
         patient: postResponse.data._id,
         priority: 0,
-        status: 0
+        status: 0,
+        clinician: loggedInUser._id,
+        result: ""
       }
       await createTask(bTask)
     } else if (data.quickAdd === 'radiology') {
@@ -259,7 +266,9 @@ export function AppContextProvider({ children }) {
         type: 'radiology',
         patient: postResponse.data._id,
         priority: 0,
-        status: 0
+        status: 0,
+        clinician: loggedInUser._id,
+        result: ""
       }
       await createTask(rTask)
     }

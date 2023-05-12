@@ -39,7 +39,7 @@ Patient List Manager is an online collaborative web application in the field of 
   npm run dev
 ```
 ***Option B. Production Environment***
-- Open terminal from frontend
+- Open terminal from backend
 ```bash
   npm run init-db
 ```
@@ -47,28 +47,42 @@ Patient List Manager is an online collaborative web application in the field of 
 ```bash
   npx tinylicious
 ```
+- Open another terminal from frontend
+```bash
+  npm run build
+```
 - Open another terminal from backend
 ```bash
   npm run production
+```
+
+***Testing***
+- Open terminal from backend
+```bash
+  npm test
+```
+- Open terminal from frontend
+```bash
+  npm test
 ```
 
 **Note: If you restart the tinylicious, you have to re-initialize the database again by running npm run init-db**
 
 # 2. Login Information: User email, password and User Type
 
-| Email     | Password | User Type               |
-| :-------- | :------- | :------------------------- |
-| `jant.chan@aucklanduni.ac.nz` | `abc123` | User |
-| `jiewen.li@aucklanduni.ac.nz` | `abc123` | Admin |
-| `olivia.li@aucklanduni.ac.nz` | `abc123` | User |
-| `jingyi.you@aucklanduni.ac.nz` | `abc123` | User|
-| `kevin.zheng@aucklanduni.ac.nz`| `abc123` | Supervisor |
-| `zhiyan.hu@aucklanduni.ac.nz` | `abc123` | User |
-| `andrew.meads@aucklanduni.ac.nz` | `abc123` | Supervisor |
-| `tyne.crow@aucklanduni.ac.nz` | `abc123` | User |
-| `vita.tsai@aucklanduni.ac.nz` | `abc123` | User |
-| `dee.miles@aucklanduni.ac.nz` | `abc123` | User |
-| `robyn.young@aucklanduni.ac.nz` | `abc123` | User |
+| Email     | Password | User Type               | Team    |
+| :-------- | :------- | :------------------------- | :------- |
+| `jant.chan@aucklanduni.ac.nz` | `abc123` | User | Pink Pandas |
+| `jiewen.li@aucklanduni.ac.nz` | `abc123` | Admin | Pink Pandas |
+| `olivia.li@aucklanduni.ac.nz` | `abc123` | User | Pink Pandas |
+| `jingyi.you@aucklanduni.ac.nz` | `abc123` | User| Pink Pandas |
+| `kevin.zheng@aucklanduni.ac.nz`| `abc123` | Supervisor | Pink Pandas |
+| `zhiyan.hu@aucklanduni.ac.nz` | `abc123` | User | Pink Pandas |
+| `andrew.meads@aucklanduni.ac.nz` | `abc123` | Supervisor | Red Pandas |
+| `tyne.crow@aucklanduni.ac.nz` | `abc123` | User | Red Pandas |
+| `vita.tsai@aucklanduni.ac.nz` | `abc123` | User | Red Pandas |
+| `dee.miles@aucklanduni.ac.nz` | `abc123` | User | Red Pandas |
+| `robyn.young@aucklanduni.ac.nz` | `abc123` | User | Red Pandas |
 
 - User: clinicians in the different teams
 - Supervisor: resposible clinician for the team

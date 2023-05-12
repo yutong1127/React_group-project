@@ -39,7 +39,7 @@ function BarChart({data}){
                 'Other'
             ]}
             indexBy="date"
-            margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
+            margin={{ top: 50, right: 100, bottom: 50, left: 50 }}
             padding={0.3}
             valueScale={{ type: 'linear' }}
             indexScale={{ type: 'band', round: true }}
