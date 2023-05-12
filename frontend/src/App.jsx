@@ -17,7 +17,11 @@ function App() {
       <PageWithNavbar />
       <Routes>
         <Route index path="/" element={<Navigate to="login" replace />} />
-        <Route path='login' element={<LoginPage />} />
+        <Route path='login' element={
+          <LoggedInRoute>
+            <LoginPage />
+          </LoggedInRoute>
+        } />
         <Route path='notification' element={
           <LoggedInRoute>
             <Notifications />
