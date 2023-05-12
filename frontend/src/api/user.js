@@ -16,10 +16,12 @@ export async function loginUser(email, password, setLoggedIn, setLoggedInUser, n
       const minimalUser = {
         _id: user._id,
         team: user.team,
+        isAdmin: user.isAdmin
       };
+      const { password, ...userInfo } = user;
       setLoggedIn(true);
-      setLoggedInUser(minimalUser);
-      sessionStorage.setItem('loggedInUser', JSON.stringify(user));
+      setLoggedInUser(userInfo);
+      sessionStorage.setItem('loggedInUser', JSON.stringify(minimalUser));
       navigate(postResponse.data.redirect);
     } else {
       throw new Error(postResponse.data.message);

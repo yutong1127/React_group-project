@@ -207,7 +207,7 @@ it('gets all notification from API', (done) => {
             if (err) return done(err);
 
             const notificationDB = res.body;
-               expect(notificationDB.length).toBe(2)
+            expect(notificationDB.length).toBe(2)
             expect(notificationDB[0]._id).toBe('000000000000000000000041')
             expect(notificationDB[1]._id).toBe('000000000000000000000042')
             expect(notificationDB[0].recipient.length).toBe(2)

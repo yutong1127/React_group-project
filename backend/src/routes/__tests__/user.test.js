@@ -11,7 +11,7 @@ import bcrypt from 'bcrypt';
 const app = express();
 app.use(express.json());
 
-// Configure express-session
+// setup session
 app.use(
   session({
     secret: 'secret_keyjdwifwfqhqif',
@@ -20,7 +20,7 @@ app.use(
   })
 );
 
-// Initialize Passport.js and enable session support
+// Initialize passport.js and session
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -29,6 +29,7 @@ let mongod;
 
 app.use('/api', router);
 
+// Mock user data for testing
 const users = [
     {
         _id: new mongoose.Types.ObjectId('000000000000000000000011'),
@@ -47,13 +48,16 @@ const users = [
     },
 ];
 
+// excute before all tests
 beforeAll(async () => {
     mongod = await MongoMemoryServer.create();
     const connectionString = mongod.getUri();
     await mongoose.connect(connectionString, { useNewUrlParser: true });
 });
 
+// excute before each test
 beforeEach(async () => {
+    // drop database first
     await mongoose.connection.db.dropDatabase();
 
     const collections = await mongoose.connection.db.listCollections().toArray();
@@ -62,11 +66,13 @@ beforeEach(async () => {
     await User.insertMany(users);
 });
 
+// excute after all tests
 afterAll(async () => {
     await mongoose.disconnect();
     await mongod.stop();
 });
 
+// Test login
 it('login', (done) => {
     request(app)
         .post('/api/user/login')
@@ -87,6 +93,8 @@ it('login', (done) => {
         });
 }, 10000);
 
+
+// Test logout
 it('logout', (done) => {
     request(app)
         .post('/api/user/login')
@@ -111,6 +119,8 @@ it('logout', (done) => {
         });
 }, 10000);
 
+
+// Test update user profile
 it('update user profile', (done) => {
     request(app)
       .post('/api/user/login')
@@ -150,6 +160,7 @@ it('update user profile', (done) => {
       });
   });
   
+  // Test update user password
   it('update user password', (done) => {
     request(app)
       .post('/api/user/login')
@@ -177,8 +188,6 @@ it('update user profile', (done) => {
               return done(err);
             }
   
-            console.log('Update password response:', res.body);
-  
             // Check if new password matches
             request(app)
               .post('/api/user/login')
@@ -189,7 +198,7 @@ it('update user profile', (done) => {
               .expect(200)
               .end((err, res) => {
                 if (err) {
-                  console.error('Error logging in with new password:', err);
+                  console.error('Error logging in using new password:', err);
                   return done(err);
                 }
   

@@ -15,7 +15,7 @@ const HTTP_NO_CONTENT = 204;
 
 const router = express.Router();
 
-
+// Get notifications for logged in user
 router.get('/:clinicianId',authenticate, async(req,res)=>{
 
     const { clinicianId } = req.params;
@@ -29,6 +29,7 @@ router.get('/:clinicianId',authenticate, async(req,res)=>{
     }
 });
 
+// Get unread notifications for logged in user
 router.get('/unread/:clinicianId',authenticate,async(req,res)=>{
 
     const { clinicianId } = req.params;
@@ -41,12 +42,9 @@ router.get('/unread/:clinicianId',authenticate,async(req,res)=>{
         return sendStatus(HTTP_NOT_FOUND)
     }
 
-
-    // res.json(await retrieveUnreadNotification('Jant'));
-
 });
 
-
+// Delete notification
 router.delete('/:id', async(req, res) => {
 
     const { id } = req.params;
@@ -55,6 +53,7 @@ router.delete('/:id', async(req, res) => {
     
 });
 
+// Update unread status to isRead
 router.put('/unread/:id', async (req, res) => {
 
     const { id } = req.params;
@@ -63,6 +62,7 @@ router.put('/unread/:id', async (req, res) => {
     
 });
 
+// Find all notifications
 router.get('/', async (req, res)=> {
 
     const notifications = await Notification.find();
