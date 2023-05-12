@@ -1,8 +1,14 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const LoggedInRoute = ({children}) => {
     const savedUser = sessionStorage.getItem('loggedInUser');
+
+    const location = useLocation();
+
+    if (location.pathname === '/login') {
+        return savedUser ? <Navigate to="/patientlist" /> : children;
+    }
 
     return savedUser ? children : <Navigate to="/login" />;
 }
