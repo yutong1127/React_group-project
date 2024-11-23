@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Terraform state files
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
