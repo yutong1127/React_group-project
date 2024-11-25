@@ -68,10 +68,11 @@ resource "azurerm_linux_web_app" "doctor" {
       allowed_origins     = ["https://${azurerm_storage_account.doctor.primary_web_endpoint}"]
       support_credentials = true
     }
-    application_stack{
-        docker_image_name ="oliviayutong/my-backend-app:latest"
-        docker_registry_url="https://index.docker.io"
-    }
+    //Docker image放在pipeline里
+    # application_stack{
+    #     docker_image_name ="oliviayutong/my-backend-app:latest"
+    #     docker_registry_url="https://index.docker.io"
+    # }
 
   }
   # Add App Settings for Environment Variables
